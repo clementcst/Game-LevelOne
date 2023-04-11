@@ -4,12 +4,12 @@ import game.item.Item;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
-// Classe pour représenter le joueur
+
 public class Player {
     private String name;
     private int health;
     private int money;
-    private ImageView sprite; // L'image qui représente le joueur dans l'interface graphique
+    private ImageView sprite;
 
     public Player(String name, int health, int money, String spritePath) {
         this.name = name;
@@ -17,6 +17,8 @@ public class Player {
         this.money = money;
         Image image = new Image(spritePath);
         this.sprite = new ImageView(image);
+        this.sprite.setFitWidth(50);
+        this.sprite.setFitHeight(50);
     }
 
     // Getters et setters
@@ -54,6 +56,8 @@ public class Player {
         sprite.setImage(image);
     }
 
+    
+    
     // Actions que le joueur peut effectuer
 
     public void attack() {
@@ -64,5 +68,5 @@ public class Player {
         // Code pour utiliser un item
     }
 
-    // ...
+    
 }
