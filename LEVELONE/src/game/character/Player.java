@@ -59,7 +59,6 @@ public class Player {
     
     
     // Actions que le joueur peut effectuer
-
     public void attack() {
         // Code pour attaquer un ennemi
     }

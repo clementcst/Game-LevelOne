@@ -9,8 +9,8 @@ import javafx.stage.Stage;
 
 public class Game extends Application {
 
-    private static final int SCENE_WIDTH = 1200;
-    private static final int SCENE_HEIGHT = 700;
+    private static final int SCENE_WIDTH = 1216;
+    private static final int SCENE_HEIGHT = 704;
     
     //private Player player;
 
@@ -39,7 +39,7 @@ public class Game extends Application {
                 default:
                     break;
             }
-            System.out.println("X :" + map.getPlayer().getSprite().getX() + "Y :" + map.getPlayer().getSprite().getY());
+            //System.out.println("X :" + map.getPlayer().getSprite().getX() + "Y :" + map.getPlayer().getSprite().getY());
         });
 
         primaryStage.setTitle("LEVELONE");
