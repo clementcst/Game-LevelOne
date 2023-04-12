@@ -20,21 +20,45 @@ public class Game extends Application {
     	Map map = new Map(SCENE_WIDTH, SCENE_HEIGHT);
         Scene scene = map.createMap();
         
-        
+
         scene.setOnKeyPressed(event -> {
             KeyCode keyCode = event.getCode();
             switch (keyCode) {
                 case Z:
                 	map.getPlayer().getSprite().setY(map.getPlayer().getSprite().getY() - 10);
+                	if(map.getPlayer().testCollision(map.getGridpaneObstacle())) {
+                		map.getPlayer().getSprite().setY(map.getPlayer().getSprite().getY() + 10);
+                	}
+                	if(map.getPlayer().testCollision(map.getGridpaneInteract())) {
+                		System.out.println("AIE LE PERSONNAGE DE STAN M'A FAIT MAL !");
+                	}
                     break;
                 case S:
                 	map.getPlayer().getSprite().setY(map.getPlayer().getSprite().getY() + 10);
+                	if(map.getPlayer().testCollision(map.getGridpaneObstacle())) {
+                		map.getPlayer().getSprite().setY(map.getPlayer().getSprite().getY() - 10);
+                	}
+                	if(map.getPlayer().testCollision(map.getGridpaneInteract())) {
+                		System.out.println("AIE LE PERSONNAGE DE STAN M'A FAIT MAL !");
+                	}
                     break;
                 case Q:
                 	map.getPlayer().getSprite().setX(map.getPlayer().getSprite().getX() - 10);
+                	if(map.getPlayer().testCollision(map.getGridpaneObstacle())) {
+                		map.getPlayer().getSprite().setX(map.getPlayer().getSprite().getX() + 10);
+                	}
+                	if(map.getPlayer().testCollision(map.getGridpaneInteract())) {
+                		System.out.println("AIE LE PERSONNAGE DE STAN M'A FAIT MAL !");
+                	}
                     break;
                 case D:
                 	map.getPlayer().getSprite().setX(map.getPlayer().getSprite().getX() + 10);
+                	if(map.getPlayer().testCollision(map.getGridpaneObstacle())) {
+                		map.getPlayer().getSprite().setX(map.getPlayer().getSprite().getX() - 10);
+                	}
+                	if(map.getPlayer().testCollision(map.getGridpaneInteract())) {
+                		System.out.println("AIE LE PERSONNAGE DE STAN M'A FAIT MAL !");
+                	}
                     break;
                 default:
                     break;
