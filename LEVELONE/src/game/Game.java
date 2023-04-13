@@ -14,7 +14,6 @@ public class Game extends Application {
 
     private static final int SCENE_WIDTH = 1216;
     private static final int SCENE_HEIGHT = 704;
-    private int timeSeconds = 10; // Le temps en secondes
 
     
     //private Player player;
