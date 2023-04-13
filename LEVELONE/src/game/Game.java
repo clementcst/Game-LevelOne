@@ -2,11 +2,17 @@ package game;
 
 
 
+
 import game.map.Map;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import game.textures.Constants;
+import javafx.scene.control.Button;
+
 
 
 
@@ -15,64 +21,42 @@ public class Game extends Application {
     private static final int SCENE_WIDTH = 1216;
     private static final int SCENE_HEIGHT = 704;
 
-    
-    //private Player player;
 
     @Override
     public void start(Stage primaryStage) throws Exception {
         
     	Map map = new Map(SCENE_WIDTH, SCENE_HEIGHT);
         Scene scene = map.createMap();
+    
         
-
+    	//Stage secondaryStage = null; 
+        Pane Inventory = new Pane();
+        //Inventory.getChildren().add(Constants.block.getImageView());  
+        Inventory.setMaxHeight(200);
+        Inventory.setMaxWidth(200);
+        Inventory.setStyle("-fx-background-color: white;");
+        Button btn = new Button("Inventaire ta mere");
+        Inventory.getChildren().add(btn);
+        
         scene.setOnKeyPressed(event -> {
             KeyCode keyCode = event.getCode();
             switch (keyCode) {
                 case Z:
-                	for(int i = 0; i < 10; i++) {
-                		map.getPlayer().getSprite().setY(map.getPlayer().getSprite().getY() - 1);
-                    	if(map.getPlayer().testCollision(map.getGridpaneObstacle())) {
-                    		map.getPlayer().getSprite().setY(map.getPlayer().getSprite().getY() + 1);
-                    	}
-                    	if(map.getPlayer().testCollision(map.getGridpaneInteract())) {
-                    		System.out.println("AIE LE PERSONNAGE DE STAN M'A FAIT MAL !");
-                    	}
-                	}
-                	
+                	map.getPlayer().moveTop(map.getGridpaneObstacle(),map.getGridpaneInteract());
                     break;
                 case S:
-                	for(int i = 0; i < 10; i++) {
-	                	map.getPlayer().getSprite().setY(map.getPlayer().getSprite().getY() + 1);
-	                	if(map.getPlayer().testCollision(map.getGridpaneObstacle())) {
-	                		map.getPlayer().getSprite().setY(map.getPlayer().getSprite().getY() - 1);
-	                	}
-	                	if(map.getPlayer().testCollision(map.getGridpaneInteract())) {
-	                		System.out.println("AIE LE PERSONNAGE DE STAN M'A FAIT MAL !");
-	                	}
-                	}
+                	map.getPlayer().moveBottom(map.getGridpaneObstacle(),map.getGridpaneInteract());
                     break;
                 case Q:
-                	for(int i = 0; i < 10; i++) {
-	                	map.getPlayer().getSprite().setX(map.getPlayer().getSprite().getX() - 1);
-	                	if(map.getPlayer().testCollision(map.getGridpaneObstacle())) {
-	                		map.getPlayer().getSprite().setX(map.getPlayer().getSprite().getX() + 1);
-	                	}
-	                	if(map.getPlayer().testCollision(map.getGridpaneInteract())) {
-	                		System.out.println("AIE LE PERSONNAGE DE STAN M'A FAIT MAL !");
-	                	}
-                	}
+                	map.getPlayer().moveLeft(map.getGridpaneObstacle(),map.getGridpaneInteract());	
                     break;
                 case D:
-                	for(int i = 0; i < 10; i++) {
-	                	map.getPlayer().getSprite().setX(map.getPlayer().getSprite().getX() + 1);
-	                	if(map.getPlayer().testCollision(map.getGridpaneObstacle())) {
-	                		map.getPlayer().getSprite().setX(map.getPlayer().getSprite().getX() - 1);
-	                	}
-	                	if(map.getPlayer().testCollision(map.getGridpaneInteract())) {
-	                		System.out.println("AIE LE PERSONNAGE DE STAN M'A FAIT MAL !");
-	                	}
-                	}
+                	map.getPlayer().moveRight(map.getGridpaneObstacle(),map.getGridpaneInteract());
                     break;
+                case I:
+                	 if(map.getStackpane().getChildren().contains(Inventory))map.getStackpane().getChildren().remove(Inventory);
+                	 else map.getStackpane().getChildren().add(Inventory);
+                	break;
                 default:
                     break;
             }

@@ -301,8 +301,10 @@ public class Map {
     	
     	
     	//ajout des monstres
-    	gridpaneInteract.add(Constants.stan.getImageView(),25,17);
-    	gridpaneInteract.add(Constants.stan2.getImageView(),26,17);
+    	gridpaneInteract.add(Constants.stan.getImageView(),8,2);
+    	gridpaneInteract.add(Constants.stan2.getImageView(),22,15);
+
+    	gridpaneInteract.add(Constants.door.getImageView(),18,3);
     	
     	
     	//autre creation

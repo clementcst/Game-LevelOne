@@ -76,6 +76,54 @@ public class Player {
 		return false;
 	}
     
+    public void moveLeft(GridPane gridpaneObstacle,GridPane gridpaneInteract) {
+    	for(int i = 0; i < 10; i++) {
+    		getSprite().setX(getSprite().getX() - 1);
+        	if(testCollision(gridpaneObstacle)) {
+        		getSprite().setX(getSprite().getX() + 1);
+        	}
+        	if(testCollision(gridpaneInteract)) {
+        		System.out.println("AIE LE PERSONNAGE DE STAN M'A FAIT MAL !");
+        	}
+    	}
+    }
+    
+	public void moveRight(GridPane gridpaneObstacle,GridPane gridpaneInteract) {
+		for(int i = 0; i < 10; i++) {
+    		getSprite().setX(getSprite().getX() + 1);
+        	if(testCollision(gridpaneObstacle)) {
+        		getSprite().setX(getSprite().getX() - 1);
+        	}
+        	if(testCollision(gridpaneInteract)) {
+        		System.out.println("AIE LE PERSONNAGE DE STAN M'A FAIT MAL !");
+        	}
+    	}
+	}
+	
+	public void moveTop(GridPane gridpaneObstacle,GridPane gridpaneInteract) {
+		for(int i = 0; i < 10; i++) {
+    		getSprite().setY(getSprite().getY() - 1);
+        	if(testCollision(gridpaneObstacle)) {
+        		getSprite().setY(getSprite().getY() + 1);
+        	}
+        	if(testCollision(gridpaneInteract)) {
+        		System.out.println("AIE LE PERSONNAGE DE STAN M'A FAIT MAL !");
+        	}
+    	}
+	}
+	
+	public void moveBottom(GridPane gridpaneObstacle,GridPane gridpaneInteract) {
+		for(int i = 0; i < 10; i++) {
+    		getSprite().setY(getSprite().getY() + 1);
+        	if(testCollision(gridpaneObstacle)) {
+        		getSprite().setY(getSprite().getY() - 1);
+        	}
+        	if(testCollision(gridpaneInteract)) {
+        		System.out.println("AIE LE PERSONNAGE DE STAN M'A FAIT MAL !");
+        	}
+    	}
+	}
+    
     // Actions que le joueur peut effectuer
     public void attack() {
         // Code pour attaquer un ennemi

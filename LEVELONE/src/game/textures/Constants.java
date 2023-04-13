@@ -29,6 +29,8 @@ public class Constants {
 			public static final Texture cornerLeftBottom = new Texture("res/images/cornerLeftBottom.png");
 			
 			public static final Texture block = new Texture("res/images/block.png");
+			public static final Texture door = new Texture("res/images/door.png");
+			
 
 			
 			public static final Texture stan = new Texture("res/images/pigKing.png");
