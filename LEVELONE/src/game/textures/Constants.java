@@ -30,9 +30,14 @@ public class Constants {
 			
 			public static final Texture block = new Texture("res/images/block.png");
 			public static final Texture door = new Texture("res/images/door.png");
+			public static final Texture heart = new Texture("res/images/heart.png");
 			
 
 			
 			public static final Texture stan = new Texture("res/images/pigKing.png");
 			public static final Texture stan2 = new Texture("res/images/pigMob.png");
+			
+			
+			
+			
 }

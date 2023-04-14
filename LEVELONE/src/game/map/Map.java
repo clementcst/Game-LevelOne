@@ -1,8 +1,11 @@
 package game.map;
 
+import java.io.IOException;
+
 import game.character.Player;
 import game.textures.Texture;
 import game.textures.Constants;
+import game.reader.CsvReader;
 import javafx.scene.Scene;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
@@ -11,12 +14,13 @@ import javafx.scene.layout.StackPane;
 
 
 public class Map {
-	
-    private int width;
-    private int height;
+
+	private int height;
+	private int width;
     private GridPane gridpaneBackground;
     private GridPane gridpaneObstacle;
     private GridPane gridpaneInteract;
+    //private GridPane gameInfo;
     private Pane pane;
 	private StackPane stackpane;
     private Player player;
@@ -31,12 +35,25 @@ public class Map {
         gridpaneObstacle.setPrefSize(width, height);
         this.gridpaneInteract = new GridPane();
         gridpaneInteract.setPrefSize(width, height);
-        this.player = new Player("clement",0,0,"res/images/perso.png");
+        //this.gameInfo = new GridPane();
+        //gameInfo.setPrefSize(width, height);
+        this.player = new Player("clement",5,0,"res/images/perso.png");
         this.player.getSprite().setX(70);
         this.player.getSprite().setY(70);
         this.stackpane = new StackPane();
         this.pane = new Pane();
     }
+    
+
+    
+    /*public GridPane getGameInfo() {
+		return gameInfo;
+	}
+
+	public void setGameInfo(GridPane gameInfo) {
+		this.gameInfo = gameInfo;
+	}*/
+
     
     public GridPane getGridpaneObstacle() {
 		return gridpaneObstacle;
@@ -114,7 +131,7 @@ public class Map {
 	}
 	
 
-    public Scene createMap() {
+    public Scene createMap() throws IOException {
         
 
     	System.out.println(Constants.black.getImageView().getFitWidth());
@@ -151,7 +168,19 @@ public class Map {
             }
         }
     	
-    	//Creation de la gridpane pour les obstacles
+    	int heart = this.getPlayer().getHealth();
+    	
+    	/*for(int i = 0 ; i < heart ; i++) {
+    		gameInfo.add(Constants.heart.getImageView(),i,0);
+    	}*/
+    	
+    	
+    	String[][] obstacles = CsvReader.ReadFile("src/res/files/obstacles.csv");
+    	System.out.println(obstacles[0][0]);
+    	
+    	
+    	
+    	//Creation de la gridpane  pour les obstacles
     	for (int col = 0; col < 22; col++) {
     		for (int row = 0; row < 38; row++) {
     			Region region = new Region();
@@ -161,6 +190,15 @@ public class Map {
     			gridpaneObstacle.add(region, row, col);
     		}
 		}
+    	
+    	/*for(int i = 0 ; i < 22;i++) {
+    		for(int j = 0;j<38;j++) {
+    			String com = "gridpaneObstacle.add(Constants."+obstacles[i][j]+".getImageView(),"+i+","+j+");";
+    			System.out.println(com);
+    			Process process = Runtime.getRuntime().exec(com);
+    		}
+    	}
+    	gridpaneObstacle.add(Constants.topLeftCorner.getImageView(),0,0);*/
     	
     	for (int col = 0; col < 22; col++) {
     		for (int row = 0; row < 38; row++) {
@@ -315,6 +353,7 @@ public class Map {
         stackpane.getChildren().add(gridpaneObstacle);
         stackpane.getChildren().add(gridpaneInteract);
         stackpane.getChildren().add(pane);
+        //stackpane.getChildren().add(gameInfo);
         pane.getChildren().add(this.getPlayer().getSprite());
         
  

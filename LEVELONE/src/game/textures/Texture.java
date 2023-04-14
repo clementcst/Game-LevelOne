@@ -15,7 +15,7 @@ public class Texture {
 		return imagePath;
 	}
 
-
+	
 	public void setImagePath(String imagePath) {
 		this.imagePath = imagePath;
 	}

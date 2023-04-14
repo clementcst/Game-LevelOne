@@ -8,12 +8,8 @@ import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import game.textures.Constants;
 import javafx.scene.control.Button;
-
-
 
 
 public class Game extends Application {
@@ -29,13 +25,13 @@ public class Game extends Application {
         Scene scene = map.createMap();
     
         
-    	//Stage secondaryStage = null; 
-        Pane Inventory = new Pane();
-        //Inventory.getChildren().add(Constants.block.getImageView());  
+    	Pane Inventory = new Pane();
+        
         Inventory.setMaxHeight(200);
         Inventory.setMaxWidth(200);
-        Inventory.setStyle("-fx-background-color: white;");
-        Button btn = new Button("Inventaire ta mere");
+        
+        Inventory.setStyle("-fx-background-color: blue;");
+        Button btn = new Button("Inventaire ta mere");  
         Inventory.getChildren().add(btn);
         
         scene.setOnKeyPressed(event -> {

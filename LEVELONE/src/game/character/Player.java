@@ -13,6 +13,7 @@ public class Player {
     private int health;
     private int money;
     private ImageView sprite;
+    //private Inventory inventory;
 
     public Player(String name, int health, int money, String spritePath) {
         this.name = name;
@@ -84,6 +85,7 @@ public class Player {
         	}
         	if(testCollision(gridpaneInteract)) {
         		System.out.println("AIE LE PERSONNAGE DE STAN M'A FAIT MAL !");
+        		//setHealth(getHealth()-1);
         	}
     	}
     }
@@ -96,6 +98,7 @@ public class Player {
         	}
         	if(testCollision(gridpaneInteract)) {
         		System.out.println("AIE LE PERSONNAGE DE STAN M'A FAIT MAL !");
+        		//setHealth(getHealth()-1);
         	}
     	}
 	}
@@ -108,6 +111,7 @@ public class Player {
         	}
         	if(testCollision(gridpaneInteract)) {
         		System.out.println("AIE LE PERSONNAGE DE STAN M'A FAIT MAL !");
+        		//setHealth(getHealth()-1);
         	}
     	}
 	}
@@ -120,6 +124,7 @@ public class Player {
         	}
         	if(testCollision(gridpaneInteract)) {
         		System.out.println("AIE LE PERSONNAGE DE STAN M'A FAIT MAL !");
+        		//setHealth(getHealth()-1);
         	}
     	}
 	}
