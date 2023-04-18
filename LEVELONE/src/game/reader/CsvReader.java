@@ -4,7 +4,6 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 
-import javafx.util.Duration;
 
 public class CsvReader {
 	

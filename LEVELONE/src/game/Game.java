@@ -1,12 +1,11 @@
 package game;
 
-
-
-
+import game.inventory.Inventory;
 import game.map.Map;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.scene.control.Button;
@@ -25,14 +24,15 @@ public class Game extends Application {
         Scene scene = map.createMap();
     
         
-    	Pane Inventory = new Pane();
+        Inventory inventory = new Inventory();
         
-        Inventory.setMaxHeight(200);
+        /*Inventory.setMaxHeight(200);
         Inventory.setMaxWidth(200);
         
         Inventory.setStyle("-fx-background-color: blue;");
         Button btn = new Button("Inventaire ta mere");  
-        Inventory.getChildren().add(btn);
+        Inventory.getChildren().add(btn);*/
+
         
         scene.setOnKeyPressed(event -> {
             KeyCode keyCode = event.getCode();
@@ -50,15 +50,16 @@ public class Game extends Application {
                 	map.getPlayer().moveRight(map.getGridpaneObstacle(),map.getGridpaneInteract());
                     break;
                 case I:
-                	 if(map.getStackpane().getChildren().contains(Inventory))map.getStackpane().getChildren().remove(Inventory);
-                	 else map.getStackpane().getChildren().add(Inventory);
+                	 if(map.getStackpane().getChildren().contains(Inventory.getBorderPane()))map.getStackpane().getChildren().remove(Inventory.getBorderPane());
+                	 else map.getStackpane().getChildren().add(Inventory.getBorderPane());
                 	break;
                 default:
                     break;
             }
             //System.out.println("X :" + map.getPlayer().getSprite().getX() + "Y :" + map.getPlayer().getSprite().getY());
         });
-
+        
+        
         primaryStage.setTitle("LEVELONE");
         primaryStage.setResizable(false);
         primaryStage.setScene(scene);

@@ -2,6 +2,8 @@ package game.map;
 
 import java.io.IOException;
 
+import javax.script.ScriptException;
+
 import game.character.Player;
 import game.textures.Texture;
 import game.textures.Constants;
@@ -37,7 +39,7 @@ public class Map {
         gridpaneInteract.setPrefSize(width, height);
         //this.gameInfo = new GridPane();
         //gameInfo.setPrefSize(width, height);
-        this.player = new Player("clement",5,0,"res/images/perso.png");
+        this.player = new Player("clement",5,0,"file:res/images/perso.png");
         this.player.getSprite().setX(70);
         this.player.getSprite().setY(70);
         this.stackpane = new StackPane();
@@ -131,7 +133,7 @@ public class Map {
 	}
 	
 
-    public Scene createMap() throws IOException {
+    public Scene createMap() throws IOException, ScriptException {
         
 
     	System.out.println(Constants.black.getImageView().getFitWidth());
@@ -168,15 +170,15 @@ public class Map {
             }
         }
     	
-    	int heart = this.getPlayer().getHealth();
+    	//int heart = this.getPlayer().getHealth();
     	
     	/*for(int i = 0 ; i < heart ; i++) {
     		gameInfo.add(Constants.heart.getImageView(),i,0);
     	}*/
     	
     	
-    	String[][] obstacles = CsvReader.ReadFile("src/res/files/obstacles.csv");
-    	System.out.println(obstacles[0][0]);
+    	//String[][] obstacles = CsvReader.ReadFile("src/res/files/obstacles.csv");
+    
     	
     	
     	
@@ -190,15 +192,10 @@ public class Map {
     			gridpaneObstacle.add(region, row, col);
     		}
 		}
+
+    			
     	
-    	/*for(int i = 0 ; i < 22;i++) {
-    		for(int j = 0;j<38;j++) {
-    			String com = "gridpaneObstacle.add(Constants."+obstacles[i][j]+".getImageView(),"+i+","+j+");";
-    			System.out.println(com);
-    			Process process = Runtime.getRuntime().exec(com);
-    		}
-    	}
-    	gridpaneObstacle.add(Constants.topLeftCorner.getImageView(),0,0);*/
+    	//gridpaneObstacle.add(Constants.topLeftCorner.getImageView(),0,0);
     	
     	for (int col = 0; col < 22; col++) {
     		for (int row = 0; row < 38; row++) {
@@ -341,9 +338,21 @@ public class Map {
     	//ajout des monstres
     	gridpaneInteract.add(Constants.stan.getImageView(),8,2);
     	gridpaneInteract.add(Constants.stan2.getImageView(),22,15);
-
     	gridpaneInteract.add(Constants.door.getImageView(),18,3);
     	
+    	
+    	/*for(int i = 0 ; i < 38;i++) {
+    		for(int j = 0;j<22;j++) {	
+    			//String com =  "cmd /c gridpaneObstacle.add(Constants."+obstacles[i][j]+".getImageView(),"+i+","+j+");";
+    			/*String com = "cmd /c System.out.println(\"Hello, world!\");";
+    			Runtime.getRuntime().exec(com);
+    	        Image image = Constants.getImageView(obstacles[i][j]);
+    	        gridpaneObstacle.add(Constants.getImageView(image,i,j);
+    	    
+ 
+    		}
+    	}*/
+  
     	
     	//autre creation
 
