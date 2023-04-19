@@ -1,5 +1,6 @@
 package game;
 
+import game.item.Weapon;
 import game.map.Map;
 import javafx.application.Application;
 import javafx.scene.Scene;
@@ -18,7 +19,10 @@ public class Game extends Application {
     	Map map = new Map(SCENE_WIDTH, SCENE_HEIGHT);
         Scene scene = map.createMap();
   
-
+        map.getPlayer().getInventory().afficheInventory();
+        map.getPlayer().getInventory().push(new Weapon("épée"));
+        map.getPlayer().getInventory().updateBorderPane();
+        map.getPlayer().getInventory().afficheInventory();
         scene.setOnKeyPressed(event -> {
             KeyCode keyCode = event.getCode();
             switch (keyCode) {

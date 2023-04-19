@@ -1,13 +1,21 @@
 package game.inventory;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+
 import game.item.Item;
 import game.item.Potion;
 import game.item.Weapon;
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
+/*import javafx.collections.FXCollections;*/
 import javafx.scene.Scene;
 import javafx.scene.control.ListView;
-import javafx.scene.control.SelectionMode;
+import javafx.scene.image.Image;
+/*import javafx.scene.control.SelectionMode;*/
 import javafx.scene.image.ImageView;
+import javafx.scene.input.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
@@ -20,7 +28,7 @@ public class Inventory {
 	//instances de l'inventaire pour la partie graphique 
 	private Stage stage;
 	private BorderPane borderPane;
-	private Album album;
+	//private Album album;
 	private ImageView centre;
 	
 	//instances de l'inventaire pour la gestion des items
@@ -31,28 +39,18 @@ public class Inventory {
 	public Inventory() {	
 		//constructeur partie items
 		this.nbItem = 0;
-		this.item = new Item[5];
-		for(int i = 0 ; i < 5; i++) {
+		this.item = new Item[6];
+		
+		for(int i = 0 ; i < 6; i++) {
 			this.item[i] =(Item) new Weapon("");
 		}
 		
-		//this.push(new Weapon("épée"));
-		this.push(new Potion("potion"));
-		/*this.push(new Weapon("dague"));
-		this.push(new Weapon("épée"));*/
-		
 		//constructeur partie graphique
-		this.album = new Album(this);
+		/*this.album = new Album(this);*/
 		this.borderPane = new BorderPane();
 		this.borderPane.setMaxSize(600, 400);
-
-		this.borderPane.setCenter(new Pane(creerCentre()));
-					
-		ListView<String> liste = creerListe();
-		liste.setPrefWidth(150);
-		liste.setPrefHeight(400);
+		this.borderPane.setCenter(new Pane(creerCentre("manchots")));
 		
-		this.borderPane.setLeft(liste);
 		
 		this.stage = new Stage();
 		this.stage.setTitle("Album photo");
@@ -79,14 +77,16 @@ public class Inventory {
 		this.nbItem = nbItem;
 	}
 
+	/*
 	//getters setter partie graphique
 	public Album getAlbum() {
 		return album;
-	}
+	}*/
 
+	/*
 	public void setAlbum(Album album) {
 		this.album = album;
-	}
+	}*/
 
 	public ImageView getCentre() {
 		return centre;
@@ -108,13 +108,48 @@ public class Inventory {
 		return borderPane;
 	}
 	
-	public void setBorderPane(BorderPane borderPane) {
-		this.borderPane = borderPane;
+	public void updateBorderPane() {
+		String [] name_items = new String[6];
+		for(int i = 0 ; i < 6; i++) {
+			name_items[i] = this.item[i].getName();
+		}
+		
+		ObservableList<String> items = FXCollections.observableArrayList();
+		
+		items.addAll(name_items);
+		ListView<String> liste = new ListView<String>(items);
+		
+		liste.setOnMouseClicked(new EventHandler<MouseEvent>() {
+		    @Override
+		    public void handle(MouseEvent event) {
+		        String selectedItem = liste.getSelectionModel().getSelectedItem();
+		        //creerCentre(selectedItem);
+		        getBorderPane().setCenter(new Pane(creerCentre(selectedItem)));
+		        //System.out.println(selectedItem);
+		    }
+		});
+		/*
+		liste.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+		    /*Item selectedItem = item.get(liste.getSelectionModel().getSelectedIndex());
+		    String imagePath = selectedItem.getPath();
+
+		    try {
+		        Image image = new Image(new FileInputStream(imagePath));
+		        ImageView imageView = new ImageView(image);
+		        borderPane.setCenter(imageView);
+		    } catch (FileNotFoundException e) {
+		        e.printStackTrace();
+		    }
+			System.out.println(liste);
+		});*/
+		
+		this.borderPane.setLeft(liste);
+		//this.borderPane.setCenter(new Pane(creerCentre()));
 	}
 
 
-	public HBox creerCentre() {
-		this.centre = new ImageView(album.getPhotoCourante().getImage());
+	public HBox creerCentre(String imageName) {
+		this.centre = new ImageView(new Image("file:res/inventory/"+imageName+".jpg"));
 		this.centre.setFitWidth(400);
 		this.centre.setFitHeight(400);
 		HBox hb = new HBox(this.centre);
@@ -122,7 +157,7 @@ public class Inventory {
 		return hb;
 	}
 	
-	
+	/*
 	private ListView<String> creerListe() {
 
 		String[] noms = new String[this.nbItem];
@@ -140,7 +175,7 @@ public class Inventory {
 			this.centre.setFitHeight(400);
 		});
 		return liste;
-	}
+	}*/
 	
 	
 	public void push(Item item) {
