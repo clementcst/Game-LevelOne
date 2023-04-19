@@ -45,4 +45,4 @@ ui/ : le package contenant les classes pour l'interface utilisateur (menu princi
 item/ : le package contenant les classes pour les objets utilisables dans le jeu (armes, potions, etc.)
 Game.java : la classe principale qui va initialiser les différentes parties de votre jeu (la carte, les personnages, l'interface utilisateur, etc.)
 res/ : le dossier contenant les ressources (images, sons, polices, etc.) utilisées dans votre jeu
-build/ : le dossier contenant les fichiers de build (compilés) de votre jeu
+build/ : le dossier contenant les fichiers de build (compilés) de votre je
