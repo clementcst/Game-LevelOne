@@ -1,5 +1,6 @@
 package game;
 
+import game.item.Potion;
 import game.item.Weapon;
 import game.map.Map;
 import javafx.application.Application;
@@ -16,13 +17,21 @@ public class Game extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         
+    	
     	Map map = new Map(SCENE_WIDTH, SCENE_HEIGHT);
+        
+        
+        map.getPlayer().getInventory().push(new Weapon("épée"));
+        map.getPlayer().getInventory().push(new Weapon("épée"));
+        map.getPlayer().getInventory().push(new Weapon("épée"));
+        map.getPlayer().getInventory().push(new Weapon("dague"));
+        map.getPlayer().getInventory().push(new Potion("potion"));
+        map.getPlayer().getInventory().push(new Weapon("épée"));
+        
+        map.getPlayer().getInventory().push(new Weapon("dague"));
+        map.getPlayer().getInventory().afficheInventory();
         Scene scene = map.createMap();
-  
-        map.getPlayer().getInventory().afficheInventory();
-        map.getPlayer().getInventory().push(new Weapon("�p�e"));
-        map.getPlayer().getInventory().updateBorderPane();
-        map.getPlayer().getInventory().afficheInventory();
+
         scene.setOnKeyPressed(event -> {
             KeyCode keyCode = event.getCode();
             switch (keyCode) {
@@ -39,23 +48,16 @@ public class Game extends Application {
                 	map.getPlayer().moveRight(map.getGridpaneObstacle(),map.getGridpaneInteract());
                     break;
                 case I:
-                	/*if(map.getStackpane().getChildren().contains(map.getPlayer().getInventory().getBorderPane())) map.getStackpane().getChildren().remove(map.getPlayer().getInventory().getBorderPane());
-                	else map.getStackpane().getChildren().add(map.getPlayer().getInventory().getBorderPane());
-                	*/
-                	 //System.out.println(map.getPlayer().getInventory().getStage().isShowing());
-                	//if(map.getPlayer().getInventory().getStage().isShowing()) map.getPlayer().getInventory().getStage().close();
-                	//else 
                 	map.getPlayer().getInventory().getStage().show();
                 	break;
                 default:
                     break;
             }
-            System.out.println(map.getPlayer().getHealth());
+            
+        if(map.getPlayer().getHealth() == 0) System.exit(0);
             map.majGridpaneGameInfo();
-            //System.out.println("X :" + map.getPlayer().getSprite().getX() + "Y :" + map.getPlayer().getSprite().getY());
         });
         
-       
         
         primaryStage.setTitle("LEVELONE");
         primaryStage.setResizable(false);
