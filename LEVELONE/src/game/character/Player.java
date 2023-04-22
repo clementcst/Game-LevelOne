@@ -23,9 +23,7 @@ public class Player {
         this.sprite = new ImageView(image);
         this.sprite.setFitWidth(40);
         this.sprite.setFitHeight(40);
-        this.inventory = new Inventory();
-        //this.inventory.afficheInventory();
-        
+        this.inventory = new Inventory();       
     }
 
     // Getters et setters
@@ -76,29 +74,27 @@ public class Player {
 	}
 
     public void moveLeft(GridPane gridpaneObstacle,GridPane gridpaneInteract) {
-    	for(int i = 0; i < 10; i++) {
-    		getSprite().setX(getSprite().getX() - 1);
+    	//for(int i = 0; i < 10; i++) {
+    		getSprite().setX(getSprite().getX() - 10);
         	if(PlayerCollision.testCollision(this,gridpaneObstacle)) {
-        		getSprite().setX(getSprite().getX() + 1);
+        		getSprite().setX(getSprite().getX() + 10);
         	}
         	if(PlayerCollision.testCollision(this,gridpaneInteract)) {
-        		System.out.println("AIE LE PERSONNAGE DE STAN M'A FAIT MAL !");
-        		setHealth(getHealth()-1);
+        		/*System.out.println("AIE LE PERSONNAGE DE STAN M'A FAIT MAL !");*/
         	}
-    	}
+    	//}
     }
     
 	public void moveRight(GridPane gridpaneObstacle,GridPane gridpaneInteract) {
-		for(int i = 0; i < 10; i++) {
+		//for(int i = 0; i < 10; i++) {
     		getSprite().setX(getSprite().getX() + 1);
         	if(PlayerCollision.testCollision(this,gridpaneObstacle)) {
         		getSprite().setX(getSprite().getX() - 1);
         	}
         	if(PlayerCollision.testCollision(this,gridpaneInteract)) {
-        		System.out.println("AIE LE PERSONNAGE DE STAN M'A FAIT MAL !");
-        		setHealth(getHealth()-1);
+        		/*System.out.println("AIE LE PERSONNAGE DE STAN M'A FAIT MAL !");*/
         	}
-    	}
+    	//}
 	}
 	
 	public void moveTop(GridPane gridpaneObstacle,GridPane gridpaneInteract) {
@@ -108,23 +104,31 @@ public class Player {
         		getSprite().setY(getSprite().getY() + 10);
         	}
         	if(PlayerCollision.testCollision(this,gridpaneInteract)) {
-        		System.out.println("AIE LE PERSONNAGE DE STAN M'A FAIT MAL !");
-        		setHealth(getHealth()-1);
+        		//System.out.println("AIE LE PERSONNAGE DE STAN M'A FAIT MAL !");*/
+
         	}
     	//}
 	}
 	
 	public void moveBottom(GridPane gridpaneObstacle,GridPane gridpaneInteract) {
-		for(int i = 0; i < 10; i++) {
-    		getSprite().setY(getSprite().getY() + 1);
+		//for(int i = 0; i < 10; i++) {
+    		getSprite().setY(getSprite().getY() + 10);
         	if(PlayerCollision.testCollision(this,gridpaneObstacle)) {
-        		getSprite().setY(getSprite().getY() - 1);
+        		getSprite().setY(getSprite().getY() - 10);
         	}
         	if(PlayerCollision.testCollision(this,gridpaneInteract)) {
-        		System.out.println("AIE LE PERSONNAGE DE STAN M'A FAIT MAL !");
-        		setHealth(getHealth()-1);
+        		/*System.out.println("AIE LE PERSONNAGE DE STAN M'A FAIT MAL !");*/
         	}
-    	}
+    	//}
+	}
+	
+	
+	public  int[] getBlockIn() {
+		int tab[] = new int[2];
+		tab[0] =(int) (this.getSprite().getX() / 32)+1;
+		tab[1] =(int) (this.getSprite().getY() / 32)+1;
+		return tab;
+		
 	}
     
     // Actions que le joueur peut effectuer
