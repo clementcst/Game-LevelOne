@@ -1,17 +1,18 @@
 package game.map;
 
+import java.util.HashMap;
 
 import game.character.Player;
+import game.reader.CsvReader;
 import game.textures.Texture;
 import game.textures.Constants;
-import javafx.collections.ObservableList;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
+import utils.Minuteur;
 
 
 public class Map {
@@ -147,6 +148,7 @@ public class Map {
     		}
     	}
 
+    	//System.out.println(Constants.black.getImageView());
 
     	//remplissage a partir de la matrice pour le background
     	for (int row = 0; row < 38; row++) {
@@ -168,28 +170,30 @@ public class Map {
 	
 	public void InitGridpaneObstacle() {
 		
-		//String[][] obstacles = CsvReader.ReadFile("src/res/files/obstacles.csv");
-   
-    	
-    	/*for(int i = 0 ; i < 38;i++) {
-    		for(int j = 0;j<22;j++) {	
-    			String com =  "gridpaneObstacle.add(Constants."+obstacles[i][j]+".getImageView(),"+i+","+j+");";
-    			/*String com = "cmd /c System.out.println(\"Hello, world!\");";
-    			Runtime.getRuntime().exec(com);
-    	        Image image = Constants.getImageView(obstacles[i][j]);
-    	        gridpaneObstacle.add(Constants.getImageView(image,i,j);
-    			Class<?> gridpaneObstacleClass = gridpaneObstacle.getClass();
-    	        Class<?> constantsClass = Constants.class;
-    	        Method addMethod = gridpaneObstacleClass.getMethod("add", Node.class, Integer.TYPE, Integer.TYPE);
-    	        Object imageView = constantsClass.getField(obstacles[i][j]).get(null).getImageView();
-
-    	        addMethod.invoke(gridpaneInteract, imageView, 8, 2);
-    		}
-    	}*/
+		HashMap<String, ImageView> imageMap = new HashMap<>();
+		imageMap.put("topLeftCorner", Constants.topLeftCorner.getImageView());
+		imageMap.put("topRightCorner", Constants.topRightCorner.getImageView());
+		imageMap.put("bottomLeftCorner", Constants.bottomLeftCorner.getImageView());
+		imageMap.put("bottomRightCorner", Constants.bottomRightCorner.getImageView());
+		imageMap.put("topBorder", Constants.topBorder.getImageView());
+		imageMap.put("bottomBorder", Constants.bottomBorder.getImageView());
+		imageMap.put("leftBorder", Constants.leftBorder.getImageView());
+		imageMap.put("rightBorder", Constants.rightBorder.getImageView());
+		/*imageMap.put("topLeftCorner", Constants.topLeftCorner.getImageView());
+		imageMap.put("topRightCorner", Constants.topRightCorner.getImageView());
+		imageMap.put("topLeftCorner", Constants.topLeftCorner.getImageView());
+		imageMap.put("topRightCorner", Constants.topRightCorner.getImageView());
+		imageMap.put("topLeftCorner", Constants.topLeftCorner.getImageView());
+		imageMap.put("topRightCorner", Constants.topRightCorner.getImageView());
+		imageMap.put("topLeftCorner", Constants.topLeftCorner.getImageView());
+		imageMap.put("topRightCorner", Constants.topRightCorner.getImageView());*/
+		
+		
+		//objects.put("wall", Constants.wall.getImageView());//
+		// Ajoutez toutes les autres variables avec leurs noms correspondants
 
 		
-		//Creation de la gridpane  pour les obstacles
-    	for (int col = 0; col < 22; col++) {
+		for (int col = 0; col < 22; col++) {
     		for (int row = 0; row < 38; row++) {
     			Region region = new Region();
     			region.setPrefSize(32, 32);
@@ -198,19 +202,23 @@ public class Map {
     			gridpaneObstacle.add(region, row, col);
     		}
 		}
+		
+		//ClÃ©ment affichage csv en cours 
+		
+		/*String[][] obstacles = CsvReader.ReadFile("res/files/obstacles.csv");
+		
+    	for(int i = 0 ; i < 37;i++) {
+    		for(int j = 0;j<21;j++) {	
+    			if(obstacles[i][j] != null) {
+    				gridpaneObstacle.add(new ImageView(imageMap.get(obstacles[i][j]).getImage()),j+1,i+1);
+    			}
+    		}
+    	}*/
 
 
     	//gridpaneObstacle.add(Constants.topLeftCorner.getImageView(),0,0);
     	
-    	for (int col = 0; col < 22; col++) {
-    		for (int row = 0; row < 38; row++) {
-    			Region region = new Region();
-    			region.setPrefSize(32, 32);
-    			region.setMinSize(32,32);
-    			region.setMaxSize(32,32);
-    			gridpaneInteract.add(region, row, col);
-    		}
-		}
+
     	
     	//ajout des bords exterieur de la map
     	this.add2Grid(2,36,Constants.topBorder,1,"horizontale");
@@ -341,19 +349,27 @@ public class Map {
 	
 	
 	public void InitGridpaneInteract() {
+		
+		for (int col = 0; col < 22; col++) {
+    		for (int row = 0; row < 38; row++) {
+    			Region region = new Region();
+    			region.setPrefSize(32, 32);
+    			region.setMinSize(32,32);
+    			region.setMaxSize(32,32);
+    			gridpaneInteract.add(region, row, col);
+    		}
+		}
 		//ajout des monstres
     	gridpaneInteract.add(Constants.stan.getImageView(),8,2);
     	gridpaneInteract.add(Constants.stan2.getImageView(),22,15);
+    	gridpaneInteract.add(Constants.diamond.getImageView(),6,7);
+
     	
-    	ImageView door = Constants.door.getImageView();
-    	/*door.setFitHeight(64);
-    	door.setFitWidth(64);
-    	door.setStyle("-fx-padding-left:20px");*/
-    	gridpaneInteract.add(door,18,3);
 	}
 	
 
 	public void InitGridpaneGameInfo() {
+	
 		for (int col = 0; col < 22; col++) {
     		for (int row = 0; row < 38; row++) {
     			Region region = new Region();
@@ -363,35 +379,26 @@ public class Map {
     			gameInfo.add(region, row, col);
     		}
 		}
-		
-		//int heart = this.getPlayer().getHealth();
-    	
+
     	for(int i = 0 ; i < this.getPlayer().getHealth() ; i++) {
     		gameInfo.add(Constants.heart.getImageView(),i,0);
     	}
-    	
-    	/*for(int i = this.getPlayer().getHealth() ; i < 35 ; i++) {
-    		Region region = new Region();
-			region.setPrefSize(32, 32);
-			region.setMinSize(32,32);
-			region.setMaxSize(32,32);
-    		gameInfo.add(region,i,0);
-    	}*/
+    	Minuteur minuteur = new Minuteur();
+    	gameInfo.add(minuteur,36,0);
+    	GridPane.setColumnSpan(minuteur,3);
+    	minuteur.start(360);
 	}
 	
 	public void majGridpaneGameInfo()
 	{
-		
-		ObservableList<Node> children = gameInfo.getChildren();
-	    if (!children.isEmpty()) {
-	        Node lastNode = children.get(children.size() - 1);
-	        gameInfo.getChildren().remove(lastNode);
-	    }
-	    
-		System.out.println("maj des infos : "+this.getPlayer().getHealth());
-		for(int i = 0 ; i < this.getPlayer().getHealth() ; i++) {
+	
+		for(int i = 0 ; i < getPlayer().getHealth() ; i++) {
     		gameInfo.add(Constants.heart.getImageView(),i,0);
     	}
+		
+		for(int i = this.getPlayer().getHealth(); i < 15; i++) {
+			gameInfo.add(Constants.black.getImageView(),i,0);
+		}
 	}
     public Scene createMap() {
         
@@ -400,14 +407,14 @@ public class Map {
     	InitGridpaneInteract();
     	InitGridpaneGameInfo();
     
-    	//getPlayer().getInventory().push(new Weapon("épéé"));
-
+    
     	//empilement des panes
         stackpane.getChildren().add(gridpaneBackground);
         stackpane.getChildren().add(gridpaneObstacle);
         stackpane.getChildren().add(gridpaneInteract);
         stackpane.getChildren().add(pane);
         stackpane.getChildren().add(gameInfo);
+        this.getPlayer().getInventory().updateBorderPane();
         pane.getChildren().add(this.getPlayer().getSprite());
 
         return new Scene(stackpane, width, height);
