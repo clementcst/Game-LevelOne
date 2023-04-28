@@ -1,22 +1,13 @@
 package game.item;
 
+public class Potion extends AbstractItem{
+    public Potion(String name) {
+        super(name);
+    }
 
-public class Potion extends AbstractItem {
-	private String name;
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public Potion(String name) {
-		this.name = name;
-	}
-	
-	//combien de pv, quelle potion, etc
-	
-	
+    @Override
+    public String getDescription() {
+        return "oui";
+    }
 }
+

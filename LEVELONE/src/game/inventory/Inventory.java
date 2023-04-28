@@ -1,74 +1,159 @@
 package game.inventory;
 
-import game.item.Item;
-import game.item.Potion;
-import game.item.Weapon;
-import javafx.collections.FXCollections;
+import game.item.AbstractItem;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.ListView;
-import javafx.scene.control.SelectionMode;
+import javafx.scene.control.Button;
+import javafx.scene.control.Separator;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
+import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
-
 public class Inventory {
-	
-	//instances de l'inventaire pour la partie graphique 
-	private Stage stage;
-	private BorderPane borderPane;
-	private Album album;
-	private ImageView centre;
-	
-	//instances de l'inventaire pour la gestion des items
-	protected Item[] item;
-	protected int nbItem;
-	
-	
-	public Inventory() {	
-		//constructeur partie items
-		this.nbItem = 0;
-		this.item = new Item[5];
-		for(int i = 0 ; i < 5; i++) {
-			this.item[i] =(Item) new Weapon("");
-		}
-		
-		//this.push(new Weapon("épée"));
-		this.push(new Potion("potion"));
-		/*this.push(new Weapon("dague"));
-		this.push(new Weapon("épée"));*/
-		
-		//constructeur partie graphique
-		this.album = new Album(this);
-		this.borderPane = new BorderPane();
-		this.borderPane.setMaxSize(600, 400);
 
-		this.borderPane.setCenter(new Pane(creerCentre()));
-					
-		ListView<String> liste = creerListe();
-		liste.setPrefWidth(150);
-		liste.setPrefHeight(400);
-		
-		this.borderPane.setLeft(liste);
-		
-		this.stage = new Stage();
-		this.stage.setTitle("Album photo");
-		this.stage.setScene(new Scene(this.borderPane));
-		this.stage.setResizable(false);
-		this.stage.sizeToScene();
-		this.stage.initModality(Modality.APPLICATION_MODAL);
-	}
+    //instances de l'inventaire pour la partie graphique 
+    private Stage stage;
+    private BorderPane borderPane;
+    private ImageView centre;
+
+    //instances de l'inventaire pour la gestion des items
+    protected AbstractItem[] items;
+    protected int nbItem;
+
+    public Inventory() {    
+        //constructeur partie items
+        this.nbItem = 0;
+        this.items = new AbstractItem[12];
+
+        for(int i = 0 ; i < 12; i++) {
+            this.items[i] = null;
+        }
+
+        this.borderPane = new BorderPane();
+        this.borderPane.setCenter(new GridPane());
+        this.borderPane.setMaxSize(600, 400);
+        this.stage = new Stage();
+        this.stage.setTitle("Inventaire");
+        this.stage.setScene(new Scene(this.borderPane));
+        this.stage.setResizable(false);
+        this.stage.initModality(Modality.APPLICATION_MODAL);
+    }
+    
+    public void updateStageInventory() {
+    	
+    	BorderPane bp = new BorderPane();
+    	bp.setMaxSize(600, 400);
+    	bp.setStyle("-fx-padding: 5px; -fx-background-color: rgb(56,52,68);");
+    	
+    	//System.out.println("mise a jour de la gridpane inventory");
+        HBox infoPlayer = new HBox();
+        infoPlayer.setPrefHeight(50);
+        infoPlayer.setPrefWidth(500);
+        infoPlayer.setStyle("-fx-border-width: 2px; -fx-border-color: white; -fx-border-radius: 10; -fx-background-color: rgb(56,52,50);");
+        
+        Text PlayerName = new Text("PERSONNAGE");
+        PlayerName.setFont(Font.font("Nom de la police", FontWeight.BOLD, 20));
+        PlayerName.setFill(Color.YELLOW);
+        HBox.setMargin(PlayerName, new Insets(0, 0, 0, 10));
+        
+        ImageView imageView = new ImageView(new Image("file:res/images/perso.png"));
+        imageView.setFitHeight(50);
+        imageView.setFitWidth(50);
+        HBox.setMargin(imageView, new Insets(10, 10, 10, 10));
+        
+        infoPlayer.getChildren().add(imageView);
+        infoPlayer.getChildren().add(PlayerName);
+        infoPlayer.setAlignment(Pos.CENTER_LEFT);
+        BorderPane.setMargin(infoPlayer, new Insets(0, 0, 10, 0));
+
+        //Créez la grille d'items
+        GridPane gridPane = new GridPane();
+        gridPane.setPadding(new Insets(10));
+        gridPane.setHgap(10);
+        gridPane.setVgap(10);
+        gridPane.setStyle("-fx-border-width: 2px; -fx-border-color: white; -fx-border-radius: 10; -fx-background-color: rgb(56,52,50);");
+        BorderPane.setMargin(gridPane, new Insets(0, 10, 0, 0));
+
+        VBox ItemInfo = new VBox();
+        ItemInfo.setPrefSize(300, 200);
+        ItemInfo.setMaxSize(300, 200);
+        ItemInfo.setStyle("-fx-border-width: 2px; -fx-border-color: white; -fx-border-radius: 10; -fx-background-color: rgb(56,52,50);");
+
+        int row = 0;
+        int compteur = 0;
+        for(AbstractItem item : items) {	
+            if (item != null) {
+                ImageView item_view = item.getImageView();
+                item_view.setFitHeight(50);
+                item_view.setFitWidth(50);
+                StackPane itemBox = new StackPane(item_view);
+                itemBox.setStyle("-fx-border-width: 2px; -fx-border-color: white; -fx-border-radius: 10; -fx-background-color: rgb(56,52,50);");
+                
+                
+                itemBox.setOnMouseClicked(event ->{
+                    ItemInfo.getChildren().clear();
+                    Text itemName = new Text(item.getName());
+                    itemName.setFont(Font.font("Nom de la police", FontWeight.BOLD, 15));
+                    itemName.setFill(Color.WHITE);
+                    VBox.setMargin(itemName, new Insets(0, 0, 0, 10));
+                    ImageView itemView = new ImageView(item.getImageView().getImage().getUrl());
+                    Text itemDescription = new Text(item.getDescription());
+                    itemDescription.setFill(Color.WHITE);
+                    StackPane descBox = new StackPane(itemDescription);
+                    descBox.setStyle("-fx-border-width: 2px; -fx-border-color: rgb(56,52,50); -fx-border-radius: 10; -fx-background-color:  rgb(56,52,68);");
+                    VBox.setMargin(itemDescription, new Insets(0, 0, 0, 10));
+                    Button itemBtn = new Button("Use");
+                    itemBtn.setStyle("-fx-background-color: rgb(56,52,68); -fx-text-fill: white; -fx-border-color: white; -fx-border-width: 2px; -fx-border-radius: 5;");
+                    VBox.setMargin(itemBtn, new Insets(10, 0, 0, 10));
+                    itemView.setFitHeight(100);
+                    itemView.setFitWidth(100);
+                    
+                    Separator separator = new Separator();
+                    separator.setPrefWidth(ItemInfo.getWidth());
+                    separator.getStyleClass().add("-fx-border-style: solid; -fx-border-width: 0 0 1 0; -fx-border-color: white;");
+                    
+                    ItemInfo.getChildren().add(itemName);
+                    ItemInfo.getChildren().add(separator);
+                    ItemInfo.getChildren().add(itemView);
+                    ItemInfo.getChildren().add(descBox);
+                    ItemInfo.getChildren().add(itemBtn);
+                });
+                gridPane.add(itemBox, compteur%4, row);
+                compteur++;
+
+                if(compteur%4 == 0) {
+                    row++;
+                }
+            }
+
+     }
+
+        bp.setTop(infoPlayer);
+        bp.setCenter(gridPane);
+        bp.setRight(ItemInfo);
+        
+        this.borderPane=bp;
+        this.stage.setScene(new Scene(bp));;
+    }
 	
 	//getters setters partie items 
-	public Item[] getItem() {
-		return item;
+	public AbstractItem[] getItem() {
+		return items;
 	}
 
-	public void setItem(Item[] item) {
-		this.item = item;
+	public void setItem(AbstractItem[] item) {
+		this.items = item;
 	}
 
 	public int getNbItem() {
@@ -79,14 +164,6 @@ public class Inventory {
 		this.nbItem = nbItem;
 	}
 
-	//getters setter partie graphique
-	public Album getAlbum() {
-		return album;
-	}
-
-	public void setAlbum(Album album) {
-		this.album = album;
-	}
 
 	public ImageView getCentre() {
 		return centre;
@@ -108,57 +185,21 @@ public class Inventory {
 		return borderPane;
 	}
 	
-	public void setBorderPane(BorderPane borderPane) {
-		this.borderPane = borderPane;
-	}
 
-
-	public HBox creerCentre() {
-		this.centre = new ImageView(album.getPhotoCourante().getImage());
-		this.centre.setFitWidth(400);
-		this.centre.setFitHeight(400);
-		HBox hb = new HBox(this.centre);
-		hb.setPrefSize(600, 450);
-		return hb;
-	}
-	
-	
-	private ListView<String> creerListe() {
-
-		String[] noms = new String[this.nbItem];
-		for (int i = 0; i < this.nbItem; i++) {
-			noms[i] = album.getPhoto(i).getNom();
-		}
-		
-		ListView<String> liste = new ListView<>(FXCollections.observableArrayList(noms));
-		liste.getSelectionModel().select(album.getIndexCourant());
-		liste.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
-		liste.getSelectionModel().selectedItemProperty().addListener(ov -> {
-			album.setIndexCourant(liste.getSelectionModel().getSelectedIndex());
-			this.centre.setImage(album.getPhotoCourante().getImage());
-			this.centre.setFitWidth(400);
-			this.centre.setFitHeight(400);
-		});
-		return liste;
-	}
-	
-	
-	public void push(Item item) {
-		this.item[this.nbItem] = item;
+	public void push(AbstractItem item) {
+		this.items[this.nbItem] = item;
 		this.nbItem++;
-		
-		/*ListView<String> liste = creerListe();
-		liste.setPrefWidth(150);
-		liste.setPrefHeight(400);*/
-		
-		//this.borderPane.setLeft(creerListe());
+		this.updateStageInventory();
 	}
 	
 	public void afficheInventory() {
 		System.out.println("Voici le contenu de l'inventaire :");
 		for(int i = 0 ; i < this.nbItem; i++) {
-			System.out.println(item[i].getName());
+			System.out.println(items[i].getName());
 		}
 	}
 	
+	public void setBorderPane(BorderPane borderPane) {
+		this.borderPane = borderPane;
+	}
 }

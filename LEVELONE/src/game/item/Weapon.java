@@ -2,17 +2,22 @@ package game.item;
 
 
 public class Weapon extends AbstractItem{
-	private String name;
+	private int damage;
+    public Weapon(String name, int damage) {
+       super(name);
+       this.damage = damage;
+    }
 
-	public String getName() {
-		return name;
+    public int getDamage() {
+		return damage;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setDamage(int damage) {
+		this.damage = damage;
 	}
 
-	public Weapon(String name) {
-		this.name = name;
-	}
+	@Override
+    public String getDescription() {
+        return "oui";
+    }
 }
