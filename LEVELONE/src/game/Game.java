@@ -15,44 +15,51 @@ public class Game extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         
-    	Map map = new Map(SCENE_WIDTH, SCENE_HEIGHT);
+    	
+    	Map map = new Map(SCENE_WIDTH, SCENE_HEIGHT);  
         Scene scene = map.createMap();
-  
 
         scene.setOnKeyPressed(event -> {
             KeyCode keyCode = event.getCode();
-            switch (keyCode) {
-                case Z:
-                	map.getPlayer().moveTop(map.getGridpaneObstacle(),map.getGridpaneInteract());
-                    break;
-                case S:
-                	map.getPlayer().moveBottom(map.getGridpaneObstacle(),map.getGridpaneInteract());
-                    break;
-                case Q:
-                	map.getPlayer().moveLeft(map.getGridpaneObstacle(),map.getGridpaneInteract());
-                    break;
-                case D:
-                	map.getPlayer().moveRight(map.getGridpaneObstacle(),map.getGridpaneInteract());
-                    break;
-                case I:
-                	/*if(map.getStackpane().getChildren().contains(map.getPlayer().getInventory().getBorderPane())) map.getStackpane().getChildren().remove(map.getPlayer().getInventory().getBorderPane());
-                	else map.getStackpane().getChildren().add(map.getPlayer().getInventory().getBorderPane());
-                	*/
-                	 //System.out.println(map.getPlayer().getInventory().getStage().isShowing());
-                	//if(map.getPlayer().getInventory().getStage().isShowing()) map.getPlayer().getInventory().getStage().close();
-                	//else 
-                	map.getPlayer().getInventory().getStage().show();
-                	break;
-                default:
-                    break;
+            if (!map.getPlayer().isAttacking()) {
+	            switch (keyCode) {
+	                case Z:
+	                	map.getPlayer().moveTop(map.getGridpaneObstacle(),map.getGridpaneInteract());
+	                    break;
+	                case S:
+	                	map.getPlayer().moveBottom(map.getGridpaneObstacle(),map.getGridpaneInteract());
+	                    break;
+	                case Q:
+	                	map.getPlayer().moveLeft(map.getGridpaneObstacle(),map.getGridpaneInteract());
+	                    break;
+	                case D:
+	                	map.getPlayer().moveRight(map.getGridpaneObstacle(),map.getGridpaneInteract());
+	                    break;
+	                case I:
+	                	map.getPlayer().getInventory().getStage().show();
+	                	break;
+	                default:
+	                    break;
+	            }
+	            map.updateMap();
             }
-            System.out.println(map.getPlayer().getHealth());
-            map.majGridpaneGameInfo();
-            //System.out.println("X :" + map.getPlayer().getSprite().getX() + "Y :" + map.getPlayer().getSprite().getY());
+        });
+            
+        
+        scene.setOnMousePressed(event -> {	
+            if (event.isPrimaryButtonDown() && !map.getPlayer().isAttacking()) {
+                if (!map.getPlayer().getWeapon().equals(null)) {
+                	map.getPlayer().setAttacking(true);
+                    map.getPlayer().attack(map.getPlayer(), map.getGridpaneInteract(), map);
+                    map.updateMap();
+                }
+                map.getPlayer().setAttacking(false);
+            }
         });
         
+        if(map.getPlayer().getHealth() == 0) System.exit(0);
+
        
-        
         primaryStage.setTitle("LEVELONE");
         primaryStage.setResizable(false);
         primaryStage.setScene(scene);

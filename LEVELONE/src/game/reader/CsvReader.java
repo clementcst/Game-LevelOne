@@ -11,8 +11,7 @@ public class CsvReader {
         String line;
         String cvsSplitBy = ",";
 
-        // créer une matrice de 10x10
-        String[][] matrix = new String[38][22];
+        String[][] matrix = new String[22][38];
 
         try (BufferedReader br = new BufferedReader(new FileReader(FilePath))) {
 
@@ -21,13 +20,12 @@ public class CsvReader {
 
                 // utiliser la virgule comme séparateur
                 String[] values = line.split(cvsSplitBy);
+            	
+            	for(int col = 0 ; col < 38; col++) {
+            		matrix[row][col] = values[col];
+            	}
+            	row++;
 
-                // remplir la matrice avec les valeurs du fichier CSV
-                for (int col = 0; col < matrix[0].length && col < values.length; col++) {
-                    matrix[row][col] = values[col];
-                }
-
-                row++;
             }
 
         } catch (IOException e) {
