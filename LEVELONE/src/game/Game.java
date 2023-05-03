@@ -1,58 +1,84 @@
 package game;
 
+import game.item.Weapon;
 import game.map.Map;
+import javafx.animation.Animation;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 public class Game extends Application {
 
     private static final int SCENE_WIDTH = 1216;
     private static final int SCENE_HEIGHT = 704;
-
+    private Boolean use_Z = true;
+    private Boolean use_Q = true;
+    private Boolean use_S = true;
+    private Boolean use_D = true;
 
     @Override
     public void start(Stage primaryStage) throws Exception {
         
-    	Map map = new Map(SCENE_WIDTH, SCENE_HEIGHT);
+    	
+    	Map map = new Map(SCENE_WIDTH, SCENE_HEIGHT);  
         Scene scene = map.createMap();
-  
-
+        
         scene.setOnKeyPressed(event -> {
             KeyCode keyCode = event.getCode();
             switch (keyCode) {
                 case Z:
-                	map.getPlayer().moveTop(map.getGridpaneObstacle(),map.getGridpaneInteract());
-                    break;
+                	if(use_Z) {
+                		map.getPlayer().move(map.getGridpaneObstacle(),map.getGridpaneInteract(),  "Up");
+                		use_Z = false;
+                		Timeline delayTimeline = new Timeline(new KeyFrame(Duration.millis(1000), e -> use_Z = true));
+                        delayTimeline.play();
+                	}
+                	break;
                 case S:
-                	map.getPlayer().moveBottom(map.getGridpaneObstacle(),map.getGridpaneInteract());
-                    break;
+                	if(use_S) {
+                		map.getPlayer().move(map.getGridpaneObstacle(),map.getGridpaneInteract(), "Down");
+                		use_S = false;
+                		Timeline delayTimeline = new Timeline(new KeyFrame(Duration.millis(1000), e -> use_S = true));
+                        delayTimeline.play();
+                	}
+                	break;
                 case Q:
-                	map.getPlayer().moveLeft(map.getGridpaneObstacle(),map.getGridpaneInteract());
-                    break;
+                	if(use_Q) {
+                		map.getPlayer().move(map.getGridpaneObstacle(),map.getGridpaneInteract(), "Left");
+                		use_Q = false;
+                		Timeline delayTimeline = new Timeline(new KeyFrame(Duration.millis(1000), e -> use_Q = true));
+                        delayTimeline.play();
+                	}
+                	break;
                 case D:
-                	map.getPlayer().moveRight(map.getGridpaneObstacle(),map.getGridpaneInteract());
-                    break;
+                	if(use_D) {
+                		map.getPlayer().move(map.getGridpaneObstacle(),map.getGridpaneInteract(), "Right");
+                		use_D = false;
+                		Timeline delayTimeline = new Timeline(new KeyFrame(Duration.millis(1000), e -> use_D = true));
+                        delayTimeline.play();
+                	}
+                	break;
                 case I:
-                	/*if(map.getStackpane().getChildren().contains(map.getPlayer().getInventory().getBorderPane())) map.getStackpane().getChildren().remove(map.getPlayer().getInventory().getBorderPane());
-                	else map.getStackpane().getChildren().add(map.getPlayer().getInventory().getBorderPane());
-                	*/
-                	 //System.out.println(map.getPlayer().getInventory().getStage().isShowing());
-                	//if(map.getPlayer().getInventory().getStage().isShowing()) map.getPlayer().getInventory().getStage().close();
-                	//else 
                 	map.getPlayer().getInventory().getStage().show();
                 	break;
                 default:
                     break;
             }
-            System.out.println(map.getPlayer().getHealth());
-            map.majGridpaneGameInfo();
-            //System.out.println("X :" + map.getPlayer().getSprite().getX() + "Y :" + map.getPlayer().getSprite().getY());
+            map.updateMap();
         });
+            
+        //scene.setOnKeyReleased(event -> {
+        //    map.getPlayer().animatedStay(map.getGridpaneObstacle(),standing, true);
+        //    map.updateMap();
+        //});
         
+        if(map.getPlayer().getHealth() == 0) System.exit(0);
+
        
-        
         primaryStage.setTitle("LEVELONE");
         primaryStage.setResizable(false);
         primaryStage.setScene(scene);
