@@ -1,7 +1,11 @@
 package game.character;
 
 import game.item.Potion;
+import game.map.Map;
+import game.pnj.Monster;
 import game.textures.Constants;
+import javafx.application.Platform;
+import javafx.geometry.BoundingBox;
 import javafx.geometry.Bounds;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
@@ -17,6 +21,9 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 	public class PlayerCollision {
+		
+		private static boolean isOpen = false;
+		
 	
 	public static void displayActionChoice(Node node,Player player, GridPane gridpane,String name,ImageView imageView) {
 		 	Button takeButton = new Button("Take");
@@ -44,22 +51,28 @@ import javafx.stage.Stage;
 	        takeButton.setOnAction(event -> {
 	            System.out.println("Take button clicked");
 	            gridpane.getChildren().remove(node);
-		        player.getInventory().push(new Potion(name));
+		        player.getInventory().push(new Potion(name, "Description de la potion dans playercollision"));
+		        isOpen = false;
 	            dialog.close();
 	        });
 
 	        dontTakeButton.setOnAction(event -> {
 	            System.out.println("Don't take button clicked");
 	            // TODO: Implement don't take action
+	            isOpen = false;
 	            dialog.close();
 	        });
 
-	        dialog.showAndWait();
+	        //Platform.runLater(() -> dialog.showAndWait());
+	        if (isOpen == false) {
+	        	Platform.runLater(() -> dialog.show());
+	        	isOpen = true;
+	        }
 	  }
+
 	
-	
-	public static boolean testCollision(Player player,GridPane gridpane) {		
-			
+	public static boolean testCollision(Player player,GridPane gridpane,double diffX, double diffY, Map map) {		
+		
 		for (Node obstacle : gridpane.getChildren()) {
 			
 			    //Vérifier si le joueur est en collision avec l'obstacle
@@ -67,11 +80,19 @@ import javafx.stage.Stage;
 		 
 					 //creation des bounds de l'obstacle et du player our verif les collisions
 					 Bounds obstacleBounds = obstacle.getBoundsInParent();
+					 
+					 player.getSprite().setLayoutX(player.getSprite().getLayoutX()+diffX);
+					 player.getSprite().setLayoutY(player.getSprite().getLayoutY()+diffY);
+
          		     Bounds playerBounds = player.getSprite().getBoundsInParent();
+         		     
+         		     player.getSprite().setLayoutX(player.getSprite().getLayoutX()-diffX);
+					 player.getSprite().setLayoutY(player.getSprite().getLayoutY()-diffY);
 
 				    //s'il y a collision
 				    if (obstacleBounds.intersects(playerBounds)) {
-				    		
+				    	
+				    	
 				    	//recuperation de l'url de l'image dde l'obstacle 
 				    	Image obstacleImage = ((ImageView) obstacle).getImage();
 				        String obstacleImagePath = obstacleImage.getUrl();
@@ -87,9 +108,17 @@ import javafx.stage.Stage;
 
 				        break;
 				        case "pigKing.png":
-				        	System.out.println("collision detected with mob");
+				        	Monster m = (Monster) obstacle.getUserData();
+				        	System.out.println("collision detected with " + m.getName());
 				        	System.out.println("PV avant collision :"+player.getHealth());
-				        	player.setHealth(player.getHealth()-1);
+				        	player.setHealth(player.getHealth()-m.getStrength(),map);
+				        	System.out.println("PV apres collision :"+player.getHealth());
+				        break;
+				        case "pigMob.png":
+				        	Monster pigMob = (Monster) obstacle.getUserData();
+				        	System.out.println("collision detected with " + pigMob.getName());
+				        	System.out.println("PV avant collision :"+player.getHealth());
+				        	player.setHealth(player.getHealth()-pigMob.getStrength(),map);
 				        	System.out.println("PV apres collision :"+player.getHealth());
 				        break;
 				        case "potionBlue.png":
@@ -114,4 +143,32 @@ import javafx.stage.Stage;
 		}
 	
 	
-}
+	
+	public static Monster attackCollision(Player player,GridPane gridpane) {		
+		
+		for (Node ennemy : gridpane.getChildren()) {
+			
+			    //Vérifier si le joueur est en collision avec l'obstacle
+				 if (ennemy instanceof ImageView ) {
+					 //creation des bounds de l'obstacle et du player our verif les collisions
+					 Bounds obstacleBounds = ennemy.getBoundsInParent();
+         		     Bounds playerBounds = player.getSprite().getBoundsInParent();
+         		     
+         		     // on prend la zone de collision du personnage a laquelle on ajoute artificiellement 10px de chaque coté
+         		    double x = playerBounds.getMinX() - 10;
+         		    double y = playerBounds.getMinY() - 10;
+         		    double width = playerBounds.getWidth() + 20;
+         		    double height = playerBounds.getHeight() + 20;
+         		    Bounds areaBounds = new BoundingBox(x, y, width, height);
+         		     
+         		    if (obstacleBounds.intersects(areaBounds)) { 
+         		    	Monster monster = (Monster) ennemy.getUserData();
+         		    	System.out.println(monster.getName());
+         		    	return monster;
+				    }
+				 }
+			}
+		return null;
+		}
+	}
+
