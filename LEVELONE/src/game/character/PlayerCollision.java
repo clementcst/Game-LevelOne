@@ -17,6 +17,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.stage.Modality;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
@@ -75,7 +76,7 @@ import javafx.stage.Stage;
 		
 		for (Node obstacle : gridpane.getChildren()) {
 			
-			    //Vérifier si le joueur est en collision avec l'obstacle
+			    //VÃ©rifier si le joueur est en collision avec l'obstacle
 				 if (obstacle instanceof ImageView ) {
 		 
 					 //creation des bounds de l'obstacle et du player our verif les collisions
@@ -103,8 +104,8 @@ import javafx.stage.Stage;
 				        	displayActionChoice(obstacle,player,gridpane,"Diamond",Constants.diamond.getImageView());
 
 				        break;
-				        case "épée.png":   
-				        	displayActionChoice(obstacle,player,gridpane,"Épée",Constants.épée.getImageView());
+				        case "Ã©pÃ©e.png":   
+				        	displayActionChoice(obstacle,player,gridpane,"Ã‰pÃ©e",Constants.Ã©pÃ©e.getImageView());
 
 				        break;
 				        case "pigKing.png":
@@ -148,13 +149,13 @@ import javafx.stage.Stage;
 		
 		for (Node ennemy : gridpane.getChildren()) {
 			
-			    //Vérifier si le joueur est en collision avec l'obstacle
+			    //VÃ©rifier si le joueur est en collision avec l'obstacle
 				 if (ennemy instanceof ImageView ) {
 					 //creation des bounds de l'obstacle et du player our verif les collisions
 					 Bounds obstacleBounds = ennemy.getBoundsInParent();
          		     Bounds playerBounds = player.getSprite().getBoundsInParent();
          		     
-         		     // on prend la zone de collision du personnage a laquelle on ajoute artificiellement 10px de chaque coté
+         		     // on prend la zone de collision du personnage a laquelle on ajoute artificiellement 10px de chaque cotÃ©
          		    double x = playerBounds.getMinX() - 10;
          		    double y = playerBounds.getMinY() - 10;
          		    double width = playerBounds.getWidth() + 20;
