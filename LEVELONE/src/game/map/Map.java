@@ -3,6 +3,8 @@ package game.map;
 import java.util.HashMap;
 
 import game.character.Player;
+import game.item.AbstractItem;
+import game.item.Items;
 import game.pnj.Monster;
 import game.reader.CsvReader;
 import game.textures.Constants;
@@ -169,25 +171,17 @@ public class Map {
 		imageMap.put("cornerRight", Constants.cornerRight.getImageView());
 		imageMap.put("cornerLeftBottom", Constants.cornerLeftBottom.getImageView());
 		imageMap.put("cornerRightBottom", Constants.cornerRightBottom.getImageView());
-
-		
-		//gridpane Interact 
-		imageMap.put("pigKing", Constants.stan.getImageView());
-		imageMap.put("potionBlue", Constants.potionBlue.getImageView());
-		imageMap.put("potionRed", Constants.potionRed.getImageView());
-		imageMap.put("key", Constants.key.getImageView());
-		imageMap.put("diamond", Constants.diamond.getImageView());
 		
 		imageMap.put("door1", Constants.door1.getImageView());
 		imageMap.put("door2", Constants.door2.getImageView());
 		imageMap.put("door3", Constants.door3.getImageView());
 		imageMap.put("door4", Constants.door4.getImageView());
-		
+
 		imageMap.put("doorOpen1", Constants.doorOpen1.getImageView());
 		imageMap.put("doorOpen2", Constants.doorOpen2.getImageView());
 		imageMap.put("doorOpen3", Constants.doorOpen3.getImageView());
 		imageMap.put("doorOpen4", Constants.doorOpen4.getImageView());
-		
+
 		//objects.put("wall", Constants.wall.getImageView());//
 		// Ajoutez toutes les autres variables avec leurs noms correspondants
 
@@ -206,17 +200,41 @@ public class Map {
 		
     	for(int i = 0 ; i < 38;i++) {
     		for(int j = 0;j<22;j++) {
-    			if(matrix[j][i].equals("pigKing")) {
-    				 Monster M = new Monster("stan", 4, 2, false, Constants.stan);
-    				 gridpane.add(M.getImageView(),i,j);
-    			}else {
-    				if(!matrix[j][i].equals("nothing")) {
-            			gridpane.add(new ImageView(imageMap.get(matrix[j][i]).getImage()),i,j);
-        			}
+    			
+    			switch(matrix[j][i]) {
+    				case "pigKing" :
+    					Items drop = new Items("key", "Ouvre porte");
+    					Monster M = new Monster("stan", 4, 2, false, Constants.stan, (AbstractItem) drop);
+    					gridpane.add(M.getImageView(),i,j);
+    					break;
+    				case "pigMob" :
+    					Items drop_pigMob = new Items("diamond", "Argent");
+    					Monster pigMob = new Monster("pigMob", 2, 1, false, Constants.stan2, (AbstractItem) drop_pigMob);
+    					gridpane.add(pigMob.getImageView(),i,j);
+    					break;
+    				case "potionRed" :
+    					Items R = new Items("potionRed", "Se boit. Rouge");
+    					gridpane.add(R.getImageView(),i,j);
+    					break;
+    				case "potionBlue" :
+    					Items B = new Items("potionBlue", "Se boit. Bleue");
+    					gridpane.add(B.getImageView(),i,j);
+    					break;
+    				case "key" :
+    					Items K = new Items("key", "Permet d'ouvrir une porte");
+    					gridpane.add(K.getImageView(),i,j);
+    					break;
+    				case "diamond" :
+    					Items D = new Items("diamond", "Argent");
+    					gridpane.add(D.getImageView(),i,j);
+    					break;
+    				case "nothing" :
+    					break;
+    				default :
+    					gridpane.add(new ImageView(imageMap.get(matrix[j][i]).getImage()),i,j);
     			}
     		}
     	}
-    	
 	}
 
 	
@@ -244,7 +262,8 @@ public class Map {
     		}
 		}
 		majLife();
-
+		
+    	
     	Minuteur minuteur = new Minuteur();
     	gameInfo.add(minuteur,36,0);
     	GridPane.setColumnSpan(minuteur,3);
@@ -260,6 +279,15 @@ public class Map {
     	InitGridpane("pnj",this.gridpanePnj);
     	InitGridpaneGameInfo();
     	
+    	/*for (int col = 0; col < 38; col++) {
+    		for (int row = 0; row < 22; row++) {
+    			Region region = new Region();
+    			region.setPrefSize(32, 32);
+    			region.setMinSize(32,32);
+    			region.setMaxSize(32,32);
+    			pane.add(region, col, row);
+    		}
+		}*/
     	
     
     	//empilement des panes
@@ -280,7 +308,7 @@ public class Map {
     	System.out.println("Position du personnage : {"+getPlayer().getX()+";"+getPlayer().getY()+"}");
     	System.out.println("PV :"+getPlayer().getHealth());
     	
-    	majLife();
+    	//majLife();
     }
 
 	

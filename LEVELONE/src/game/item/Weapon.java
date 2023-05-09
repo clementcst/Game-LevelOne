@@ -3,8 +3,8 @@ package game.item;
 
 public class Weapon extends AbstractItem{
 	private int damage;
-    public Weapon(String name, int damage) {
-       super(name);
+    public Weapon(String name, int damage, String description) {
+       super(name, description);
        this.damage = damage;
     }
 

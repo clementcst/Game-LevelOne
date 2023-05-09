@@ -5,15 +5,16 @@ import javafx.scene.image.ImageView;
 
 public abstract class AbstractItem{
 	protected String name;
-	protected  String description;
-	protected  ImageView imageView;
+	protected String description;
+	protected ImageView imageView;
 	
-	public AbstractItem(String name) {
+	public AbstractItem(String name, String description) {
 		this.name = name;
-		this.description ="";
+		this.description = description;
 		this.imageView = new ImageView(new Image("file:res/images/"+name+".png"));
-		this.imageView.setFitHeight(32);
-		this.imageView.setFitWidth(32);
+		this.imageView.setFitHeight(16);
+		this.imageView.setFitWidth(16);
+		this.imageView.setUserData(this);
 	}
 	
 	public String getName() {
