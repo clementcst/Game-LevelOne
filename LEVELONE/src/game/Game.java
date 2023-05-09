@@ -36,6 +36,7 @@ public class Game extends Application {
                 	map.getPlayer().getAnimationRight().play();
                 	break;
                 case I:
+                    map.getPlayer().getInventory().updateStageInventory(map.getPlayer());
                 	map.getPlayer().getInventory().getStage().show();
                 	break;
                 default:
