@@ -29,20 +29,11 @@ public class Constants {
 			public static final Texture cornerLeftBottom = new Texture("cornerLeftBottom.png");
 			
 			public static final Texture block = new Texture("block.png");
+			public static final Texture door = new Texture("door.png");
 			public static final Texture fullHeart = new Texture("fullHeart.png");
 			public static final Texture semiHeart = new Texture("semiHeart.png");
 			public static final Texture emptyHeart = new Texture("emptyHeart.png");
 			public static final Texture transparent = new Texture("transparent.png");
-			
-			public static final Texture doorOpen1 = new Texture("doorOpen1.png");
-			public static final Texture doorOpen2 = new Texture("doorOpen2.png");
-			public static final Texture doorOpen3 = new Texture("doorOpen3.png");
-			public static final Texture doorOpen4 = new Texture("doorOpen4.png");
-			
-			public static final Texture door1 = new Texture("door1.png");
-			public static final Texture door2 = new Texture("door2.png");
-			public static final Texture door3 = new Texture("door3.png");
-			public static final Texture door4 = new Texture("door4.png");
 			
 			//obj ramassable
 			public static final Texture diamond = new Texture("diamond.png",25,25);
@@ -51,6 +42,7 @@ public class Constants {
 			public static final Texture potionBlue = new Texture("potionBlue.png",18,22);
 			public static final Texture potionRed = new Texture("potionRed.png",18,22);
 			public static final Texture key= new Texture("key.png",18,22);
+
 			
 			//ennemy
 			public static final Texture stan = new Texture("pigKing.png");

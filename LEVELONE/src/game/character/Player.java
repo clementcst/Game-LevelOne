@@ -49,7 +49,7 @@ public class Player {
         this.x = 70;
         this.y = 70;
         this.inventory = new Inventory();
-        this.weapon = new Weapon("épée basique", 1);   
+        this.weapon = new Weapon("épée basique", 1, "Permet de taper");   
     }
 
     // Getters et setters
@@ -98,8 +98,9 @@ public class Player {
         return health;
     }
 
-    public void setHealth(int health) {
+    public void setHealth(int health, Map map) {
         this.health = health;
+        map.majLife();
     }
 
     public int getMoney() {
@@ -172,9 +173,10 @@ public class Player {
 			m.setHealth(m.getHealth() - this.getWeapon().getDamage());
 			System.out.println("PV:"+m.getHealth());
 			if(m.getHealth()<=0) { //Si le monstre n'a plus de vie, on le supprime
-				map.getGridpanePnj().getChildren().remove(m.getImageView());
-				//map.getGridpanePnj().add(new ImageView(new Image("file:res/images/diamond.png")),5, 5);
-			}else { 
+				m.drop(map);
+//				map.getGridpanePnj().getChildren().remove(m.getImageView());
+				//map.getGridpanePnj().add(new ImageView(new Image("file:res/images/diamond.png")),4,7);
+			}else {
 				Timeline timeline = new Timeline(new KeyFrame(Duration.millis(200), event -> {
 				    m.getImageView().setVisible(!m.getImageView().isVisible());
 				}));

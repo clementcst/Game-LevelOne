@@ -1,6 +1,7 @@
 package game.character;
 
 import game.item.Potion;
+import game.map.Map;
 import game.pnj.Monster;
 import game.textures.Constants;
 import javafx.application.Platform;
@@ -17,7 +18,6 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 	public class PlayerCollision {
@@ -27,29 +27,16 @@ import javafx.stage.Stage;
 	
 	public static void displayActionChoice(Node node,Player player, GridPane gridpane,String name,ImageView imageView) {
 		 	Button takeButton = new Button("Take");
-		 	takeButton.setStyle("-fx-background-color: rgb(56,52,68); -fx-text-fill: white; -fx-border-color: white; -fx-border-width: 2px; -fx-border-radius: 5;");
-		 	
-		 	Button dontTakeButton = new Button("Don't Take");
-		 	dontTakeButton.setStyle("-fx-background-color: rgb(56,52,68); -fx-text-fill: white; -fx-border-color: white; -fx-border-width: 2px; -fx-border-radius: 5;");
+	        Button dontTakeButton = new Button("Don't Take");
 
 	        BorderPane borderPane = new BorderPane();
-	        //borderPane.setMaxSize(600, 400);
-	        borderPane.setStyle("-fx-padding: 5px; -fx-background-color: rgb(56,52,68);");
 
 	        VBox vBox = new VBox(10);
-	        vBox.setStyle("-fx-border-width: 2px; -fx-border-color: white; -fx-border-radius: 10; -fx-background-color: rgb(56,52,50);");
 	        vBox.setAlignment(Pos.CENTER);
-	        
-	        Label itm_name = new Label(name);
-	        itm_name.setStyle("-fx-text-fill: white; -fx-margin-bottom: 10px;");
-	        
-	        HBox hBox = new HBox(10, takeButton, dontTakeButton);
-	        hBox.setAlignment(Pos.CENTER);
-	        
 	        vBox.getChildren().addAll(
-	        		itm_name,
+	                new Label(name),
 	                imageView,
-	                hBox
+	                new HBox(10, takeButton, dontTakeButton)
 	        );
 
 	        borderPane.setCenter(vBox);
@@ -60,16 +47,11 @@ import javafx.stage.Stage;
 	        dialog.setScene(dialogScene);
 	        dialog.setTitle("Pick Up Items Decision");
 
-	        dialog.setOnCloseRequest(event -> {
-	        	//Ferme la Stage dialog quand on clique sur la croix rouge
-	        	isOpen = false;
-	        	dialog.close();
-	        });
 
 	        takeButton.setOnAction(event -> {
 	            System.out.println("Take button clicked");
 	            gridpane.getChildren().remove(node);
-		        player.getInventory().push(new Potion(name),player);
+		        player.getInventory().push(new Potion(name, "Description de la potion dans playercollision"));
 		        isOpen = false;
 	            dialog.close();
 	        });
@@ -83,14 +65,13 @@ import javafx.stage.Stage;
 
 	        //Platform.runLater(() -> dialog.showAndWait());
 	        if (isOpen == false) {
-	        	dialog.initModality(Modality.APPLICATION_MODAL);
-	        	Platform.runLater(() -> dialog.showAndWait());
+	        	Platform.runLater(() -> dialog.show());
 	        	isOpen = true;
 	        }
 	  }
 
 	
-	public static boolean testCollision(Player player,GridPane gridpane,double diffX, double diffY) {		
+	public static boolean testCollision(Player player,GridPane gridpane,double diffX, double diffY, Map map) {		
 		
 		for (Node obstacle : gridpane.getChildren()) {
 			
@@ -127,9 +108,17 @@ import javafx.stage.Stage;
 
 				        break;
 				        case "pigKing.png":
-				        	System.out.println("collision detected with mob");
+				        	Monster m = (Monster) obstacle.getUserData();
+				        	System.out.println("collision detected with " + m.getName());
 				        	System.out.println("PV avant collision :"+player.getHealth());
-				        	player.setHealth(player.getHealth()-1);
+				        	player.setHealth(player.getHealth()-m.getStrength(),map);
+				        	System.out.println("PV apres collision :"+player.getHealth());
+				        break;
+				        case "pigMob.png":
+				        	Monster pigMob = (Monster) obstacle.getUserData();
+				        	System.out.println("collision detected with " + pigMob.getName());
+				        	System.out.println("PV avant collision :"+player.getHealth());
+				        	player.setHealth(player.getHealth()-pigMob.getStrength(),map);
 				        	System.out.println("PV apres collision :"+player.getHealth());
 				        break;
 				        case "potionBlue.png":

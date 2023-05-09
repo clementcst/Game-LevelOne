@@ -25,7 +25,6 @@ public class Game extends Application {
             switch (keyCode) {
                 case Z:
                 	map.getPlayer().getAnimationUp().play();
-                	
                 	break;
                 case S:
                 	map.getPlayer().getAnimationDown().play();
@@ -37,7 +36,6 @@ public class Game extends Application {
                 	map.getPlayer().getAnimationRight().play();
                 	break;
                 case I:
-                	map.getPlayer().getInventory().updateStageInventory(map.getPlayer());
                 	map.getPlayer().getInventory().getStage().show();
                 	break;
                 default:
@@ -83,7 +81,7 @@ public class Game extends Application {
             }
         });
         
-        //if(map.getPlayer().getHealth() == 0) System.exit(0);
+        if(map.getPlayer().getHealth() == 0) System.exit(0);
 
        
         primaryStage.setTitle("LEVELONE");

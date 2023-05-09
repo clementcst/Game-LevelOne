@@ -1,6 +1,5 @@
 package game.inventory;
 
-import game.character.Player;
 import game.item.AbstractItem;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -51,12 +50,10 @@ public class Inventory {
         this.stage.initModality(Modality.APPLICATION_MODAL);
     }
     
-    public void updateStageInventory(Player player) {
+    public void updateStageInventory() {
     	
     	BorderPane bp = new BorderPane();
-    	bp.setPrefSize(600, 300);
-    	bp.setMaxSize(600, 300);
-    	bp.setMinSize(600, 300);
+    	bp.setMaxSize(600, 400);
     	bp.setStyle("-fx-padding: 5px; -fx-background-color: rgb(56,52,68);");
     	
     	//System.out.println("mise a jour de la gridpane inventory");
@@ -101,7 +98,7 @@ public class Inventory {
                 item_view.setFitHeight(50);
                 item_view.setFitWidth(50);
                 StackPane itemBox = new StackPane(item_view);
-                itemBox.setStyle("-fx-border-width: 2px;-fx-border-color: white; -fx-border-radius: 10; -fx-background-color: rgb(56,52,50);");
+                itemBox.setStyle("-fx-border-width: 2px; -fx-border-color: white; -fx-border-radius: 10; -fx-background-color: rgb(56,52,50);");
                 
                 
                 itemBox.setOnMouseClicked(event ->{
@@ -116,19 +113,9 @@ public class Inventory {
                     StackPane descBox = new StackPane(itemDescription);
                     descBox.setStyle("-fx-border-width: 2px; -fx-border-color: rgb(56,52,50); -fx-border-radius: 10; -fx-background-color:  rgb(56,52,68);");
                     VBox.setMargin(itemDescription, new Insets(0, 0, 0, 10));
-                    UseButtonInventory itemBtn = new UseButtonInventory(item.getName(),"Use");
+                    Button itemBtn = new Button("Use");
                     itemBtn.setStyle("-fx-background-color: rgb(56,52,68); -fx-text-fill: white; -fx-border-color: white; -fx-border-width: 2px; -fx-border-radius: 5;");
-         
                     VBox.setMargin(itemBtn, new Insets(10, 0, 0, 10));
-                    
-                    itemBtn.setOnAction(e -> {
-                    	System.out.println("ON EST LA TA RACEEEE");
-                        itemBtn.pushButton(player);
-                        this.remove(item, player);
-                        
-                    });
-                    
-                    
                     itemView.setFitHeight(100);
                     itemView.setFitWidth(100);
                     
@@ -199,25 +186,10 @@ public class Inventory {
 	}
 	
 
-	public void push(AbstractItem item,Player player) {
+	public void push(AbstractItem item) {
 		this.items[this.nbItem] = item;
 		this.nbItem++;
-	}
-	
-	public void remove(AbstractItem item,Player player) {
-		
-		int compteur = 0;
-		
-		for(AbstractItem itemIn : this.items) {
-			if (itemIn == item) {
-				for(int i = compteur; i < this.getNbItem();i++) {
-					this.getItem()[i] = this.getItem()[i+1];
-				}
-			}
-			compteur++;
-		}
-		this.nbItem--;;
-		this.updateStageInventory(player);
+		this.updateStageInventory();
 	}
 	
 	public void afficheInventory() {

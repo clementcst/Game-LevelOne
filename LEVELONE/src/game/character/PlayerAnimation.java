@@ -26,11 +26,11 @@ public class PlayerAnimation {
 			    			
 			    			boolean collision = false;
 			    			
-			    			if(PlayerCollision.testCollision(map.getPlayer(), map.getGridpaneObstacle(),5,0)) {
+			    			if(PlayerCollision.testCollision(map.getPlayer(), map.getGridpaneObstacle(),5,0, map)) {
 			    				collision=true;
 			    			}
 			    		
-			    			if(PlayerCollision.testCollision(map.getPlayer(), map.getGridpaneInteract(),5,0)) {
+			    			if(PlayerCollision.testCollision(map.getPlayer(), map.getGridpaneInteract(),5,0, map)) {
 			    				System.out.println("ON A TAPPE UN PTN D OBJECT INTERACT");
 			    				collision=true;
 			    				player.getAnimationDown().stop();
@@ -39,7 +39,7 @@ public class PlayerAnimation {
 			    				player.getAnimationRight().stop();
 			    			}
 			    			
-			    			if(PlayerCollision.testCollision(map.getPlayer(), map.getGridpanePnj(),5,0)) {
+			    			if(PlayerCollision.testCollision(map.getPlayer(), map.getGridpanePnj(),5,0, map)) {
 			    				collision=true;
 			    			}
 			    			
@@ -68,11 +68,11 @@ public class PlayerAnimation {
 			    			
 			    			boolean collision = false;
 			    			
-			    			if(PlayerCollision.testCollision(map.getPlayer(), map.getGridpaneObstacle(),-5,0)) {
+			    			if(PlayerCollision.testCollision(map.getPlayer(), map.getGridpaneObstacle(),-5,0, map)) {
 			    				collision=true;
 			    			}
 			    		
-			    			if(PlayerCollision.testCollision(map.getPlayer(), map.getGridpaneInteract(),-5,0)) {
+			    			if(PlayerCollision.testCollision(map.getPlayer(), map.getGridpaneInteract(),-5,0, map)) {
 			    				collision=true;
 			    				player.getAnimationDown().stop();
 			    				player.getAnimationUp().stop();
@@ -80,7 +80,7 @@ public class PlayerAnimation {
 			    				player.getAnimationRight().stop();
 			    			}
 			    			
-			    			if(PlayerCollision.testCollision(map.getPlayer(), map.getGridpanePnj(),-5,0)) {
+			    			if(PlayerCollision.testCollision(map.getPlayer(), map.getGridpanePnj(),-5,0, map)) {
 			    				collision=true;
 			    			}
 			    			
@@ -108,11 +108,11 @@ public class PlayerAnimation {
 			    			
 			    			boolean collision = false;
 			    			
-			    			if(PlayerCollision.testCollision(map.getPlayer(), map.getGridpaneObstacle(),0,-5)) {
+			    			if(PlayerCollision.testCollision(map.getPlayer(), map.getGridpaneObstacle(),0,-5, map)) {
 			    				collision=true;
 			    			}
 			    		
-			    			if(PlayerCollision.testCollision(map.getPlayer(), map.getGridpaneInteract(),0,-5)) {
+			    			if(PlayerCollision.testCollision(map.getPlayer(), map.getGridpaneInteract(),0,-5, map)) {
 			    				collision=true;
 			    				player.getAnimationDown().stop();
 			    				player.getAnimationUp().stop();
@@ -120,7 +120,7 @@ public class PlayerAnimation {
 			    				player.getAnimationRight().stop();
 			    			}
 			    			
-			    			if(PlayerCollision.testCollision(map.getPlayer(), map.getGridpanePnj(),0,-5)) {
+			    			if(PlayerCollision.testCollision(map.getPlayer(), map.getGridpanePnj(),0,-5, map)) {
 			    				collision=true;
 			    			}
 			    			
@@ -148,11 +148,11 @@ public class PlayerAnimation {
 			    			
 			    			boolean collision = false;
 			    			
-			    			if(PlayerCollision.testCollision(map.getPlayer(), map.getGridpaneObstacle(),0,5)) {
+			    			if(PlayerCollision.testCollision(map.getPlayer(), map.getGridpaneObstacle(),0,5, map)) {
 			    				collision=true;
 			    			}
 			    		
-			    			if(PlayerCollision.testCollision(map.getPlayer(), map.getGridpaneInteract(),0,5)) {
+			    			if(PlayerCollision.testCollision(map.getPlayer(), map.getGridpaneInteract(),0,5, map)) {
 			    				collision=true;
 			    				System.out.println("ON A TAPPE UN PTN D OBJECT INTERACT");
 			    				player.getAnimationDown().stop();
@@ -161,7 +161,7 @@ public class PlayerAnimation {
 			    				player.getAnimationRight().stop();
 			    			}
 			    			
-			    			if(PlayerCollision.testCollision(map.getPlayer(), map.getGridpanePnj(),0,5)) {
+			    			if(PlayerCollision.testCollision(map.getPlayer(), map.getGridpanePnj(),0,5, map)) {
 			    				collision=true;
 			    			}
 			    			
