@@ -171,6 +171,16 @@ public class Map {
 		imageMap.put("cornerRight", Constants.cornerRight.getImageView());
 		imageMap.put("cornerLeftBottom", Constants.cornerLeftBottom.getImageView());
 		imageMap.put("cornerRightBottom", Constants.cornerRightBottom.getImageView());
+		
+		imageMap.put("door1", Constants.door1.getImageView());
+		imageMap.put("door2", Constants.door2.getImageView());
+		imageMap.put("door3", Constants.door3.getImageView());
+		imageMap.put("door4", Constants.door4.getImageView());
+
+		imageMap.put("doorOpen1", Constants.doorOpen1.getImageView());
+		imageMap.put("doorOpen2", Constants.doorOpen2.getImageView());
+		imageMap.put("doorOpen3", Constants.doorOpen3.getImageView());
+		imageMap.put("doorOpen4", Constants.doorOpen4.getImageView());
 
 		//objects.put("wall", Constants.wall.getImageView());//
 		// Ajoutez toutes les autres variables avec leurs noms correspondants
