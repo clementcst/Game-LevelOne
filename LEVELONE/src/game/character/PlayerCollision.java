@@ -17,6 +17,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 	public class PlayerCollision {
@@ -29,13 +30,23 @@ import javafx.stage.Stage;
 	        Button dontTakeButton = new Button("Don't Take");
 
 	        BorderPane borderPane = new BorderPane();
+	        //borderPane.setMaxSize(600, 400);
+	        borderPane.setStyle("-fx-padding: 5px; -fx-background-color: rgb(56,52,68);");
 
 	        VBox vBox = new VBox(10);
+	        vBox.setStyle("-fx-border-width: 2px; -fx-border-color: white; -fx-border-radius: 10; -fx-background-color: rgb(56,52,50);");
 	        vBox.setAlignment(Pos.CENTER);
+	        
+	        Label itm_name = new Label(name);
+	        itm_name.setStyle("-fx-text-fill: white; -fx-margin-bottom: 10px;");
+	        
+	        HBox hBox = new HBox(10, takeButton, dontTakeButton);
+	        hBox.setAlignment(Pos.CENTER);
+	        
 	        vBox.getChildren().addAll(
-	                new Label(name),
+	        		itm_name,
 	                imageView,
-	                new HBox(10, takeButton, dontTakeButton)
+	                hBox
 	        );
 
 	        borderPane.setCenter(vBox);
@@ -46,6 +57,11 @@ import javafx.stage.Stage;
 	        dialog.setScene(dialogScene);
 	        dialog.setTitle("Pick Up Items Decision");
 
+	        dialog.setOnCloseRequest(event -> {
+	        	//Ferme la Stage dialog quand on clique sur la croix rouge
+	        	isOpen = false;
+	        	dialog.close();
+	        });
 
 	        takeButton.setOnAction(event -> {
 	            System.out.println("Take button clicked");
@@ -64,7 +80,8 @@ import javafx.stage.Stage;
 
 	        //Platform.runLater(() -> dialog.showAndWait());
 	        if (isOpen == false) {
-	        	Platform.runLater(() -> dialog.show());
+	        	dialog.initModality(Modality.APPLICATION_MODAL);
+	        	Platform.runLater(() -> dialog.showAndWait());
 	        	isOpen = true;
 	        }
 	  }
@@ -74,7 +91,7 @@ import javafx.stage.Stage;
 		
 		for (Node obstacle : gridpane.getChildren()) {
 			
-			    //Vérifier si le joueur est en collision avec l'obstacle
+			    //VÃ©rifier si le joueur est en collision avec l'obstacle
 				 if (obstacle instanceof ImageView ) {
 		 
 					 //creation des bounds de l'obstacle et du player our verif les collisions
@@ -102,8 +119,8 @@ import javafx.stage.Stage;
 				        	displayActionChoice(obstacle,player,gridpane,"Diamond",Constants.diamond.getImageView());
 
 				        break;
-				        case "épée.png":   
-				        	displayActionChoice(obstacle,player,gridpane,"Épée",Constants.épée.getImageView());
+				        case "Ã©pÃ©e.png":   
+				        	displayActionChoice(obstacle,player,gridpane,"Ã‰pÃ©e",Constants.Ã©pÃ©e.getImageView());
 
 				        break;
 				        case "pigKing.png":
@@ -139,13 +156,13 @@ import javafx.stage.Stage;
 		
 		for (Node ennemy : gridpane.getChildren()) {
 			
-			    //Vérifier si le joueur est en collision avec l'obstacle
+			    //VÃ©rifier si le joueur est en collision avec l'obstacle
 				 if (ennemy instanceof ImageView ) {
 					 //creation des bounds de l'obstacle et du player our verif les collisions
 					 Bounds obstacleBounds = ennemy.getBoundsInParent();
          		     Bounds playerBounds = player.getSprite().getBoundsInParent();
          		     
-         		     // on prend la zone de collision du personnage a laquelle on ajoute artificiellement 10px de chaque coté
+         		     // on prend la zone de collision du personnage a laquelle on ajoute artificiellement 10px de chaque cotÃ©
          		    double x = playerBounds.getMinX() - 10;
          		    double y = playerBounds.getMinY() - 10;
          		    double width = playerBounds.getWidth() + 20;
