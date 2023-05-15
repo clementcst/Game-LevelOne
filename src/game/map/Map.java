@@ -183,6 +183,8 @@ public class Map {
 		imageMap.put("doorOpen2", Constants.doorOpen2.getImageView());
 		imageMap.put("doorOpen3", Constants.doorOpen3.getImageView());
 		imageMap.put("doorOpen4", Constants.doorOpen4.getImageView());
+		
+		imageMap.put("flag", Constants.flag.getImageView());
 
 		//objects.put("wall", Constants.wall.getImageView());//
 		// Ajoutez toutes les autres variables avec leurs noms correspondants
@@ -269,7 +271,7 @@ public class Map {
     	Minuteur minuteur = new Minuteur();
     	gameInfo.add(minuteur,36,0);
     	GridPane.setColumnSpan(minuteur,3);
-    	minuteur.start(360);
+    	minuteur.start(100);
 	}
 	
 	
