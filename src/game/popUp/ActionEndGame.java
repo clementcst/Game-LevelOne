@@ -1,14 +1,13 @@
 package game.popUp;
 
-import game.character.Player;
+import game.Game;
+import game.PrimaryStageHolder;
 import javafx.application.Platform;
 import javafx.geometry.Pos;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
@@ -19,7 +18,7 @@ public class ActionEndGame {
 	private static boolean isOpen = false;
 	
 	
-	public static void displayEndGame(Node node,Player player, GridPane gridpane) {
+	public static void displayEndGame(Boolean victory) {
 	 	Button restartGame = new Button("Restart");
 	 	restartGame.setStyle("-fx-background-color: rgb(56,52,68); -fx-text-fill: white; -fx-border-color: white; -fx-border-width: 2px; -fx-border-radius: 5;");
 	 	
@@ -34,16 +33,25 @@ public class ActionEndGame {
         vBox.setStyle("-fx-border-width: 2px; -fx-border-color: white; -fx-border-radius: 10; -fx-background-color: rgb(56,52,50);");
         vBox.setAlignment(Pos.CENTER);
         
-        Label itm_name = new Label("Bravo, vous avez gagné");
-        itm_name.setStyle("-fx-text-fill: white; -fx-margin-bottom: 10px;");
-        
         HBox hBox = new HBox(10, restartGame, exitGame);
         hBox.setAlignment(Pos.CENTER);
         
-        vBox.getChildren().addAll(
-        		itm_name,
-                hBox
-        );
+        if(victory) {
+        	Label end_message = new Label("Bravo, vous avez gagnÃ© !");
+        	end_message.setStyle("-fx-text-fill: white; -fx-margin-bottom: 10px;");
+        	vBox.getChildren().addAll(
+            		end_message,
+                    hBox
+            );
+        }
+        else {
+        	Label end_message = new Label("Dommage, vous avez perdu.");
+        	end_message.setStyle("-fx-text-fill: white; -fx-margin-bottom: 10px;");
+        	vBox.getChildren().addAll(
+            		end_message,
+                    hBox
+            );
+        }
 
         borderPane.setCenter(vBox);
 
@@ -51,7 +59,7 @@ public class ActionEndGame {
 
         Stage dialog = new Stage();
         dialog.setScene(dialogScene);
-        dialog.setTitle("Pick Up Items Decision");
+        dialog.setTitle("Fin de partie !");
 
         dialog.setOnCloseRequest(event -> {
         	//Ferme la Stage dialog quand on clique sur la croix rouge
@@ -62,11 +70,22 @@ public class ActionEndGame {
         restartGame.setOnAction(event -> {
             System.out.println("Restart game");
             dialog.close();
+            Stage actualStage = PrimaryStageHolder.getPrimaryStage();
+            try {
+            	actualStage.close();
+            	isOpen = false;
+				Game newGame = new Game();
+				Stage newPrimaryStage = new Stage();
+				newGame.start(newPrimaryStage);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
         });
 
         exitGame.setOnAction(event -> {
             System.out.println("Exit game");
-            Platform.exit();
+            System.exit(0);
         });
 
         //Platform.runLater(() -> dialog.showAndWait());
