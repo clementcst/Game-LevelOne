@@ -2,8 +2,12 @@ package game;
 
 
 import game.map.Map;
+import game.pnj.Monster;
 import javafx.application.Application;
+import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.stage.Stage;
 
@@ -18,6 +22,17 @@ public class Game extends Application {
  
     	Map map = new Map(SCENE_WIDTH, SCENE_HEIGHT);  
         Scene scene = map.createMap();
+        for (Node obstacle : map.getGridpanePnj().getChildren()) {        	
+        	if (obstacle instanceof ImageView ) {
+        		Image obstacleImage = ((ImageView) obstacle).getImage();
+		        String obstacleImagePath = obstacleImage.getUrl();
+        		if(obstacleImagePath.substring(16).equals("pigKing.png")) {
+        			Monster m = (Monster) obstacle.getUserData();
+        			m.getRandomM().play();
+        			m.playerInVision(map);
+        		}
+        	}
+        }
 
         
         scene.setOnKeyPressed(event -> {
