@@ -36,7 +36,7 @@ import javafx.stage.Stage;
 		
 		for (Node obstacle : gridpane.getChildren()) {
 			
-			    //Vérifier si le joueur est en collision avec l'obstacle
+			    //VÃ©rifier si le joueur est en collision avec l'obstacle
 				 if (obstacle instanceof ImageView ) {
 		 
 					 //creation des bounds de l'obstacle et du player our verif les collisions
@@ -64,8 +64,8 @@ import javafx.stage.Stage;
 				        	ActionChoice.displayActionChoice(obstacle,player,gridpane,"Diamond",Constants.diamond.getImageView());
 
 				        break;
-				        case "épée.png":   
-				        	ActionChoice.displayActionChoice(obstacle,player,gridpane,"Épée",Constants.épée.getImageView());
+				        case "Ã©pÃ©e.png":   
+				        	ActionChoice.displayActionChoice(obstacle,player,gridpane,"Ã‰pÃ©e",Constants.Ã©pÃ©e.getImageView());
 
 				        break;
 				        case "pigKing.png":
@@ -98,7 +98,7 @@ import javafx.stage.Stage;
 				        	ActionOnDoor.displayActionDoorChoice(obstacle,player,gridpane,map);//test
 				        break;
 				        case "flag.png":
-				        	ActionEndGame.displayEndGame(obstacle,player,gridpane);
+				        	ActionEndGame.displayEndGame(true);
 				        break;
 				        default:
 				        	
@@ -118,13 +118,13 @@ import javafx.stage.Stage;
 		
 		for (Node ennemy : gridpane.getChildren()) {
 			
-			    //Vérifier si le joueur est en collision avec l'obstacle
+			    //VÃ©rifier si le joueur est en collision avec l'obstacle
 				 if (ennemy instanceof ImageView ) {
 					 //creation des bounds de l'obstacle et du player our verif les collisions
 					 Bounds obstacleBounds = ennemy.getBoundsInParent();
          		     Bounds playerBounds = player.getSprite().getBoundsInParent();
          		     
-         		     // on prend la zone de collision du personnage a laquelle on ajoute artificiellement 10px de chaque coté
+         		     // on prend la zone de collision du personnage a laquelle on ajoute artificiellement 10px de chaque cotÃ©
          		    double x = playerBounds.getMinX() - 10;
          		    double y = playerBounds.getMinY() - 10;
          		    double width = playerBounds.getWidth() + 20;
