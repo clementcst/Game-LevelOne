@@ -103,10 +103,21 @@ public class Game extends Application {
         primaryStage.setTitle("LEVELONE");
         primaryStage.setResizable(false);
         primaryStage.setScene(scene);
+        PrimaryStageHolder.setPrimaryStage(primaryStage);
         primaryStage.show();
     }
 
-    public static void main(String[] args) {
+    public void newGame(String[] args) {
     	launch(args);
+    }
+    
+    public void restartgame() { //Inutile tu peux sup clement si tu veux, on relance differement dans ActionEndGame et ca marche
+    	String[] args = null;
+    	launch(args);
+    } //Sup uniquement la methode restartgame()
+    
+    public static void main(String[] args) {
+        Game game = new Game();
+        game.newGame(args);
     }
 }
