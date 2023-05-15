@@ -8,12 +8,14 @@ import game.item.Items;
 import game.pnj.Monster;
 import game.reader.CsvReader;
 import game.textures.Constants;
+import javafx.animation.PauseTransition;
 import javafx.scene.Scene;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
+import javafx.util.Duration;
 import utils.Minuteur;
 
 
@@ -181,8 +183,6 @@ public class Map {
 		imageMap.put("doorOpen2", Constants.doorOpen2.getImageView());
 		imageMap.put("doorOpen3", Constants.doorOpen3.getImageView());
 		imageMap.put("doorOpen4", Constants.doorOpen4.getImageView());
-		
-		imageMap.put("flag", Constants.flag.getImageView());
 
 		//objects.put("wall", Constants.wall.getImageView());//
 		// Ajoutez toutes les autres variables avec leurs noms correspondants
@@ -206,14 +206,13 @@ public class Map {
     			switch(matrix[j][i]) {
     				case "pigKing" :
     					Items drop = new Items("key", "Ouvre porte");
-    					Monster M = new Monster("stan", 4, 2, false, Constants.stan, (AbstractItem) drop);
+    					Monster M = new Monster("stan", 4, 2, false, Constants.stan, (AbstractItem) drop, this, i,j);
     					gridpane.add(M.getImageView(),i,j);
     					break;
     				case "pigMob" :
     					Items drop_pigMob = new Items("diamond", "Argent");
-    					Monster pigMob = new Monster("pigMob", 2, 1, false, Constants.stan2, (AbstractItem) drop_pigMob);
+    					Monster pigMob = new Monster("pigMob", 2, 1, false, Constants.stan2, (AbstractItem) drop_pigMob, this, i,j);
     					gridpane.add(pigMob.getImageView(),i,j);
-    					
     					break;
     				case "potionRed" :
     					Items R = new Items("potionRed", "Se boit. Rouge");
@@ -281,7 +280,6 @@ public class Map {
     	InitGridpane("interact",this.gridpaneInteract);
     	InitGridpane("pnj",this.gridpanePnj);
     	InitGridpaneGameInfo();
-
   
     	//empilement des panes
         stackpane.getChildren().add(gridpaneBackground);
