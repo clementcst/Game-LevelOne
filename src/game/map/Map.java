@@ -56,9 +56,6 @@ public class Map {
         this.player.getSprite().setLayoutX(70);
         this.player.getSprite().setLayoutY(70);
         this.stackpane = new StackPane();
-    
-        
-
     }
     
 
@@ -259,7 +256,7 @@ public class Map {
                     gridpane.add(G.getImageView(),i,j);
                     break;
 				case "potionYellow" :
-                    Items Y = new Items("potionYellow", "ajoute invincibilité, a faire Jordan","Drink");
+                    Items Y = new Items("potionYellow", "Invicibility for 15 seconds","Drink");
                     gridpane.add(Y.getImageView(),i,j);
                     break;
                 case "potionPurple" :

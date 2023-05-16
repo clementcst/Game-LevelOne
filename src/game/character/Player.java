@@ -25,7 +25,8 @@ public class Player {
     private Weapon weapon;
     private ImageView sprite;
     private Inventory inventory;
-    private boolean isAttacking = false;
+    private boolean isAttacking;
+    private boolean canBeHurt;
     
     private Timeline animationRight;
     private Timeline animationUp;
@@ -48,6 +49,8 @@ public class Player {
         this.name = name;
         this.health = health;
         this.money = money;
+        this.isAttacking = false;
+        this.canBeHurt = true;
         Image image = new Image(spritePath);
         this.sprite = new ImageView(image);
         this.sprite.setFitWidth(40);
@@ -187,11 +190,35 @@ public class Player {
 		this.y = Y;
 	}
 	
+	public boolean CanBeHurt() {
+		return canBeHurt;
+	}
+
+	public void setCanBeHurt(boolean canBeHurt) {
+		this.canBeHurt = canBeHurt;
+	}
+
 	public void stopAnimation() {
 		this.getAnimationDown().stop();
 		this.getAnimationUp().stop();
 		this.getAnimationLeft().stop();
 		this.getAnimationRight().stop();
+	}
+	
+	public void takingDamage() {
+		Timeline timeline = new Timeline(new KeyFrame(Duration.millis(200), event -> {
+		    this.getSprite().setVisible(!this.getSprite().isVisible());
+		}));
+		timeline.setCycleCount(Timeline.INDEFINITE);
+		this.setCanBeHurt(false);
+		PauseTransition pause = new PauseTransition(Duration.seconds(1));
+		pause.setOnFinished(event -> {
+		    timeline.stop();
+		    this.getSprite().setVisible(true);
+		    this.setCanBeHurt(true);
+		});
+		timeline.play();
+		pause.play();
 	}
 
     // Actions que le joueur peut effectuer
@@ -206,27 +233,14 @@ public class Player {
         	this.getAnimationAttackLeft().play();
         }
     	Monster m = PlayerCollision.attackCollision(this, map.getGridpanePnj());
-    	if(m != null) {
+    	if(m != null && m.CanBeHurt()) {
     		System.out.println("on attaque le monstre "+m.getName());
 			m.setHealth(m.getHealth() - this.getWeapon().getDamage());
 			System.out.println("PV:"+m.getHealth());
 			if(m.getHealth()<=0) { //Si le monstre n'a plus de vie, on le supprime
 				m.drop(map);
-//				map.getGridpanePnj().getChildren().remove(m.getImageView());
-				//map.getGridpanePnj().add(new ImageView(new Image("file:res/images/diamond.png")),4,7);
 			}else {
-				Timeline timeline = new Timeline(new KeyFrame(Duration.millis(200), event -> {
-				    m.getImageView().setVisible(!m.getImageView().isVisible());
-				}));
-				timeline.setCycleCount(Timeline.INDEFINITE);
-				
-				PauseTransition pause = new PauseTransition(Duration.seconds(1));
-				pause.setOnFinished(event -> {
-				    timeline.stop();
-				    m.getImageView().setVisible(true);
-				});
-				timeline.play();
-				pause.play();
+				m.takingDamage();
 			}
     	}
     } 
