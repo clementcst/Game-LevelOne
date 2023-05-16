@@ -220,11 +220,11 @@ public class Map {
     					pigMob.getRandomM().play();
     					break;
     				case "potionRed" :
-    					Items R = new Items("potionRed", "Drink");
+    					Items R = new Items("potionRed", "Se boit. Rouge","Drink");
     					gridpane.add(R.getImageView(),i,j);
     					break;
     				case "potionBlue" :
-    					Items B = new Items("potionBlue", "Drink");
+    					Items R = new Items("potionBlue", "Se boit. Rouge","Drink");
     					gridpane.add(B.getImageView(),i,j);
     					break;
     				case "key" :
