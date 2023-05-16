@@ -224,7 +224,7 @@ public class Map {
     					gridpane.add(R.getImageView(),i,j);
     					break;
     				case "potionBlue" :
-    					Items R = new Items("potionBlue", "Se boit. Bleue","Drink");
+    					Items B = new Items("potionBlue", "Se boit. Bleue","Drink");
     					gridpane.add(B.getImageView(),i,j);
     					break;
     				case "key" :
@@ -232,8 +232,12 @@ public class Map {
     					gridpane.add(K.getImageView(),i,j);
     					break;
     				case "diamond" :
-    					Items D = new Items("diamond", "beautiful diamond wit a lot of utilities ;)", "Use With Merchantt");
+    					Items D = new Items("diamond", "beautiful diamond wit a lot of utilities ;)", "Use With Merchant");
     					gridpane.add(D.getImageView(),i,j);
+    					break;
+				case "perso" :
+    					Merchant Me = new Merchant("Mearchant",Constants.merchant);
+    					gridpane.add(Me.getImageView(),i,j);
     					break;
     				case "nothing" :
     					break;
