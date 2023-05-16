@@ -235,7 +235,7 @@ public class Map {
     					Items D = new Items("diamond", "beautiful diamond wit a lot of utilities ;)", "Use With Merchant");
     					gridpane.add(D.getImageView(),i,j);
     					break;
-				case "perso" :
+				case "merchant" :
     					Merchant Me = new Merchant("Mearchant",Constants.merchant);
     					gridpane.add(Me.getImageView(),i,j);
     					break;
