@@ -6,6 +6,7 @@ import game.map.Map;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Separator;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -20,6 +21,8 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
+import utils.Minuteur;
 
 public class Inventory {
 
@@ -49,6 +52,7 @@ public class Inventory {
         this.stage.setScene(new Scene(this.borderPane));
         this.stage.setResizable(false);
         this.stage.initModality(Modality.APPLICATION_MODAL);
+	this.stage.initStyle(StageStyle.UNDECORATED);
     }
     
     public void updateStageInventory(Player player, Map map) {
@@ -74,13 +78,23 @@ public class Inventory {
         imageView.setFitHeight(50);
         imageView.setFitWidth(50);
         HBox.setMargin(imageView, new Insets(10, 10, 10, 10));
+	    
+	Button goBack = new Button("Go back");
+		goBack.setStyle("-fx-background-color: rgb(56,52,68); -fx-text-fill: white; -fx-border-color: white; -fx-border-width: 2px; -fx-border-radius: 5;");
+
+		goBack.setOnAction(event -> {
+		//Ferme la Stage dialog quand on clique sur la croix rouge
+		Minuteur.resume();
+		this.stage.close();
+        });
         
         infoPlayer.getChildren().add(imageView);
         infoPlayer.getChildren().add(PlayerName);
+    	infoPlayer.getChildren().add(goBack);
         infoPlayer.setAlignment(Pos.CENTER_LEFT);
         BorderPane.setMargin(infoPlayer, new Insets(0, 0, 10, 0));
 
-        //Créez la grille d'items
+        //CrÃ©ez la grille d'items
         GridPane gridPane = new GridPane();
         gridPane.setPadding(new Insets(10));
         gridPane.setHgap(10);
