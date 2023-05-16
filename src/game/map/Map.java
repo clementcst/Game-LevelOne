@@ -224,11 +224,11 @@ public class Map {
     					gridpane.add(R.getImageView(),i,j);
     					break;
     				case "potionBlue" :
-    					Items R = new Items("potionBlue", "Se boit. Rouge","Drink");
+    					Items R = new Items("potionBlue", "Se boit. Bleue","Drink");
     					gridpane.add(B.getImageView(),i,j);
     					break;
     				case "key" :
-    					Items K = new Items("key", "Permet d'ouvrir une porte");
+    					Items K = new Items("key", "Permet d'ouvrir une porte","Use");
     					gridpane.add(K.getImageView(),i,j);
     					break;
     				case "diamond" :
