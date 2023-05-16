@@ -5,6 +5,7 @@ import java.util.HashMap;
 import game.character.Player;
 import game.item.AbstractItem;
 import game.item.Items;
+import game.pnj.Merchant;
 import game.pnj.Monster;
 import game.reader.CsvReader;
 import game.textures.Constants;
