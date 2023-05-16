@@ -9,6 +9,7 @@ import game.popUp.ActionEndGame;
 import game.textures.Constants;
 import game.textures.Texture;
 import javafx.animation.KeyFrame;
+import javafx.animation.PauseTransition;
 import javafx.animation.Timeline;
 import javafx.animation.TranslateTransition;
 import javafx.geometry.BoundingBox;
@@ -33,7 +34,7 @@ public class Monster extends AbstractPnj{
  private int newY;
 
 	 public Monster(String name, int health, int strength, boolean hasVision, Texture image, AbstractItem drop, Map map, int x, int y) {
-		 super(name, image);
+		 super(name, image, true);
 		 this.health = health;
 		 this.strength = strength;				 
 		 this.hasVision = hasVision;
@@ -43,9 +44,6 @@ public class Monster extends AbstractPnj{
 		 this.imageView.setFitWidth(30);
 		 this.itemOnDeath = drop;
 		 this.imageView.setUserData(this);
-		 
-		 // bordure pour hitbox monstre
-		 this.imageView.setStyle("-fx-border-color: red; -fx-border-width: 10px; -fx-border-style: solid;");
 		 this.x = x;
 		 this.y = y;
 		 this.newX = x;
@@ -166,7 +164,25 @@ public class Monster extends AbstractPnj{
 		map.getGridpaneInteract().add(this.getItemOnDeath().getImageView(), x, y);
 	}
 
-
+	public void invincybility() {
+		
+	}
+	
+	public void takingDamage() {
+		Timeline timeline = new Timeline(new KeyFrame(Duration.millis(200), event -> {
+		    this.getImageView().setVisible(!this.getImageView().isVisible());
+		}));
+		timeline.setCycleCount(Timeline.INDEFINITE);
+		this.setCanBeHurt(false);
+		PauseTransition pause = new PauseTransition(Duration.seconds(1));
+		pause.setOnFinished(event -> {
+		    timeline.stop();
+		    this.getImageView().setVisible(true);
+		    this.setCanBeHurt(true);
+		});
+		timeline.play();
+		pause.play();
+	}
 	
 	public static void movement(GridPane gameBoard, ImageView characterImageView, int startX, int startY, int endX, int endY) {
 //	    // Load the animation frames for the character's movement
@@ -210,137 +226,93 @@ public class Monster extends AbstractPnj{
 //	    animationTimeline.play();
 	}
 	
-	//MOVEMENT TEST
-	
-	// Comportements des monstres
-	 public boolean move(String direction, Map map) {
-		 switch(direction) {
-		 	case "UP" :
-		 		if(!PnjCollision.testCollision(this, map.getGridpaneInteract(),0,-this.getSpeed(), map) && !PnjCollision.testCollision(this, map.getGridpaneObstacle(),0, -this.getSpeed(), map)) {
-		 			movement(map.getGridpanePnj(), this.getImageView(), this.getX(), this.getY(), this.getNewX(), this.getNewY()-1);
-    				this.setNewY(this.getNewY()-1);
-    				return true;
-    			}
-		 		return false;
-		 	case "DOWN" :
-		 		if(!PnjCollision.testCollision(this, map.getGridpaneInteract(),0,this.getSpeed(), map) && !PnjCollision.testCollision(this, map.getGridpaneObstacle(),0, this.getSpeed(), map)) {
-		 			movement(map.getGridpanePnj(), this.getImageView(), this.getX(), this.getY(), this.getNewX(), this.getNewY()+1);
-    				this.setNewY(this.getNewY()+1);
-    				return true;
-    			}
-		 		return false;
-		 	case "LEFT" :
-		 		if(!PnjCollision.testCollision(this, map.getGridpaneInteract(),-this.getSpeed(),0, map) && !PnjCollision.testCollision(this, map.getGridpaneObstacle(),-this.getSpeed(),0, map)) {
-		 			movement(map.getGridpanePnj(), this.getImageView(), this.getX(), this.getY(), this.getNewX()-1, this.getNewY());
-    				this.setNewX(this.getNewX()-1);
-    				return true;
-    			}
-		 		return false;
-		 	case "RIGTH" :
-		 		if(!PnjCollision.testCollision(this, map.getGridpaneInteract(),this.getSpeed(),0, map) && !PnjCollision.testCollision(this, map.getGridpaneObstacle(),this.getSpeed(),0, map)) {
-		 			movement(map.getGridpanePnj(), this.getImageView(), this.getX(), this.getY(), this.getNewX()+1, this.getNewY());
-    				this.setNewX(this.getNewX()+1);
-    				return true;
-    			}
-		 		return false;
-		 	default :
-		 		return false;
-		 }
-		 
-	 }
+	public boolean move(String direction, Map map) {
+	    boolean hasMoved = false;
+
+	    switch(direction) {
+	        case "UP":
+	            hasMoved = this.moveIfPossible(map, 0, -1);
+	            break;
+	        case "DOWN":
+	            hasMoved = this.moveIfPossible(map, 0, 1);
+	            break;
+	        case "LEFT":
+	            hasMoved = this.moveIfPossible(map, -1, 0);
+	            break;
+	        case "RIGHT":
+	            hasMoved = this.moveIfPossible(map, 1, 0);
+	            break;
+	    }
+
+	    return hasMoved;
+	}
 	 
-	 
+	 private boolean moveIfPossible(Map map, int newX, int newY) {
+		    if (!PnjCollision.testCollision(this, map.getGridpaneInteract(), newX, newY, map) && !PnjCollision.testCollision(this, map.getGridpaneObstacle(), newX, newY, map)) {
+		    	movement(map.getGridpanePnj(), this.getImageView(), this.getX(), this.getY(), this.getNewX() + newX, this.getNewY() + newY);
+		        this.setNewX(this.getNewX() + newX);
+		        this.setNewY(this.getNewY() + newY);
+		        return true;
+		    }
+		    return false;
+		}
 
-	public void randomMove(Map map) {
-		this.playerInVision(map);
-		 if(this.hasVision()) {
-			 return;
-		 }
-		 System.out.println(this.hasVision());
-		 int direction;
-		 Boolean hasMoved;
-		 Random random = new Random();
-		 direction = (int) random.nextInt(4);
-		 switch (direction) {
-		 case 0 :
-			 hasMoved = this.move("UP", map);
-			 System.out.println("UP choose " + hasMoved);
+	 public void randomMove(Map map) {
+		    this.playerInVision(map);
+		    if (this.hasVision()) {
+		        return;
+		    }
+		    
+		    boolean hasMoved;
+		    int direction;
+		    Random random = new Random();
+		    direction = random.nextInt(4);
 
-			 break;
-		 case 1 :
-			 hasMoved = this.move("LEFT", map);
-			 System.out.println("LEFT choose " + hasMoved);
+		    switch (direction) {
+		        case 0:
+		        	hasMoved = this.moveIfPossible(map, 0, -1);
+		            break;
+		        case 1:
+		        	hasMoved = this.moveIfPossible(map, -1, 0);
+		            break;
+		        case 2:
+		        	hasMoved = this.moveIfPossible(map, 1, 0);
+		            break;
+		        case 3:
+		        	hasMoved = this.moveIfPossible(map, 0, 1);
+		            break;
+		        default :
+		        	hasMoved = false;
+		        	break;
+		    }
+		    if(!hasMoved) {
+		    	randomMove(map);
+		    }
+		}
 
-			 break;
-		 case 2 :
-			 hasMoved = this.move("RIGTH", map);
-			 System.out.println("RIGHT choose " + hasMoved);
+	private boolean checkVisionAndMoveIfPossible(double sortX, double sortY, double shortWidth, double sortHeight, double longX, double longY, double longWidth, double longHeight, Bounds playerBounds, String direction, Map map) {
+	    if (!PnjCollision.testVision(new BoundingBox(sortX,sortY,shortWidth,sortHeight), map) && playerBounds.intersects(longX, longY, longWidth, longHeight)) {
+	        this.setHasVision(true);
+	        return this.move(direction, map);
+	    }
 
-			 break;
-		 case 3 :
-			 hasMoved = this.move("DOWN", map);
-			 System.out.println("DOWN choose " + hasMoved);
-			 break;
-		default : hasMoved = false;
-			break;
-		 }
-		 if(!hasMoved)
-			 randomMove(map);
-		 
-	 }
-	 
-	public void moveWithVision() {
-			 
+	    return false;
 	}
 	
 	public void playerInVision(Map map) {
-		Boolean hasMoved;
-		this.setHasVision(false);
-		Bounds playerBounds = map.getPlayer().getSprite().getBoundsInParent();
-		Bounds monsterBounds = this.getImageView().getBoundsInParent();
-		Bounds gaucheHaut = new BoundingBox(monsterBounds.getMinX()-30, monsterBounds.getMinY()-30, monsterBounds.getWidth(), monsterBounds.getHeight()+30);
-		Bounds hautDroite = new BoundingBox(monsterBounds.getMinX(), monsterBounds.getMinY()-30, monsterBounds.getWidth()+30, monsterBounds.getHeight());
-		Bounds droiteBas = new BoundingBox(monsterBounds.getMinX()+30, monsterBounds.getMinY(), monsterBounds.getWidth(), monsterBounds.getHeight()+30);
-		Bounds basGauche = new BoundingBox(monsterBounds.getMinX()-30, monsterBounds.getMinY()+30, monsterBounds.getWidth()+30, monsterBounds.getHeight());
-		Bounds gaucheHautPleineVision = new BoundingBox(monsterBounds.getMinX()-64, monsterBounds.getMinY()-64, 64, 94);
-		Bounds hautDroitePleineVision = new BoundingBox(monsterBounds.getMinX(), monsterBounds.getMinY()-64, 94, 64);
-		Bounds droiteBasPleineVision = new BoundingBox(monsterBounds.getMinX()+30, monsterBounds.getMinY(), 64, 94);
-		Bounds basGauchePleineVision = new BoundingBox(monsterBounds.getMinX()-64, monsterBounds.getMinY()+30, 94, 64);
-		
-		if(!PnjCollision.testVision(gaucheHaut, map)) {
-			if(playerBounds.intersects(gaucheHautPleineVision)) {
-				this.setHasVision(true);
-				System.out.println("gauche");
-				hasMoved = this.move("LEFT", map);
-				return;
-			}
-		}
-		if(!PnjCollision.testVision(hautDroite, map)) {
-			if(playerBounds.intersects(hautDroitePleineVision)) {
-				this.setHasVision(true);
-				System.out.println("haut");
-				hasMoved = this.move("UP", map);
-				return;
-			}
-		}
-		if(!PnjCollision.testVision(droiteBas, map)) {
-			if(playerBounds.intersects(droiteBasPleineVision)) {
-				this.setHasVision(true);
-				System.out.println("droite");
-				hasMoved = this.move("RIGTH", map);
-				return;
-			}
-		}
-		if(!PnjCollision.testVision(basGauche, map)) {
-			if(playerBounds.intersects(basGauchePleineVision)) {				
-				this.setHasVision(true);
-				System.out.println("bas");
-				hasMoved = this.move("DOWN", map);
-				return;
-			}
-		}
-		
+	    this.setHasVision(false);
+	    Bounds playerBounds = map.getPlayer().getSprite().getBoundsInParent();
+	    Bounds monsterBounds = this.getImageView().getBoundsInParent();
+
+	    if (!checkVisionAndMoveIfPossible(monsterBounds.getMinX() - 30, monsterBounds.getMinY() - 30,monsterBounds.getWidth(),monsterBounds.getHeight()+30,monsterBounds.getMinX()-64,monsterBounds.getMinY()-64, 64, 94, playerBounds, "LEFT", map)) {
+	        if (!checkVisionAndMoveIfPossible(monsterBounds.getMinX(), monsterBounds.getMinY() - 30,monsterBounds.getWidth()+30,monsterBounds.getHeight(),monsterBounds.getMinX(), monsterBounds.getMinY()-64, 94, 64, playerBounds, "UP", map)) {
+	            if (!checkVisionAndMoveIfPossible(monsterBounds.getMinX() + 30, monsterBounds.getMinY(), monsterBounds.getWidth(), monsterBounds.getHeight()+30,monsterBounds.getMinX()+30, monsterBounds.getMinY(), 64, 94, playerBounds, "RIGHT", map)) {
+	                checkVisionAndMoveIfPossible(monsterBounds.getMinX() - 30, monsterBounds.getMinY() + 30,monsterBounds.getWidth()+30, monsterBounds.getHeight(),monsterBounds.getMinX()-64,monsterBounds.getMinY()+30,  94, 64, playerBounds, "DOWN", map);
+	            }
+	        }
+	    }
 	}
+		
 	 public void attack(Player player, Map map) {
 		 player.setHealth(player.getHealth()-this.getStrength(),map);
     	 if(player.getHealth() <= 0) {

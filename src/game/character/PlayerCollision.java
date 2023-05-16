@@ -57,18 +57,24 @@ import javafx.scene.layout.GridPane;
 				        	ActionChoice.displayActionChoice(obstacle,player,gridpane,W,Constants.épée.getImageView());
 				        break;
 				        case "pigKing.png":
-				        	Monster m = (Monster) obstacle.getUserData();
-				        	System.out.println("collision detected with " + m.getName());
-				        	System.out.println("PV avant collision :"+player.getHealth());
-				        	player.setHealth(player.getHealth()-m.getStrength(),map);
-				        	System.out.println("PV apres collision :"+player.getHealth());
+				        	if(player.CanBeHurt()) {
+					        	Monster pigKing = (Monster) obstacle.getUserData();
+					        	System.out.println("collision detected with " + pigKing.getName());
+					        	System.out.println("PV avant collision :"+player.getHealth());
+					        	player.setHealth(player.getHealth()-pigKing.getStrength(),map);
+					        	player.takingDamage();
+					        	System.out.println("PV apres collision :"+player.getHealth());
+				        	}
 				        break;
 				        case "pigMob.png":
-				        	Monster pigMob = (Monster) obstacle.getUserData();
-				        	System.out.println("collision detected with " + pigMob.getName());
-				        	System.out.println("PV avant collision :"+player.getHealth());
-				        	player.setHealth(player.getHealth()-pigMob.getStrength(),map);
-				        	System.out.println("PV apres collision :"+player.getHealth());
+				        	if(player.CanBeHurt()) {
+					        	Monster pigMob = (Monster) obstacle.getUserData();
+					        	System.out.println("collision detected with " + pigMob.getName());
+					        	System.out.println("PV avant collision :"+player.getHealth());
+					        	player.setHealth(player.getHealth()-pigMob.getStrength(),map);
+					        	player.takingDamage();
+					        	System.out.println("PV apres collision :"+player.getHealth());
+				        	}
 				        break;
 				        case "potionBlue.png":
 				        	Items B = new Items("potionBlue", "Your weapon w'll have 1 more damage","Drink");
@@ -87,7 +93,7 @@ import javafx.scene.layout.GridPane;
                             ActionChoice.displayActionChoice(obstacle,player,gridpane,P,Constants.potionPurple.getImageView());
                         break;
                         case "potionYellow.png":
-                            Items Y = new Items("potionYellow", "invisibilité for x seconds","Drink");
+                            Items Y = new Items("potionYellow", "Invicibility for 15 seconds","Drink");
                             ActionChoice.displayActionChoice(obstacle,player,gridpane,Y,Constants.potionYellow.getImageView());
                         break;
 				        case "key.png":

@@ -11,13 +11,13 @@ import javafx.scene.layout.GridPane;
 public class PnjCollision {
 	public static boolean testCollision(Monster monster,GridPane gridpane,double diffX, double diffY, Map map) {		
 			Player player = map.getPlayer();
-			monster.getImageView().setLayoutX(monster.getImageView().getLayoutX()+diffX);
-			monster.getImageView().setLayoutY(monster.getImageView().getLayoutY()+diffY);
+			monster.getImageView().setLayoutX(monster.getImageView().getLayoutX()+diffX*32);
+			monster.getImageView().setLayoutY(monster.getImageView().getLayoutY()+diffY*32);
 	
 		    Bounds monsterBounds = monster.getImageView().getBoundsInParent();
 		     
-		    monster.getImageView().setLayoutX(monster.getImageView().getLayoutX()-diffX);
-		    monster.getImageView().setLayoutY(monster.getImageView().getLayoutY()-diffY);
+		    monster.getImageView().setLayoutX(monster.getImageView().getLayoutX()-diffX*32);
+		    monster.getImageView().setLayoutY(monster.getImageView().getLayoutY()-diffY*32);
 			for (Node obstacle : gridpane.getChildren()) {
 				
 				    //Vérifier si le joueur est en collision avec l'obstacle
@@ -50,7 +50,6 @@ public class PnjCollision {
 					        	
 					        break;
 					        }
-					        System.out.println("LE MUR");
 					    	return true;
 					    }
 					 }
@@ -58,7 +57,11 @@ public class PnjCollision {
 	
 		     Bounds playerBounds = player.getSprite().getBoundsInParent();
 		     if (playerBounds.intersects(monsterBounds)) {
-		    	 monster.attack(player, map);
+		    	 System.out.println("bug");
+		    	 if(player.CanBeHurt()) {
+		    		 monster.attack(player, map);
+		    		 player.takingDamage();
+		    	 }		    	
 		    	 return true;
 		     }
 			return false;

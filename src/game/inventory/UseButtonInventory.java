@@ -6,6 +6,7 @@ import game.map.Map;
 import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
 import utils.Minuteur;
+import utils.MinuteurInvincibility;
 import utils.MinuteurMonsterStop;
 
 public class UseButtonInventory extends Button {
@@ -39,7 +40,10 @@ public class UseButtonInventory extends Button {
     		minuteur2.start(20);
 			break;
 		case("potionYellow"):
-			//a faire Jordan ajoute invicibilité
+			MinuteurInvincibility otherMinuteur = new MinuteurInvincibility(map);
+			map.getGameInfo().add(otherMinuteur,33,0);
+			GridPane.setColumnSpan(otherMinuteur,3);
+			otherMinuteur.start(15);
 			break;
 		default:
 			break;
