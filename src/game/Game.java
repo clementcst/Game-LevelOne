@@ -25,6 +25,7 @@ public class Game extends Application {
         Scene scene = map.createMap();
                
         scene.setOnKeyPressed(event -> {
+            System.out.println("PV : "+map.getPlayer().getHealth());
             KeyCode keyCode = event.getCode();
             switch (keyCode) {
                 case Z:
@@ -52,7 +53,6 @@ public class Game extends Application {
         
         
         scene.setOnKeyReleased(event -> {
-             System.out.println("PV : "+map.getPlayer().getHealth());
             KeyCode keyCode = event.getCode();
             switch (keyCode) {
                 case Z:
