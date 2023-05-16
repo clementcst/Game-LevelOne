@@ -29,7 +29,8 @@ public class PnjCollision {
 	
 					    //s'il y a collision
 					    if (obstacleBounds.intersects(monsterBounds)) {
-
+					    	
+					    	
 					    	//recuperation de l'url de l'image dde l'obstacle 
 					    	Image obstacleImage = ((ImageView) obstacle).getImage();
 					        String obstacleImagePath = obstacleImage.getUrl();
@@ -50,6 +51,7 @@ public class PnjCollision {
 					        	
 					        break;
 					        }
+					        System.out.println("LE MUR");
 					    	return true;
 					    }
 					 }
@@ -57,10 +59,7 @@ public class PnjCollision {
 	
 		     Bounds playerBounds = player.getSprite().getBoundsInParent();
 		     if (playerBounds.intersects(monsterBounds)) {
-		    	 //animation de déplacement avant puis arrière très rapide pour faire un semblant d'attaque
-		    	 System.out.println("PV avant collision :"+player.getHealth());
-		    	 player.setHealth(player.getHealth()-monster.getStrength(),map);
-		    	 System.out.println("PV apres collision :"+player.getHealth());
+		    	 monster.attack(player, map);
 		    	 return true;
 		     }
 			return false;

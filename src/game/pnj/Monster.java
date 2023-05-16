@@ -42,12 +42,16 @@ public class Monster extends AbstractPnj{
 		 this.imageView.setFitWidth(30);
 		 this.itemOnDeath = drop;
 		 this.imageView.setUserData(this);
+		 
+		 // bordure pour hitbox monstre
+		 this.imageView.setStyle("-fx-border-color: red; -fx-border-width: 10px; -fx-border-style: solid;");
+		 
 		 this.x = x;
 		 this.y = y;
 		 this.newX = x;
 		 this.newY = y;
 		 this.randomM = new Timeline();
-		 this.randomM.getKeyFrames().add(new KeyFrame(Duration.seconds(2),event ->{   			
+		 this.randomM.getKeyFrames().add(new KeyFrame(Duration.seconds(1),event ->{   			
 			 this.randomMove(map);
 		 }));
 		 this.randomM.setCycleCount(Timeline.INDEFINITE);
@@ -159,12 +163,12 @@ public class Monster extends AbstractPnj{
 
 
 	public void drop(Map map) {
-		int x = (int)this.imageView.getLayoutX();
-		int y = (int)this.imageView.getLayoutY();
+		System.out.println("drop");
+		int x = (int)this.getNewX();
+		int y = (int)this.getNewY();
+		this.randomM.stop();
 		map.getGridpanePnj().getChildren().remove(this.getImageView());
-		System.out.println("X:"+x+"Y:"+y);
-		map.getGridpaneInteract().add(this.getItemOnDeath().getImageView(), x/32, y/32);
-
+		map.getGridpaneInteract().add(this.getItemOnDeath().getImageView(), x, y);
 	}
 
 	//MOVEMENT TEST
@@ -186,8 +190,8 @@ public class Monster extends AbstractPnj{
 
 	    // Create a TranslateTransition to move the character to the ending position
 	    TranslateTransition translateTransition = new TranslateTransition(Duration.seconds(1), characterImageView);
-	    translateTransition.setToX(endSquare.getLayoutX() - startSquare.getLayoutX());
-	    translateTransition.setToY(endSquare.getLayoutY() - startSquare.getLayoutY());
+	    translateTransition.setToX(endSquare.getLayoutX()+1 - startSquare.getLayoutX());
+	    translateTransition.setToY(endSquare.getLayoutY()+1 - startSquare.getLayoutY());
 
 	    // Create a Timeline to animate the character's movement frames
 //	    Timeline animationTimeline = new Timeline();
@@ -218,7 +222,7 @@ public class Monster extends AbstractPnj{
 		 switch(direction) {
 		 	case "UP" :
 		 		if(!PnjCollision.testCollision(this, map.getGridpaneInteract(),0,-this.getSpeed(), map) && !PnjCollision.testCollision(this, map.getGridpaneObstacle(),0, -this.getSpeed(), map)) {
-    				movement(map.getGridpanePnj(), this.getImageView(), this.getX(), this.getY(), this.getNewX(), this.getNewY()-1);
+		 			movement(map.getGridpanePnj(), this.getImageView(), this.getX(), this.getY(), this.getNewX(), this.getNewY()-1);
     				this.setNewY(this.getNewY()-1);
     				return true;
     			}
@@ -255,9 +259,12 @@ public class Monster extends AbstractPnj{
 	public void randomMove(Map map) {
 		this.playerInVision(map);
 		 if(this.hasVision()) {
-			 System.out.println("Je te vois");
 			 return;
 		 }
+		 if(this.getHealth() <= 0) {
+			 this.drop(map);
+		 }
+		 System.out.println(this.hasVision());
 		 int direction;
 		 Boolean hasMoved;
 		 Random random = new Random();
@@ -265,28 +272,28 @@ public class Monster extends AbstractPnj{
 		 switch (direction) {
 		 case 0 :
 			 hasMoved = this.move("UP", map);
-			 if(!hasMoved)
-				 randomMove(map);
+			 System.out.println("UP choose " + hasMoved);
+
 			 break;
 		 case 1 :
 			 hasMoved = this.move("LEFT", map);
-			 if(!hasMoved)
-				 randomMove(map);
+			 System.out.println("LEFT choose " + hasMoved);
+
 			 break;
 		 case 2 :
 			 hasMoved = this.move("RIGTH", map);
-			 if(!hasMoved)
-				 randomMove(map);
+			 System.out.println("RIGHT choose " + hasMoved);
+
 			 break;
 		 case 3 :
 			 hasMoved = this.move("DOWN", map);
-			 if(!hasMoved)
-				 randomMove(map);
+			 System.out.println("DOWN choose " + hasMoved);
 			 break;
-		default :
-			this.randomMove(map);
+		default : hasMoved = false;
 			break;
 		 }
+		 if(!hasMoved)
+			 randomMove(map);
 		 
 	 }
 	 
@@ -311,48 +318,42 @@ public class Monster extends AbstractPnj{
 		if(!PnjCollision.testVision(gaucheHaut, map)) {
 			if(playerBounds.intersects(gaucheHautPleineVision)) {
 				this.setHasVision(true);
+				System.out.println("gauche");
 				hasMoved = this.move("LEFT", map);
-				System.out.println("1");
-				if(!hasMoved)
-					hasMoved = this.move("UP", map);
 				return;
 			}
 		}
 		if(!PnjCollision.testVision(hautDroite, map)) {
 			if(playerBounds.intersects(hautDroitePleineVision)) {
 				this.setHasVision(true);
+				System.out.println("haut");
 				hasMoved = this.move("UP", map);
-				System.out.println("2");
-				if(!hasMoved)
-					hasMoved = this.move("RIGTH", map);
 				return;
 			}
 		}
 		if(!PnjCollision.testVision(droiteBas, map)) {
 			if(playerBounds.intersects(droiteBasPleineVision)) {
 				this.setHasVision(true);
+				System.out.println("droite");
 				hasMoved = this.move("RIGTH", map);
-				System.out.println("3");
-				if(!hasMoved)
-					hasMoved = this.move("DOWN", map);
 				return;
 			}
 		}
 		if(!PnjCollision.testVision(basGauche, map)) {
-			if(playerBounds.intersects(basGauchePleineVision)) {
+			if(playerBounds.intersects(basGauchePleineVision)) {				
 				this.setHasVision(true);
+				System.out.println("bas");
 				hasMoved = this.move("DOWN", map);
-				System.out.println("4");
-				if(!hasMoved)
-					hasMoved = this.move("LEFT", map);
 				return;
 			}
 		}
 		
 	}
-	
-	 public void attack(Player player) {
-	     // Code pour attaquer le joueur
+	 public void attack(Player player, Map map) {
+//		 System.out.println(this.getName() + "vous a attaqué ");
+//    	 System.out.println("PV avant collision :"+player.getHealth());
+		 player.setHealth(player.getHealth()-this.getStrength(),map);
+//    	 System.out.println("PV apres collision :"+player.getHealth());
 	 }
 
  // ...

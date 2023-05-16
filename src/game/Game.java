@@ -23,22 +23,9 @@ public class Game extends Application {
  
     	Map map = new Map(SCENE_WIDTH, SCENE_HEIGHT);  
         Scene scene = map.createMap();
-        
-        for (Node obstacle : map.getGridpanePnj().getChildren()) {        	
-        	if (obstacle instanceof ImageView ) {
-        		Image obstacleImage = ((ImageView) obstacle).getImage();
-		        String obstacleImagePath = obstacleImage.getUrl();
-        		if(obstacleImagePath.substring(16).equals("pigKing.png")) {
-        			Monster m = (Monster) obstacle.getUserData();
-        			m.getRandomM().play();
-        			m.playerInVision(map);
-        		}
-        	}
-        }
-      
+               
         scene.setOnKeyPressed(event -> {
             System.out.println("PV : "+map.getPlayer().getHealth());
-            
             KeyCode keyCode = event.getCode();
             switch (keyCode) {
                 case Z:
@@ -60,8 +47,10 @@ public class Game extends Application {
                 default:
                     break;
             }
+            //map.updateMap();
         });
- 
+        
+        
         
         scene.setOnKeyReleased(event -> {
             KeyCode keyCode = event.getCode();
@@ -81,13 +70,18 @@ public class Game extends Application {
                 default:
                     break;
             }
+           // map.updateMap();
         });
+        
+        
+            
 
         scene.setOnMousePressed(event -> {	
             if (event.isPrimaryButtonDown() && !map.getPlayer().isAttacking()) {
                 if (!map.getPlayer().getWeapon().equals(null)) {
                 	map.getPlayer().setAttacking(true);
                     map.getPlayer().attack(map);
+                    map.updateMap();
                 }
                 map.getPlayer().setAttacking(false);
             }
