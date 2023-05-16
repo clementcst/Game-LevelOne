@@ -24,7 +24,7 @@ import javafx.scene.layout.GridPane;
 		
 		for (Node obstacle : gridpane.getChildren()) {
 			
-			    //Vérifier si le joueur est en collision avec l'obstacle
+			    //VÃ©rifier si le joueur est en collision avec l'obstacle
 				 if (obstacle instanceof ImageView ) {
 		 
 					 //creation des bounds de l'obstacle et du player our verif les collisions
@@ -52,9 +52,9 @@ import javafx.scene.layout.GridPane;
 				        	Items D = new Items("diamond","beautiful diamond wit a lot of utilities ;)", "Use With Merchant");
 				        	ActionChoice.displayActionChoice(obstacle,player,gridpane,D,Constants.diamond.getImageView());
 				        break;
-				        case "épée.png":
-				        	Items W = new Items("épée","beautiful weapon ", "Use to kill ennemy");
-				        	ActionChoice.displayActionChoice(obstacle,player,gridpane,W,Constants.épée.getImageView());
+				        case "Ã©pÃ©e.png":
+				        	Items W = new Items("Ã©pÃ©e","beautiful weapon ", "Use to kill ennemy");
+				        	ActionChoice.displayActionChoice(obstacle,player,gridpane,W,Constants.Ã©pÃ©e.getImageView());
 
 				        break;
 				        case "pigKing.png":
@@ -90,7 +90,7 @@ import javafx.scene.layout.GridPane;
 				        	ActionOnDoor.displayActionDoorChoice(obstacle,player,gridpane,map);//test
 				        break;
 				        case "flag.png":
-				        	ActionEndGame.displayEndGame(obstacle,player,gridpane);
+				        	ActionEndGame.displayEndGame(true);
 				        break;
 				        case "merchant.png":
 				        	ActionOnMerchant.displayActionMerchant(obstacle, player, gridpane, map);
@@ -113,13 +113,13 @@ import javafx.scene.layout.GridPane;
 		
 		for (Node ennemy : gridpane.getChildren()) {
 			
-			    //Vérifier si le joueur est en collision avec l'obstacle
+			    //VÃ©rifier si le joueur est en collision avec l'obstacle
 				 if (ennemy instanceof ImageView ) {
 					 //creation des bounds de l'obstacle et du player our verif les collisions
 					 Bounds obstacleBounds = ennemy.getBoundsInParent();
          		     Bounds playerBounds = player.getSprite().getBoundsInParent();
          		     
-         		     // on prend la zone de collision du personnage a laquelle on ajoute artificiellement 10px de chaque coté
+         		     // on prend la zone de collision du personnage a laquelle on ajoute artificiellement 10px de chaque cotÃ©
          		    double x = playerBounds.getMinX() - 10;
          		    double y = playerBounds.getMinY() - 10;
          		    double width = playerBounds.getWidth() + 20;
