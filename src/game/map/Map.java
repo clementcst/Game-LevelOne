@@ -184,6 +184,8 @@ public class Map {
 		imageMap.put("doorOpen2", Constants.doorOpen2.getImageView());
 		imageMap.put("doorOpen3", Constants.doorOpen3.getImageView());
 		imageMap.put("doorOpen4", Constants.doorOpen4.getImageView());
+		
+		imageMap.put("flag", Constants.flag.getImageView());
 
 		//objects.put("wall", Constants.wall.getImageView());//
 		// Ajoutez toutes les autres variables avec leurs noms correspondants
