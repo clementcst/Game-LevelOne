@@ -93,7 +93,7 @@ public class Game extends Application {
         System.out.println("AVANT : PV DU JOUEUR :"+map.getPlayer().getHealth());
         if(map.getPlayer().getHealth() <= 0) {
         	System.out.println("je suis mort");
-        	ActionEndGame.displayEndGame(null, null, null);
+        	ActionEndGame.displayEndGame(false);
         }
 
        
