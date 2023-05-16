@@ -2,6 +2,7 @@ package game;
 
 
 import game.map.Map;
+import game.popUp.ActionEchap;
 import game.pnj.Monster;
 import game.popUp.ActionEndGame;
 import javafx.application.Application;
@@ -44,6 +45,8 @@ public class Game extends Application {
                     map.getPlayer().getInventory().updateStageInventory(map.getPlayer(),map);
                 	map.getPlayer().getInventory().getStage().show();
                 	break;
+                case ESCAPE:
+                    ActionEchap.displayPause();
                 default:
                     break;
             }
@@ -97,10 +100,11 @@ public class Game extends Application {
         primaryStage.setTitle("LEVELONE");
         primaryStage.setResizable(false);
         primaryStage.setScene(scene);
+        PrimaryStageHolder.setPrimaryStage(primaryStage);
         primaryStage.show();
     }
 
-    public static void main(String[] args) {
+    public void newGame(String[] args) {
     	launch(args);
     }
 }
