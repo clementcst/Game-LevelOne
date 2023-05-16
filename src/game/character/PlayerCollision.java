@@ -55,7 +55,6 @@ import javafx.scene.layout.GridPane;
 				        case "épée.png":
 				        	Items W = new Items("épée","beautiful weapon ", "Use to kill ennemy");
 				        	ActionChoice.displayActionChoice(obstacle,player,gridpane,W,Constants.épée.getImageView());
-
 				        break;
 				        case "pigKing.png":
 				        	Monster m = (Monster) obstacle.getUserData();
