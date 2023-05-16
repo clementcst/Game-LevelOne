@@ -5,16 +5,17 @@ import java.util.HashMap;
 import game.character.Player;
 import game.item.AbstractItem;
 import game.item.Items;
-import game.pnj.Merchant;
 import game.pnj.Monster;
 import game.reader.CsvReader;
 import game.textures.Constants;
+import javafx.animation.PauseTransition;
 import javafx.scene.Scene;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
+import javafx.util.Duration;
 import utils.Minuteur;
 
 
@@ -28,6 +29,7 @@ public class Map {
     private GridPane gridpanePnj;
     private GridPane gameInfo;
     private Pane pane;
+    //private GridPane pane;
 	private StackPane stackpane;
     private Player player;
 
@@ -51,7 +53,12 @@ public class Map {
         this.player.getSprite().setLayoutX(70);
         this.player.getSprite().setLayoutY(70);
         this.stackpane = new StackPane();
+    
+        
+
     }
+    
+
     
     public GridPane getGameInfo() {
 		return gameInfo;
@@ -176,9 +183,6 @@ public class Map {
 		imageMap.put("doorOpen2", Constants.doorOpen2.getImageView());
 		imageMap.put("doorOpen3", Constants.doorOpen3.getImageView());
 		imageMap.put("doorOpen4", Constants.doorOpen4.getImageView());
-		
-		imageMap.put("flag", Constants.flag.getImageView());
-
 
 		//objects.put("wall", Constants.wall.getImageView());//
 		// Ajoutez toutes les autres variables avec leurs noms correspondants
@@ -201,34 +205,32 @@ public class Map {
     			
     			switch(matrix[j][i]) {
     				case "pigKing" :
-    					Items drop = new Items("key", "Ouvre porte","Use");
-    					Monster M = new Monster("stan", 4, 2, false, Constants.stan, (AbstractItem) drop, this, i,j);
-    					gridpane.add(M.getImageView(),i,j);
+    					Items drop = new Items("key", "Ouvre porte");
+    					Monster pigKing = new Monster("stan", 4, 2, false, Constants.stan, (AbstractItem) drop, this, i,j);
+    					gridpane.add(pigKing.getImageView(),i,j);
+    					pigKing.getRandomM().play();
     					break;
     				case "pigMob" :
-    					Items drop_pigMob = new Items("diamond","beautiful diamond wit a lot of utilities ;)", "Use With Merchant");
+    					Items drop_pigMob = new Items("diamond", "Argent");
     					Monster pigMob = new Monster("pigMob", 2, 1, false, Constants.stan2, (AbstractItem) drop_pigMob, this, i,j);
     					gridpane.add(pigMob.getImageView(),i,j);
+    					pigMob.getRandomM().play();
     					break;
     				case "potionRed" :
-    					Items R = new Items("potionRed", "Se boit. Rouge","Drink");
+    					Items R = new Items("potionRed", "Se boit. Rouge");
     					gridpane.add(R.getImageView(),i,j);
     					break;
     				case "potionBlue" :
-    					Items B = new Items("potionBlue", "Se boit. Bleue","Drink");
+    					Items B = new Items("potionBlue", "Se boit. Bleue");
     					gridpane.add(B.getImageView(),i,j);
     					break;
     				case "key" :
-    					Items K = new Items("key", "Permet d'ouvrir une porte","Use");
+    					Items K = new Items("key", "Permet d'ouvrir une porte");
     					gridpane.add(K.getImageView(),i,j);
     					break;
     				case "diamond" :
-    					Items D = new Items("diamond","beautiful diamond wit a lot of utilities ;)", "Use With Merchant");
+    					Items D = new Items("diamond", "Argent");
     					gridpane.add(D.getImageView(),i,j);
-    					break;
-    				case "perso" :
-    					Merchant Me = new Merchant("Mearchant",Constants.merchant);
-    					gridpane.add(Me.getImageView(),i,j);
     					break;
     				case "nothing" :
     					break;
@@ -293,5 +295,13 @@ public class Map {
         return new Scene(stackpane, width, height);
     }
     
+
+	public void updateMap() {  	
+    	/*System.out.println("update de la map...");
+    	System.out.println("Position du personnage : {"+getPlayer().getX()+";"+getPlayer().getY()+"}");
+    	System.out.println("PV :"+getPlayer().getHealth());*/
+    	
+    }
+
 	
 }
