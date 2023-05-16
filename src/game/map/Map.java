@@ -214,17 +214,17 @@ public class Map {
     					pigKing.getRandomM().play();
     					break;
     				case "pigMob" :
-    					Items drop_pigMob = new Items("diamond", "Argent");
+    					Items drop_pigMob = new Items("diamond","beautiful diamond wit a lot of utilities ;)", "Use With Merchant");
     					Monster pigMob = new Monster("pigMob", 2, 1, false, Constants.stan2, (AbstractItem) drop_pigMob, this, i,j);
     					gridpane.add(pigMob.getImageView(),i,j);
     					pigMob.getRandomM().play();
     					break;
     				case "potionRed" :
-    					Items R = new Items("potionRed", "Se boit. Rouge");
+    					Items R = new Items("potionRed", "Drink");
     					gridpane.add(R.getImageView(),i,j);
     					break;
     				case "potionBlue" :
-    					Items B = new Items("potionBlue", "Se boit. Bleue");
+    					Items B = new Items("potionBlue", "Drink");
     					gridpane.add(B.getImageView(),i,j);
     					break;
     				case "key" :
@@ -232,7 +232,7 @@ public class Map {
     					gridpane.add(K.getImageView(),i,j);
     					break;
     				case "diamond" :
-    					Items D = new Items("diamond", "Argent");
+    					Items D = new Items("diamond", "beautiful diamond wit a lot of utilities ;)", "Use With Merchantt");
     					gridpane.add(D.getImageView(),i,j);
     					break;
     				case "nothing" :
