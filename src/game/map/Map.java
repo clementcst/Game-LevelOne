@@ -261,7 +261,7 @@ public class Map {
 		}
 	}
 	
-	public void InitGridpaneGameInfo() {
+	public void InitGridpaneGameInfo(Player player) {
 	
 		for (int col = 0; col < 22; col++) {
     		for (int row = 0; row < 38; row++) {
@@ -275,10 +275,10 @@ public class Map {
 		majLife();
 		
     	
-    	Minuteur minuteur = new Minuteur();
+    	Minuteur minuteur = new Minuteur(player);
     	gameInfo.add(minuteur,36,0);
     	GridPane.setColumnSpan(minuteur,3);
-    	minuteur.start(360);
+    	minuteur.start(50);
 	}
 	
 	
@@ -288,7 +288,7 @@ public class Map {
     	InitGridpane("obstacles",this.gridpaneObstacle);
     	InitGridpane("interact",this.gridpaneInteract);
     	InitGridpane("pnj",this.gridpanePnj);
-    	InitGridpaneGameInfo();
+    	InitGridpaneGameInfo(player);
   
     	//empilement des panes
         stackpane.getChildren().add(gridpaneBackground);
