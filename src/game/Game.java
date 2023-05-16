@@ -3,6 +3,7 @@ package game;
 
 import game.map.Map;
 import game.pnj.Monster;
+import game.popUp.ActionEndGame;
 import javafx.application.Application;
 import javafx.scene.Node;
 import javafx.scene.Scene;
