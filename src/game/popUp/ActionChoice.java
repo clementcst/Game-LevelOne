@@ -15,12 +15,16 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
+import utils.Minuteur;
 
 public class ActionChoice {
 
 	private static boolean isOpen = false;
 	
 	public static void displayActionChoice(Node node,Player player, GridPane gridpane,Items items,ImageView imageView) {
+		
+		Minuteur.pause();
 	 	Button takeButton = new Button("Take");
 	 	takeButton.setStyle("-fx-background-color: rgb(56,52,68); -fx-text-fill: white; -fx-border-color: white; -fx-border-width: 2px; -fx-border-radius: 5;");
 	 	
@@ -32,7 +36,7 @@ public class ActionChoice {
         borderPane.setStyle("-fx-padding: 5px; -fx-background-color: rgb(56,52,68);");
 
         VBox vBox = new VBox(10);
-        vBox.setStyle("-fx-border-width: 2px; s-fx-border-color: white; -fx-border-radius: 10; -fx-background-color: rgb(56,52,50);");
+        vBox.setStyle("-fx-border-width: 2px; -fx-border-color: white; -fx-border-radius: 10; -fx-background-color: rgb(56,52,50);");
         vBox.setAlignment(Pos.CENTER);
         
         Label itm_name = new Label(items.getName());
@@ -62,20 +66,23 @@ public class ActionChoice {
         });
 
         takeButton.setOnAction(event -> {
-            gridpane.getChildren().remove(node);
+            	gridpane.getChildren().remove(node);
 	        player.getInventory().push(items);
 	        isOpen = false;
-            dialog.close();
+		Minuteur.resume();
+            	dialog.close();
         });
 
         dontTakeButton.setOnAction(event -> {
-            isOpen = false;
-            dialog.close();
+            	isOpen = false;
+		Minuteur.resume();
+            	dialog.close();
         });
 
         //Platform.runLater(() -> dialog.showAndWait());
         if (isOpen == false) {
         	dialog.initModality(Modality.APPLICATION_MODAL);
+		dialog.initStyle(StageStyle.UNDECORATED);
         	Platform.runLater(() -> dialog.showAndWait());
         	isOpen = true;
         }
