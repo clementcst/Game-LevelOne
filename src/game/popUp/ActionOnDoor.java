@@ -20,18 +20,21 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 public class ActionOnDoor {
 	private static boolean isOpen = false;
 	
 	
 	public static void displayActionDoorChoice(Node node,Player player, GridPane gridpane,Map map) {
+		 
+		player.getInventory().afficheInventory();
 		
 		
 		for(AbstractItem item : player.getInventory().getItem()) {
-
+	    	System.out.println(player.getInventory().getItem().length);
 			if(item != null && item.getName().equals("key")) {
-	    		 //possibilité d'ouvrir
+	    		 //possibilitÃ© d'ouvrir
 	    		 
 	    		 Button takeButton2 = new Button("Use your Key ! ");
 	    		 takeButton2.setStyle("-fx-background-color: rgb(56,52,68); -fx-text-fill: white; -fx-border-color: white; -fx-border-width: 2px; -fx-border-radius: 5;");
@@ -76,7 +79,7 @@ public class ActionOnDoor {
 
 	    	         List<Node> nodesToRemove = new ArrayList<>();
 
-	    	         // Trouver les noeuds à supprimer
+	    	         // Trouver les noeuds Ã  supprimer
 	    	         for (Node nodet : gridpane.getChildren()) {
 	    	        
 	    	             if (nodet instanceof ImageView){
@@ -101,6 +104,7 @@ public class ActionOnDoor {
 	    	        //Platform.runLater(() -> dialog.showAndWait());
 	    	        if (isOpen == false) {
 	    	        	dialog.initModality(Modality.APPLICATION_MODAL);
+	    	        	dialog.initStyle(StageStyle.UNDECORATED);
 	    	        	Platform.runLater(() -> dialog.showAndWait());
 	    	        	isOpen = true;
 	    	        }
