@@ -87,7 +87,11 @@ public class Game extends Application {
             }
         });
         
-        if(map.getPlayer().getHealth() == 0) System.exit(0);
+        System.out.println("AVANT : PV DU JOUEUR :"+map.getPlayer().getHealth());
+        if(map.getPlayer().getHealth() <= 0) {
+        	System.out.println("je suis mort");
+        	ActionEndGame.displayEndGame(null, null, null);
+        }
 
        
         primaryStage.setTitle("LEVELONE");
