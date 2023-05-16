@@ -208,7 +208,7 @@ public class Map {
     			
     			switch(matrix[j][i]) {
     				case "pigKing" :
-    					Items drop = new Items("key", "Ouvre porte");
+    					Items drop = new Items("key", "Permet d'ouvrir une porte","Use");
     					Monster pigKing = new Monster("stan", 4, 2, false, Constants.stan, (AbstractItem) drop, this, i,j);
     					gridpane.add(pigKing.getImageView(),i,j);
     					pigKing.getRandomM().play();
