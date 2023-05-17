@@ -25,7 +25,7 @@ import javafx.scene.layout.GridPane;
 		
 		for (Node obstacle : gridpane.getChildren()) {
 			
-			    //Vérifier si le joueur est en collision avec l'obstacle
+			    //VÃ©rifier si le joueur est en collision avec l'obstacle
 				 if (obstacle instanceof ImageView ) {
 		 
 					 //creation des bounds de l'obstacle et du player our verif les collisions
@@ -71,9 +71,9 @@ import javafx.scene.layout.GridPane;
 				        	Items D = new Items("diamond","beautiful diamond wit a lot of utilities ;)", "Use With Merchant");
 				        	ActionChoice.displayActionChoice(obstacle,player,gridpane,D,Constants.diamond.getImageView());
 				        break;
-				        case "�p�e.png":
-				        	Items W = new Items("�p�e","beautiful weapon ", "Use to kill ennemy");
-				        	ActionChoice.displayActionChoice(obstacle,player,gridpane,W,Constants.�p�e.getImageView());
+				        case "épée.png":
+				        	Items W = new Items("épée","beautiful weapon ", "Use to kill ennemy");
+				        	ActionChoice.displayActionChoice(obstacle,player,gridpane,W,Constants.épée.getImageView());
 				        break;
 				        case "potionBlue.png":
 				        	Items B = new Items("potionBlue", "Your weapon w'll have 1 more damage","Drink");
@@ -94,6 +94,10 @@ import javafx.scene.layout.GridPane;
                         case "potionYellow.png":
                             Items Y = new Items("potionYellow", "Invicibility for 15 seconds","Drink");
                             ActionChoice.displayActionChoice(obstacle,player,gridpane,Y,Constants.potionYellow.getImageView());
+			break;
+                        case "potionGray.png":
+                            Items Gr = new Items("potionGray", "special ability, hmm...","Drink");
+                            ActionChoice.displayActionChoice(obstacle,player,gridpane,Gr,Constants.potionGray.getImageView());
                         break;
 				        case "key.png":
 				        	Items K = new Items("key", "Permet d'ouvrir une porte","Use next to a door");
@@ -129,13 +133,13 @@ import javafx.scene.layout.GridPane;
 		
 		for (Node ennemy : gridpane.getChildren()) {
 			
-			    //Vérifier si le joueur est en collision avec l'obstacle
+			    //VÃ©rifier si le joueur est en collision avec l'obstacle
 				 if (ennemy instanceof ImageView ) {
 					 //creation des bounds de l'obstacle et du player our verif les collisions
 					 Bounds obstacleBounds = ennemy.getBoundsInParent();
          		     Bounds playerBounds = player.getSprite().getBoundsInParent();
          		     
-         		     // on prend la zone de collision du personnage a laquelle on ajoute artificiellement 10px de chaque coté
+         		     // on prend la zone de collision du personnage a laquelle on ajoute artificiellement 10px de chaque cotÃ©
          		    double x = playerBounds.getMinX() - 32;
          		    double y = playerBounds.getMinY() - 32;
          		    double width = playerBounds.getWidth() + 96;
