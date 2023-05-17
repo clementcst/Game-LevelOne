@@ -293,7 +293,48 @@ public class Monster extends AbstractPnj{
 	    return hasMoved;
 	}
 	 
-	 
+	 private boolean moveIfPossible(Map map, int newX, int newY) {
+		    if (!PnjCollision.testCollision(this, map.getGridpaneInteract(), newX, newY, map) && !PnjCollision.testCollision(this, map.getGridpaneObstacle(), newX, newY, map)) {
+		    	movement(map.getGridpanePnj(), this.getImageView(), this.getX(), this.getY(), this.getNewX() + newX, this.getNewY() + newY);
+		        this.setNewX(this.getNewX() + newX);
+		        this.setNewY(this.getNewY() + newY);
+		        return true;
+		    }
+		    return false;
+	}
+
+	 public void randomMove(Map map) {
+		    this.playerInVision(map);
+		    if (this.hasVision()) {
+		        return;
+		    }
+
+		    boolean hasMoved;
+		    int direction;
+		    Random random = new Random();
+		    direction = random.nextInt(4);
+
+		    switch (direction) {
+		        case 0:
+		        	hasMoved = this.moveIfPossible(map, 0, -1);
+		            break;
+		        case 1:
+		        	hasMoved = this.moveIfPossible(map, -1, 0);
+		            break;
+		        case 2:
+		        	hasMoved = this.moveIfPossible(map, 1, 0);
+		            break;
+		        case 3:
+		        	hasMoved = this.moveIfPossible(map, 0, 1);
+		            break;
+		        default :
+		        	hasMoved = false;
+		        	break;
+		    }
+		    if(!hasMoved) {
+		    	randomMove(map);
+		    }
+	}
 
 	public void randomMove(Map map) {
 		this.playerInVision(map);
