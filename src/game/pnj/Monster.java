@@ -47,8 +47,6 @@ public class Monster extends AbstractPnj{
 		 this.itemOnDeath = drop;
 		 this.imageView.setUserData(this);
 		 
-		 // bordure pour hitbox monstre
-		 this.imageView.setStyle("-fx-border-color: red; -fx-border-width: 10px; -fx-border-style: solid;");
 		 this.x = x;
 		 this.y = y;
 		 this.newX = x;
