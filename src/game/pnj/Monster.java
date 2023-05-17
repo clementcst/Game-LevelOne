@@ -5,19 +5,23 @@ import java.util.Random;
 import game.character.Player;
 import game.item.AbstractItem;
 import game.map.Map;
+import game.popUp.ActionEndGame;
+import game.textures.Constants;
 import game.textures.Texture;
-import javafx.animation.KeyFrame;
 import javafx.animation.PauseTransition;
+import javafx.animation.Animation;
+import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.animation.TranslateTransition;
 import javafx.geometry.BoundingBox;
 import javafx.geometry.Bounds;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Region;
 import javafx.util.Duration;
 
-//Classe pour représenter les monstres
+//Classe pour reprÃ©senter les monstres
 public class Monster extends AbstractPnj{
  private int health;
  private int strength;
@@ -42,6 +46,7 @@ public class Monster extends AbstractPnj{
 		 this.imageView.setFitWidth(30);
 		 this.itemOnDeath = drop;
 		 this.imageView.setUserData(this);
+		 
 		 this.x = x;
 		 this.y = y;
 		 this.newX = x;
@@ -162,8 +167,39 @@ public class Monster extends AbstractPnj{
 		map.getGridpaneInteract().add(this.getItemOnDeath().getImageView(), x, y);
 	}
 
-	public void invincybility() {
+
+	public static void animatedAttack(ImageView characterImageView, String direction) {
+	    // Get the monster's type
+		String monsterType = "pigMob";
 		
+		Image monsterImage = characterImageView.getImage();
+        String monsterImagePath = monsterImage.getUrl();
+        if(monsterImagePath.substring(16).contains("pigKing")) {
+        	monsterType = "pigKing";
+        }
+		
+		// Load the animation frames for the character's movement
+	    Image[] animationFrames = new Image[5];
+	    for (int i = 0; i < animationFrames.length; i++) {
+	        animationFrames[i] = new Image("file:res/images/"+ monsterType + "Attack" + direction + i + ".png");
+	    }
+
+	    // Create a Timeline to animate the character's movement frames
+	    Timeline animationTimeline = new Timeline();
+	    animationTimeline.setCycleCount(5);
+
+	    for (int i = 0; i < animationFrames.length; i++) {
+	        int frameIndex = i;
+	        KeyFrame keyFrame = new KeyFrame(Duration.millis(100 * (i + 1)), event -> {
+	            characterImageView.setImage(animationFrames[frameIndex]);
+	            characterImageView.setFitHeight(30);
+	            characterImageView.setFitWidth(30);
+	        });
+	        animationTimeline.getKeyFrames().add(keyFrame);
+	    }
+	    
+	    // Play the TranslateTransition and Timeline animations simultaneously
+	    animationTimeline.play();
 	}
 	
 	public void takingDamage() {
@@ -182,12 +218,21 @@ public class Monster extends AbstractPnj{
 		pause.play();
 	}
 	
-	public static void movement(GridPane gameBoard, ImageView characterImageView, int startX, int startY, int endX, int endY) {
-//	    // Load the animation frames for the character's movement
-//	    Image[] animationFrames = new Image[8];
-//	    for (int i = 0; i < animationFrames.length; i++) {
-//	        animationFrames[i] = new Image("file:res/images/move" + direction + i + ".png");
-//	    }
+	public static void animatedMove(GridPane gameBoard, ImageView characterImageView, String direction, int startX, int startY, int endX, int endY) {
+	    // Get the monster's type
+		String monsterType = "pigMob";
+		
+		Image monsterImage = characterImageView.getImage();
+        String monsterImagePath = monsterImage.getUrl();
+        if(monsterImagePath.substring(16).contains("pigKing")) {
+        	monsterType = "pigKing";
+        }
+		
+		// Load the animation frames for the character's movement
+	    Image[] animationFrames = new Image[6];
+	    for (int i = 0; i < animationFrames.length; i++) {
+	        animationFrames[i] = new Image("file:res/images/"+ monsterType + "Move" + direction + i + ".png");
+	    }
 
 	    // Get the starting and ending positions of the character on the game board
 	    Region startSquare = (Region) gameBoard.getChildren().get(startY + 22 * startX);
@@ -203,64 +248,67 @@ public class Monster extends AbstractPnj{
 	    translateTransition.setToY(endSquare.getLayoutY()+1 - startSquare.getLayoutY());
 
 	    // Create a Timeline to animate the character's movement frames
-//	    Timeline animationTimeline = new Timeline();
-//	    animationTimeline.setCycleCount(Animation.INDEFINITE);
-//
-//	    for (int i = 0; i < animationFrames.length; i++) {
-//	        int frameIndex = i;
-//	        KeyFrame keyFrame = new KeyFrame(Duration.millis(100 * (i + 1)), event -> {
-//	            characterImageView.setImage(animationFrames[frameIndex]);
-//	        });
-//	        animationTimeline.getKeyFrames().add(keyFrame);
-//	    }
+	    Timeline animationTimeline = new Timeline();
+	    animationTimeline.setCycleCount(Animation.INDEFINITE);
+
+	    for (int i = 0; i < animationFrames.length; i++) {
+	        int frameIndex = i;
+	        KeyFrame keyFrame = new KeyFrame(Duration.millis(100 * (i + 1)), event -> {
+	            characterImageView.setImage(animationFrames[frameIndex]);
+	            characterImageView.setFitHeight(30);
+	            characterImageView.setFitWidth(30);
+	        });
+	        animationTimeline.getKeyFrames().add(keyFrame);
+	    }
 
 	    // Avoids the animation from playing infinitely
-//	    translateTransition.setOnFinished(event -> {
-//	    	animationTimeline.stop();
-//	    });
+	    translateTransition.setOnFinished(event -> {
+	    	animationTimeline.stop();
+	    });
 	    
 	    // Play the TranslateTransition and Timeline animations simultaneously
 	    translateTransition.play();
-//	    animationTimeline.play();
+	    animationTimeline.play();
 	}
 	
-	public boolean move(String direction, Map map) {
+	 // Comportements des monstres
+	 public boolean move(String direction, Map map) {
 	    boolean hasMoved = false;
 
 	    switch(direction) {
 	        case "UP":
-	            hasMoved = this.moveIfPossible(map, 0, -1);
+	            hasMoved = this.moveIfPossible(map, 0, -1, "Left");
 	            break;
 	        case "DOWN":
-	            hasMoved = this.moveIfPossible(map, 0, 1);
+	            hasMoved = this.moveIfPossible(map, 0, 1, "Right");
 	            break;
 	        case "LEFT":
-	            hasMoved = this.moveIfPossible(map, -1, 0);
+	            hasMoved = this.moveIfPossible(map, -1, 0, "Left");
 	            break;
 	        case "RIGHT":
-	            hasMoved = this.moveIfPossible(map, 1, 0);
+	            hasMoved = this.moveIfPossible(map, 1, 0, "Right");
 	            break;
 	    }
 
 	    return hasMoved;
 	}
 	 
-	 private boolean moveIfPossible(Map map, int newX, int newY) {
+	 private boolean moveIfPossible(Map map, int newX, int newY, String direction) {
 		    if (!PnjCollision.testCollision(this, map.getGridpaneInteract(), newX, newY, map) && !PnjCollision.testCollision(this, map.getGridpaneObstacle(), newX, newY, map)) {
-		    	movement(map.getGridpanePnj(), this.getImageView(), this.getX(), this.getY(), this.getNewX() + newX, this.getNewY() + newY);
+		    	animatedMove(map.getGridpanePnj(), this.getImageView(), direction, this.getX(), this.getY(), this.getNewX() + newX, this.getNewY() + newY);
 		        this.setNewX(this.getNewX() + newX);
 		        this.setNewY(this.getNewY() + newY);
 		        return true;
 		    }
 		    return false;
-		}
+	}
 
 	 public void randomMove(Map map) {
 		    this.playerInVision(map);
 		    if (this.hasVision()) {
 		        return;
 		    }
-		    
+
 		    boolean hasMoved;
 		    int direction;
 		    Random random = new Random();
@@ -268,16 +316,16 @@ public class Monster extends AbstractPnj{
 
 		    switch (direction) {
 		        case 0:
-		        	hasMoved = this.moveIfPossible(map, 0, -1);
+		        	hasMoved = this.moveIfPossible(map, 0, -1, "Left");
 		            break;
 		        case 1:
-		        	hasMoved = this.moveIfPossible(map, -1, 0);
+		        	hasMoved = this.moveIfPossible(map, -1, 0, "Left");
 		            break;
 		        case 2:
-		        	hasMoved = this.moveIfPossible(map, 1, 0);
+		        	hasMoved = this.moveIfPossible(map, 1, 0, "Right");
 		            break;
 		        case 3:
-		        	hasMoved = this.moveIfPossible(map, 0, 1);
+		        	hasMoved = this.moveIfPossible(map, 0, 1, "Right");
 		            break;
 		        default :
 		        	hasMoved = false;
@@ -286,15 +334,18 @@ public class Monster extends AbstractPnj{
 		    if(!hasMoved) {
 		    	randomMove(map);
 		    }
-		}
-
+	}
+	
 	private boolean checkVisionAndMoveIfPossible(double sortX, double sortY, double shortWidth, double sortHeight, double longX, double longY, double longWidth, double longHeight, Bounds playerBounds, String direction, Map map) {
 	    if (!PnjCollision.testVision(new BoundingBox(sortX,sortY,shortWidth,sortHeight), map) && playerBounds.intersects(longX, longY, longWidth, longHeight)) {
 	        this.setHasVision(true);
 	        return this.move(direction, map);
 	    }
-
 	    return false;
+	}
+	 
+	public void moveWithVision() {
+			 
 	}
 	
 	public void playerInVision(Map map) {
@@ -310,7 +361,7 @@ public class Monster extends AbstractPnj{
 	        }
 	    }
 	}
-		
+	
 	 public void attack(Player player, Map map) {
 		 player.setHealth(player.getHealth()-this.getStrength(),map);
     	 if(player.getHealth() <= 0) {

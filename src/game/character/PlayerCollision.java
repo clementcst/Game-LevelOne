@@ -25,7 +25,7 @@ import javafx.scene.layout.GridPane;
 		
 		for (Node obstacle : gridpane.getChildren()) {
 			
-			    //Vérifier si le joueur est en collision avec l'obstacle
+			    //VÃ©rifier si le joueur est en collision avec l'obstacle
 				 if (obstacle instanceof ImageView ) {
 		 
 					 //creation des bounds de l'obstacle et du player our verif les collisions
@@ -47,35 +47,33 @@ import javafx.scene.layout.GridPane;
 				    	Image obstacleImage = ((ImageView) obstacle).getImage();
 				        String obstacleImagePath = obstacleImage.getUrl();
 				        
+				        if(obstacleImagePath.substring(16).contains("pigKing")) {
+				        	if(player.canBeHurt()) {
+					        	Monster pigKing = (Monster) obstacle.getUserData();
+					        	player.setHealth(player.getHealth()-pigKing.getStrength(),map);
+					        	player.takingDamage();					        	
+				        	}
+				        	return false;
+				        }
+				        
+				        if(obstacleImagePath.substring(16).contains("pigMob")) {
+				        	if(player.canBeHurt()) {
+					        	Monster pigMob = (Monster) obstacle.getUserData();
+					        	player.setHealth(player.getHealth()-pigMob.getStrength(),map);
+					        	player.takingDamage();					        	
+				        	}
+				        	return false;
+				        }
+				        
 				        //Switch selon le nom de l'img (via l'URL)
 				        switch(obstacleImagePath.substring(16)) {
 				        case "diamond.png":
 				        	Items D = new Items("diamond","beautiful diamond wit a lot of utilities ;)", "Use With Merchant");
 				        	ActionChoice.displayActionChoice(obstacle,player,gridpane,D,Constants.diamond.getImageView());
 				        break;
-				        case "�p�e.png":
-				        	Items W = new Items("�p�e","beautiful weapon ", "Use to kill ennemy");
-				        	ActionChoice.displayActionChoice(obstacle,player,gridpane,W,Constants.�p�e.getImageView());
-				        break;
-				        case "pigKing.png":
-				        	if(player.canBeHurt()) {
-					        	Monster pigKing = (Monster) obstacle.getUserData();
-					        	System.out.println("collision detected with " + pigKing.getName());
-					        	System.out.println("PV avant collision :"+player.getHealth());
-					        	player.setHealth(player.getHealth()-pigKing.getStrength(),map);
-					        	player.takingDamage();
-					        	System.out.println("PV apres collision :"+player.getHealth());
-				        	}
-				        break;
-				        case "pigMob.png":
-				        	if(player.canBeHurt()) {
-					        	Monster pigMob = (Monster) obstacle.getUserData();
-					        	System.out.println("collision detected with " + pigMob.getName());
-					        	System.out.println("PV avant collision :"+player.getHealth());
-					        	player.setHealth(player.getHealth()-pigMob.getStrength(),map);
-					        	player.takingDamage();
-					        	System.out.println("PV apres collision :"+player.getHealth());
-				        	}
+				        case "épée.png":
+				        	Items W = new Items("épée","beautiful weapon ", "Use to kill ennemy");
+				        	ActionChoice.displayActionChoice(obstacle,player,gridpane,W,Constants.épée.getImageView());
 				        break;
 				        case "potionBlue.png":
 				        	Items B = new Items("potionBlue", "Your weapon w'll have 1 more damage","Drink");
@@ -96,7 +94,7 @@ import javafx.scene.layout.GridPane;
                         case "potionYellow.png":
                             Items Y = new Items("potionYellow", "Invicibility for 15 seconds","Drink");
                             ActionChoice.displayActionChoice(obstacle,player,gridpane,Y,Constants.potionYellow.getImageView());
-                        break;
+			break;
                         case "potionGray.png":
                             Items Gr = new Items("potionGray", "special ability, hmm...","Drink");
                             ActionChoice.displayActionChoice(obstacle,player,gridpane,Gr,Constants.potionGray.getImageView());
@@ -112,13 +110,13 @@ import javafx.scene.layout.GridPane;
 				        	ActionOnDoor.displayActionDoorChoice(obstacle,player,gridpane,map);//test
 				        break;
 				        case "flag.png":
-				        	player.stopAnimation();
+						player.stopAnimation();
 				        	ActionEndGame.displayEndGame(true);
 				        break;
 				        case "merchant.png":
 				        	ActionOnMerchant.displayActionMerchant(obstacle, player, gridpane, map);
 				        break;
-				        case "merchant2.png":
+					case "merchant2.png":
 				        	//ActionOnMerchant.displayActionMerchant(obstacle, player, gridpane, map);
 				        break;
 				        default:
@@ -139,23 +137,25 @@ import javafx.scene.layout.GridPane;
 		
 		for (Node ennemy : gridpane.getChildren()) {
 			
-			    //Vérifier si le joueur est en collision avec l'obstacle
+			    //VÃ©rifier si le joueur est en collision avec l'obstacle
 				 if (ennemy instanceof ImageView ) {
 					 //creation des bounds de l'obstacle et du player our verif les collisions
 					 Bounds obstacleBounds = ennemy.getBoundsInParent();
          		     Bounds playerBounds = player.getSprite().getBoundsInParent();
          		     
-         		     // on prend la zone de collision du personnage a laquelle on ajoute artificiellement 10px de chaque coté
+         		     // on prend la zone de collision du personnage a laquelle on ajoute artificiellement 10px de chaque cotÃ©
          		    double x = playerBounds.getMinX() - 32;
          		    double y = playerBounds.getMinY() - 32;
          		    double width = playerBounds.getWidth() + 96;
          		    double height = playerBounds.getHeight() + 96;
          		    Bounds areaBounds = new BoundingBox(x, y, width, height);
-         		     
+         		  
+         		    
          		    if (obstacleBounds.intersects(areaBounds)) { 
+     		    	  if(ennemy.getUserData().getClass().toString().equals("class game.pnj.Monster")) {
          		    	Monster monster = (Monster) ennemy.getUserData();
-         		    	System.out.println(monster.getName());
          		    	return monster;
+     		    	  }
 				    }
 				 }
 			}

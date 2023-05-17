@@ -11,7 +11,7 @@ public class Merchant extends AbstractPnj {
 		this.imageView = image.getImageView();
 		this.imageView.setFitHeight(30);
 		this.imageView.setFitWidth(30);
-		
+		this.imageView.setUserData(this);
 	}
 
 	public ImageView getImageView() {

@@ -13,7 +13,7 @@ import javafx.animation.PauseTransition;
 import javafx.util.Duration;
 
 /**
- * Classe représentant le joueur.
+ * Classe reprÃ©sentant le joueur.
  */
 public class Player {
 
@@ -30,6 +30,7 @@ public class Player {
     private boolean canBeHurt;
     private boolean isInvisible;
 
+
 	private Timeline animationRight;
     private Timeline animationUp;
     private Timeline animationLeft;
@@ -44,7 +45,7 @@ public class Player {
      * @param name       Nom du joueur.
      * @param health     Points de vie du joueur.
      * @param money      Montant d'argent du joueur.
-     * @param spritePath Chemin vers l'image représentant le joueur.
+     * @param spritePath Chemin vers l'image reprÃ©sentant le joueur.
      * @param map        Carte du jeu.
      */
     public Player(String name, int health, int money, String spritePath, Map map) {
@@ -62,8 +63,8 @@ public class Player {
         this.health = health;
         this.money = money;
         this.isAttacking = false;
-        this.isInvisible = false;
         this.canBeHurt = true;
+	this.isInvisible = false;
         Image image = new Image(spritePath);
         this.sprite = new ImageView(image);
         this.sprite.setFitWidth(40);
@@ -71,12 +72,12 @@ public class Player {
         this.x = 70;
         this.y = 70;
         this.inventory = new Inventory();
-        this.weapon = new Weapon("épée basique", 1, "Permet de taper", "equip weapon");
+        this.weapon = new Weapon("Ã©pÃ©e basique", 1, "Permet de taper", "equip weapon");
     }
 
     // Getters et setters
 
-	/**
+    /**
      * Obtient l'animation d'attaque vers la droite du joueur.
      *
      * @return Animation d'attaque vers la droite.
@@ -86,7 +87,7 @@ public class Player {
     }
 
     /**
-     * Définit l'animation d'attaque vers la droite du joueur.
+     * DÃ©finit l'animation d'attaque vers la droite du joueur.
      *
      * @param animationAttackRight Animation d'attaque vers la droite.
      */
@@ -104,7 +105,7 @@ public class Player {
     }
 
     /**
-     * Définit l'animation d'attaque vers la gauche du joueur.
+     * DÃ©finit l'animation d'attaque vers la gauche du joueur.
      *
      * @param animationAttackLeft Animation d'attaque vers la gauche.
      */
@@ -113,72 +114,72 @@ public class Player {
     }
     
     /**
-     * Obtient l'animation de déplacement vers la droite du joueur.
+     * Obtient l'animation de dÃ©placement vers la droite du joueur.
      *
-     * @return Animation de déplacement vers la droite.
+     * @return Animation de dÃ©placement vers la droite.
      */
     public Timeline getAnimationRight() {
         return animationRight;
     }
 
     /**
-     * Définit l'animation de déplacement vers la droite du joueur.
+     * DÃ©finit l'animation de dÃ©placement vers la droite du joueur.
      *
-     * @param animationRight Animation de déplacement vers la droite.
+     * @param animationRight Animation de dÃ©placement vers la droite.
      */
     public void setAnimationRight(Timeline animationRight) {
         this.animationRight = animationRight;
     }
 
     /**
-     * Obtient l'animation de déplacement vers le haut du joueur.
+     * Obtient l'animation de dÃ©placement vers le haut du joueur.
      *
-     * @return Animation de déplacement vers le haut.
+     * @return Animation de dÃ©placement vers le haut.
      */
     public Timeline getAnimationUp() {
         return animationUp;
     }
 
     /**
-     * Définit l'animation de déplacement vers le haut du joueur.
+     * DÃ©finit l'animation de dÃ©placement vers le haut du joueur.
      *
-     * @param animationUp Animation de déplacement vers le haut.
+     * @param animationUp Animation de dÃ©placement vers le haut.
      */
     public void setAnimationUp(Timeline animationUp) {
         this.animationUp = animationUp;
     }
 
     /**
-     * Obtient l'animation de déplacement vers la gauche du joueur.
+     * Obtient l'animation de dÃ©placement vers la gauche du joueur.
      *
-     * @return Animation de déplacement vers la gauche.
+     * @return Animation de dÃ©placement vers la gauche.
      */
     public Timeline getAnimationLeft() {
         return animationLeft;
     }
 
     /**
-     * Définit l'animation de déplacement vers la gauche du joueur.
+     * DÃ©finit l'animation de dÃ©placement vers la gauche du joueur.
      *
-     * @param animationLeft Animation de déplacement vers la gauche.
+     * @param animationLeft Animation de dÃ©placement vers la gauche.
      */
     public void setAnimationLeft(Timeline animationLeft) {
         this.animationLeft = animationLeft;
     }
 
     /**
-     * Obtient l'animation de déplacement vers le bas du joueur.
+     * Obtient l'animation de dÃ©placement vers le bas du joueur.
      *
-     * @return Animation de déplacement vers le bas.
+     * @return Animation de dÃ©placement vers le bas.
      */
     public Timeline getAnimationDown() {
         return animationDown;
     }
 
     /**
-     * Définit l'animation de déplacement vers le bas du joueur.
+     * DÃ©finit l'animation de dÃ©placement vers le bas du joueur.
      *
-     * @param animationDown Animation de déplacement vers le bas.
+     * @param animationDown Animation de dÃ©placement vers le bas.
      */
     public void setAnimationDown(Timeline animationDown) {
         this.animationDown = animationDown;
@@ -194,7 +195,7 @@ public class Player {
     }
 
     /**
-     * Définit le nom du joueur.
+     * DÃ©finit le nom du joueur.
      *
      * @param name Nom du joueur.
      */
@@ -212,7 +213,7 @@ public class Player {
     }
 
     /**
-     * Définit les points de vie du joueur.
+     * DÃ©finit les points de vie du joueur.
      *
      * @param health Points de vie du joueur.
      * @param map    Carte du jeu.
@@ -232,7 +233,7 @@ public class Player {
     }
 
     /**
-     * Définit le montant d'argent du joueur.
+     * DÃ©finit le montant d'argent du joueur.
      *
      * @param money Montant d'argent du joueur.
      */
@@ -250,7 +251,7 @@ public class Player {
     }
 
     /**
-	 * Définit l'arme du joueur.
+	 * DÃ©finit l'arme du joueur.
 	 *
 	 * @param weapon Arme du joueur.
 	 */
@@ -268,7 +269,7 @@ public class Player {
 	}
 	
 	/**
-	 * Définit l'image du joueur.
+	 * DÃ©finit l'image du joueur.
 	 *
 	 * @param imagePath Chemin vers l'image du joueur.
 	 */
@@ -287,7 +288,7 @@ public class Player {
 	}
 	
 	/**
-	 * Définit l'inventaire du joueur.
+	 * DÃ©finit l'inventaire du joueur.
 	 *
 	 * @param inventory Inventaire du joueur.
 	 */
@@ -296,7 +297,7 @@ public class Player {
 	}
 	
 	/**
-	 * Obtient l'état d'attaque du joueur.
+	 * Obtient l'Ã©tat d'attaque du joueur.
 	 *
 	 * @return Vrai si le joueur est en train d'attaquer, sinon faux.
 	 */
@@ -305,7 +306,7 @@ public class Player {
 	}
 	
 	/**
-	 * Définit l'état d'attaque du joueur.
+	 * DÃ©finit l'Ã©tat d'attaque du joueur.
 	 *
 	 * @param isAttacking Vrai si le joueur est en train d'attaquer, sinon faux.
 	 */
@@ -332,7 +333,7 @@ public class Player {
 	}
 	
 	/**
-	 * Définit la position en X du joueur.
+	 * DÃ©finit la position en X du joueur.
 	 *
 	 * @param X Position en X du joueur.
 	 */
@@ -341,7 +342,7 @@ public class Player {
 	}
 	
 	/**
-	 * Définit la position en Y du joueur.
+	 * DÃ©finit la position en Y du joueur.
 	 *
 	 * @param Y Position en Y du joueur.
 	 */
@@ -350,25 +351,24 @@ public class Player {
 	}
 	
 	/**
-	 * Vérifie si le joueur peut être blessé.
+	 * VÃ©rifie si le joueur peut Ãªtre blessÃ©.
 	 *
-	 * @return Vrai si le joueur peut être blessé, sinon faux.
+	 * @return Vrai si le joueur peut Ãªtre blessÃ©, sinon faux.
 	 */
 	public boolean canBeHurt() {
 	    return canBeHurt;
 	}
 	
 	/**
-	 * Définit si le joueur peut être blessé.
+	 * DÃ©finit si le joueur peut Ãªtre blessÃ©.
 	 *
-	 * @param canBeHurt Vrai si le joueur peut être blessé, sinon faux.
+	 * @param canBeHurt Vrai si le joueur peut Ãªtre blessÃ©, sinon faux.
 	 */
 	public void setCanBeHurt(boolean canBeHurt) {
 	    this.canBeHurt = canBeHurt;
 	}
 	
-
-    public boolean isInvisible() {
+	public boolean isInvisible() {
 		return isInvisible;
 	}
 
@@ -381,7 +381,7 @@ public class Player {
 	}
 	
 	/**
-	 * Arrête toutes les animations du joueur.
+	 * ArrÃªte toutes les animations du joueur.
 	 */
 	public void stopAnimation() {
 	    this.getAnimationDown().stop();
@@ -391,23 +391,25 @@ public class Player {
 	}
 	
 	/**
-	 * Anime le joueur lorsqu'il subit des dégâts.
+	 * Anime le joueur lorsqu'il subit des dÃ©gÃ¢ts.
 	 */
 	public void takingDamage() {
-	    Timeline timeline = new Timeline(new KeyFrame(Duration.millis(200), event -> {
-	        this.getSprite().setVisible(!this.getSprite().isVisible());
-	    }));
+	    Timeline timeline = new Timeline(new KeyFrame(Duration.millis(200),
+	    	event -> {
+	    		this.getSprite().setVisible(!this.getSprite().isVisible());
+	    	}));
 	    timeline.setCycleCount(Timeline.INDEFINITE);
-	    this.setCanBeHurt(false);
+	    this.setCanBeHurt(false); 
 	    timeline.play();
 	    PauseTransition pause = new PauseTransition(Duration.seconds(1));
-	    pause.setOnFinished(event -> {
-	    timeline.stop();
-	    this.getSprite().setVisible(true);
-	    this.setCanBeHurt(true);
-	    });
+	    pause.setOnFinished(
+	    	event -> {
+			    timeline.stop();
+			    this.getSprite().setVisible(true);
+			    this.setCanBeHurt(true);
+	    	});
 	    pause.play();
-	    }
+	}
 
 
 	/**
