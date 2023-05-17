@@ -36,7 +36,7 @@ public class Monster extends AbstractPnj{
  private int newY;
 
 	 public Monster(String name, int health, int strength, boolean hasVision, Texture image, AbstractItem drop, Map map, int x, int y) {
-		 super(name, image);
+		 super(name, image, true);
 		 this.health = health;
 		 this.strength = strength;				 
 		 this.hasVision = hasVision;
