@@ -47,6 +47,24 @@ import javafx.scene.layout.GridPane;
 				    	Image obstacleImage = ((ImageView) obstacle).getImage();
 				        String obstacleImagePath = obstacleImage.getUrl();
 				        
+				        if(obstacleImagePath.substring(16).contains("pigKing")) {
+				        	if(player.canBeHurt()) {
+					        	Monster pigKing = (Monster) obstacle.getUserData();
+					        	player.setHealth(player.getHealth()-pigKing.getStrength(),map);
+					        	player.takingDamage();					        	
+				        	}
+				        	return false;
+				        }
+				        
+				        if(obstacleImagePath.substring(16).contains("pigMob")) {
+				        	if(player.canBeHurt()) {
+					        	Monster pigMob = (Monster) obstacle.getUserData();
+					        	player.setHealth(player.getHealth()-pigMob.getStrength(),map);
+					        	player.takingDamage();					        	
+				        	}
+				        	return false;
+				        }
+				        
 				        //Switch selon le nom de l'img (via l'URL)
 				        switch(obstacleImagePath.substring(16)) {
 				        case "diamond.png":
@@ -56,26 +74,6 @@ import javafx.scene.layout.GridPane;
 				        case "épée.png":
 				        	Items W = new Items("épée","beautiful weapon ", "Use to kill ennemy");
 				        	ActionChoice.displayActionChoice(obstacle,player,gridpane,W,Constants.épée.getImageView());
-				        break;
-				        case "pigKing.png":
-				        	if(player.canBeHurt()) {
-					        	Monster pigKing = (Monster) obstacle.getUserData();
-					        	System.out.println("collision detected with " + pigKing.getName());
-					        	System.out.println("PV avant collision :"+player.getHealth());
-					        	player.setHealth(player.getHealth()-pigKing.getStrength(),map);
-					        	player.takingDamage();
-					        	System.out.println("PV apres collision :"+player.getHealth());
-				        	}
-				        break;
-				        case "pigMob.png":
-				        	if(player.canBeHurt()) {
-					        	Monster pigMob = (Monster) obstacle.getUserData();
-					        	System.out.println("collision detected with " + pigMob.getName());
-					        	System.out.println("PV avant collision :"+player.getHealth());
-					        	player.setHealth(player.getHealth()-pigMob.getStrength(),map);
-					        	player.takingDamage();
-					        	System.out.println("PV apres collision :"+player.getHealth());
-				        	}
 				        break;
 				        case "potionBlue.png":
 				        	Items B = new Items("potionBlue", "Your weapon w'll have 1 more damage","Drink");
@@ -97,10 +95,6 @@ import javafx.scene.layout.GridPane;
                             Items Y = new Items("potionYellow", "Invicibility for 15 seconds","Drink");
                             ActionChoice.displayActionChoice(obstacle,player,gridpane,Y,Constants.potionYellow.getImageView());
                         break;
-                        case "potionGray.png":
-                            Items Gr = new Items("potionGray", "special ability, hmm...","Drink");
-                            ActionChoice.displayActionChoice(obstacle,player,gridpane,Gr,Constants.potionGray.getImageView());
-                        break;
 				        case "key.png":
 				        	Items K = new Items("key", "Permet d'ouvrir une porte","Use next to a door");
 				        	ActionChoice.displayActionChoice(obstacle,player,gridpane,K,Constants.key.getImageView());
@@ -112,14 +106,10 @@ import javafx.scene.layout.GridPane;
 				        	ActionOnDoor.displayActionDoorChoice(obstacle,player,gridpane,map);//test
 				        break;
 				        case "flag.png":
-				        	player.stopAnimation();
 				        	ActionEndGame.displayEndGame(true);
 				        break;
 				        case "merchant.png":
 				        	ActionOnMerchant.displayActionMerchant(obstacle, player, gridpane, map);
-				        break;
-				        case "merchant2.png":
-				        	//ActionOnMerchant.displayActionMerchant(obstacle, player, gridpane, map);
 				        break;
 				        default:
 				        	
@@ -151,11 +141,13 @@ import javafx.scene.layout.GridPane;
          		    double width = playerBounds.getWidth() + 96;
          		    double height = playerBounds.getHeight() + 96;
          		    Bounds areaBounds = new BoundingBox(x, y, width, height);
-         		     
+         		  
+         		    
          		    if (obstacleBounds.intersects(areaBounds)) { 
+     		    	  if(ennemy.getUserData().getClass().toString().equals("class game.pnj.Monster")) {
          		    	Monster monster = (Monster) ennemy.getUserData();
-         		    	System.out.println(monster.getName());
          		    	return monster;
+     		    	  }
 				    }
 				 }
 			}

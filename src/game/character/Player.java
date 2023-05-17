@@ -28,7 +28,6 @@ public class Player {
     private Inventory inventory;
     private boolean isAttacking;
     private boolean canBeHurt;
-    private boolean isInvisible;
 
 	private Timeline animationRight;
     private Timeline animationUp;
@@ -62,7 +61,6 @@ public class Player {
         this.health = health;
         this.money = money;
         this.isAttacking = false;
-        this.isInvisible = false;
         this.canBeHurt = true;
         Image image = new Image(spritePath);
         this.sprite = new ImageView(image);
@@ -76,7 +74,7 @@ public class Player {
 
     // Getters et setters
 
-	/**
+    /**
      * Obtient l'animation d'attaque vers la droite du joueur.
      *
      * @return Animation d'attaque vers la droite.
@@ -367,19 +365,6 @@ public class Player {
 	    this.canBeHurt = canBeHurt;
 	}
 	
-
-    public boolean isInvisible() {
-		return isInvisible;
-	}
-
-	public void setInvisible(boolean isInvisible) {
-		this.isInvisible = isInvisible;
-	}
-
-	public void setSprite(ImageView sprite) {
-		this.sprite = sprite;
-	}
-	
 	/**
 	 * Arrête toutes les animations du joueur.
 	 */
@@ -394,20 +379,22 @@ public class Player {
 	 * Anime le joueur lorsqu'il subit des dégâts.
 	 */
 	public void takingDamage() {
-	    Timeline timeline = new Timeline(new KeyFrame(Duration.millis(200), event -> {
-	        this.getSprite().setVisible(!this.getSprite().isVisible());
-	    }));
+	    Timeline timeline = new Timeline(new KeyFrame(Duration.millis(200),
+	    	event -> {
+	    		this.getSprite().setVisible(!this.getSprite().isVisible());
+	    	}));
 	    timeline.setCycleCount(Timeline.INDEFINITE);
-	    this.setCanBeHurt(false);
+	    this.setCanBeHurt(false); 
 	    timeline.play();
 	    PauseTransition pause = new PauseTransition(Duration.seconds(1));
-	    pause.setOnFinished(event -> {
-	    timeline.stop();
-	    this.getSprite().setVisible(true);
-	    this.setCanBeHurt(true);
-	    });
+	    pause.setOnFinished(
+	    	event -> {
+			    timeline.stop();
+			    this.getSprite().setVisible(true);
+			    this.setCanBeHurt(true);
+	    	});
 	    pause.play();
-	    }
+	}
 
 
 	/**

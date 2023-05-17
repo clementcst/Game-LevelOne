@@ -57,7 +57,6 @@ public class PnjCollision {
 	
 		     Bounds playerBounds = player.getSprite().getBoundsInParent();
 		     if (playerBounds.intersects(monsterBounds)) {
-		    	 System.out.println("bug");
 		    	 if(player.canBeHurt()) {
 		    		 monster.attack(player, map);
 		    		 player.takingDamage();
