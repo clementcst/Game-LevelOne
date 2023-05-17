@@ -8,6 +8,7 @@ import game.map.Map;
 import game.popUp.ActionEndGame;
 import game.textures.Constants;
 import game.textures.Texture;
+import javafx.animation.PauseTransition;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -20,7 +21,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Region;
 import javafx.util.Duration;
 
-//Classe pour représenter les monstres
+//Classe pour reprÃ©senter les monstres
 public class Monster extends AbstractPnj{
  private int health;
  private int strength;
