@@ -368,6 +368,18 @@ public class Player {
 	    this.canBeHurt = canBeHurt;
 	}
 	
+	public boolean isInvisible() {
+		return isInvisible;
+	}
+
+	public void setInvisible(boolean isInvisible) {
+		this.isInvisible = isInvisible;
+	}
+
+	public void setSprite(ImageView sprite) {
+		this.sprite = sprite;
+	}
+	
 	/**
 	 * Arrête toutes les animations du joueur.
 	 */
