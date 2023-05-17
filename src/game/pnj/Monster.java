@@ -349,6 +349,20 @@ public class Monster extends AbstractPnj{
 	}
 	
 	public void playerInVision(Map map) {
+	    this.setHasVision(false);
+	    Bounds playerBounds = map.getPlayer().getSprite().getBoundsInParent();
+	    Bounds monsterBounds = this.getImageView().getBoundsInParent();
+
+	    if (!checkVisionAndMoveIfPossible(monsterBounds.getMinX() - 30, monsterBounds.getMinY() - 30,monsterBounds.getWidth(),monsterBounds.getHeight()+30,monsterBounds.getMinX()-64,monsterBounds.getMinY()-64, 64, 94, playerBounds, "LEFT", map)) {
+	        if (!checkVisionAndMoveIfPossible(monsterBounds.getMinX(), monsterBounds.getMinY() - 30,monsterBounds.getWidth()+30,monsterBounds.getHeight(),monsterBounds.getMinX(), monsterBounds.getMinY()-64, 94, 64, playerBounds, "UP", map)) {
+	            if (!checkVisionAndMoveIfPossible(monsterBounds.getMinX() + 30, monsterBounds.getMinY(), monsterBounds.getWidth(), monsterBounds.getHeight()+30,monsterBounds.getMinX()+30, monsterBounds.getMinY(), 64, 94, playerBounds, "RIGHT", map)) {
+	                checkVisionAndMoveIfPossible(monsterBounds.getMinX() - 30, monsterBounds.getMinY() + 30,monsterBounds.getWidth()+30, monsterBounds.getHeight(),monsterBounds.getMinX()-64,monsterBounds.getMinY()+30,  94, 64, playerBounds, "DOWN", map);
+	            }
+	        }
+	    }
+	}
+	
+	public void playerInVision(Map map) {
 		Boolean hasMoved;
 		this.setHasVision(false);
 		Bounds playerBounds = map.getPlayer().getSprite().getBoundsInParent();
