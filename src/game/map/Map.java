@@ -7,6 +7,7 @@ import java.util.List;
 import game.character.Player;
 import game.item.AbstractItem;
 import game.item.Items;
+import game.item.Weapon;
 import game.pnj.Merchant;
 import game.pnj.Monster;
 import game.reader.CsvReader;
@@ -52,7 +53,7 @@ public class Map {
         this.gridpanePnj = new GridPane();
         gridpanePnj.setPrefSize(width, height);
         this.pane = new Pane();
-        this.player = new Player("clement",19,0,"file:res/images/perso.png",this);
+        this.player = new Player("Julien",19,0,"file:res/images/perso.png",this);
         this.player.getSprite().setLayoutX(70);
         this.player.getSprite().setLayoutY(70);
         this.stackpane = new StackPane();
@@ -195,6 +196,7 @@ public class Map {
 		imageMap.put("doorOpen4", Constants.doorOpen4.getImageView());
 		
 		imageMap.put("flag", Constants.flag.getImageView());
+		
 
 		//objects.put("wall", Constants.wall.getImageView());//
 		// Ajoutez toutes les autres variables avec leurs noms correspondants
@@ -270,6 +272,10 @@ public class Map {
                 case "potionGray" :
                     Items Gr = new Items("potionGray", "Se boit.","Drink");
                     gridpane.add(Gr.getImageView(),i,j);
+                    break;
+                case "hammerBoosted" :
+                    Items HB = new Weapon("hammerBoosted", 1, "Able to hit", "equip weapon");
+                    gridpane.add(HB.getImageView(),i,j);
                     break;
 				case "nothing" :
 					break;

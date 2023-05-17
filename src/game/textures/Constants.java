@@ -64,4 +64,8 @@ public class Constants {
 			public static final Texture merchant= new Texture("merchant.png");
 			public static final Texture merchant2= new Texture("merchant2.png");
 			
+			//arme
+			public static final Texture hammer= new Texture("hammer.png");
+			public static final Texture hammerBoosted= new Texture("hammerBoosted.png");
+			
 }

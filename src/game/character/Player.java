@@ -64,7 +64,7 @@ public class Player {
         this.money = money;
         this.isAttacking = false;
         this.canBeHurt = true;
-	this.isInvisible = false;
+        this.isInvisible = false;
         Image image = new Image(spritePath);
         this.sprite = new ImageView(image);
         this.sprite.setFitWidth(40);
@@ -72,7 +72,8 @@ public class Player {
         this.x = 70;
         this.y = 70;
         this.inventory = new Inventory();
-        this.weapon = new Weapon("épée basique", 1, "Permet de taper", "equip weapon");
+        this.weapon = new Weapon("hammer", 1, "Able to hit", "equip weapon");
+        this.getInventory().push(this.weapon);
     }
 
     // Getters et setters

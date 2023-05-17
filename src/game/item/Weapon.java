@@ -1,7 +1,7 @@
 package game.item;
 
 
-public class Weapon extends AbstractItem{
+public class Weapon extends Items{
 	private int damage;
     public Weapon(String name, int damage, String description, String btnText) {
        super(name, description,btnText);

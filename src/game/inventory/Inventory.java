@@ -2,6 +2,7 @@ package game.inventory;
 
 import game.character.Player;
 import game.item.AbstractItem;
+import game.item.Weapon;
 import game.map.Map;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -13,6 +14,8 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -69,18 +72,44 @@ public class Inventory {
         infoPlayer.setPrefWidth(500);
         infoPlayer.setStyle("-fx-border-width: 2px; -fx-border-color: white; -fx-border-radius: 10; -fx-background-color: rgb(56,52,50);");
         
-        Text PlayerName = new Text("PERSONNAGE");
+        Text PlayerName = new Text(player.getName());
         PlayerName.setFont(Font.font("Nom de la police", FontWeight.BOLD, 20));
         PlayerName.setFill(Color.YELLOW);
         HBox.setMargin(PlayerName, new Insets(0, 0, 0, 10));
         
-        ImageView imageView = new ImageView(new Image("file:res/images/perso.png"));
-        imageView.setFitHeight(50);
-        imageView.setFitWidth(50);
-        HBox.setMargin(imageView, new Insets(10, 10, 10, 10));
+        ImageView PlayerView = new ImageView(new Image("file:res/images/perso.png"));
+        PlayerView.setFitHeight(50);
+        PlayerView.setFitWidth(50);
+        HBox.setMargin(PlayerView, new Insets(10, 10, 10, 10));
+        
+        Weapon actualweapon = player.getWeapon();
+        ImageView WeaponView = new ImageView(actualweapon.getImageView().getImage());
+        WeaponView.setFitHeight(32);
+        WeaponView.setFitWidth(70);
+        HBox.setMargin(WeaponView, new Insets(10, 10, 10, 50));
+        
+        VBox weaponDetails = new VBox();
+        VBox.setMargin(weaponDetails, new Insets(10, 10, 10, 10));
+        
+        Text testname = new Text("Nom : " + actualweapon.getName());
+        testname.setFont(Font.font("Nom de la police", 17));
+        testname.setFill(Color.YELLOW);
+        VBox.setMargin(testname, new Insets(10, 0, 0, 0));
+        
+        Text testatatck = new Text("Dégats : " + actualweapon.getDamage());
+        testatatck.setFont(Font.font("Nom de la police", 17));
+        testatatck.setFill(Color.YELLOW);
+        VBox.setMargin(testatatck, new Insets(0, 0, 10, 0));
+        
+        weaponDetails.getChildren().add(testname);
+        weaponDetails.getChildren().add(testatatck);
+        
+        Region spacer = new Region();
+        HBox.setHgrow(spacer, Priority.ALWAYS);
 	    
         Button goBack = new Button("Go back");
 		goBack.setStyle("-fx-background-color: rgb(56,52,68); -fx-text-fill: white; -fx-border-color: white; -fx-border-width: 2px; -fx-border-radius: 5;");
+		HBox.setMargin(goBack, new Insets(10, 10, 10, 10));
 
 		goBack.setOnAction(event -> {
 		//Ferme la Stage dialog quand on clique sur la croix rouge
@@ -88,8 +117,11 @@ public class Inventory {
 		this.stage.close();
         });
         
-        infoPlayer.getChildren().add(imageView);
+        infoPlayer.getChildren().add(PlayerView);
         infoPlayer.getChildren().add(PlayerName);
+        infoPlayer.getChildren().add(WeaponView);
+        infoPlayer.getChildren().add(weaponDetails);
+        infoPlayer.getChildren().add(spacer);
     	infoPlayer.getChildren().add(goBack);
         infoPlayer.setAlignment(Pos.CENTER_LEFT);
         BorderPane.setMargin(infoPlayer, new Insets(0, 0, 10, 0));
@@ -109,12 +141,14 @@ public class Inventory {
 
         int row = 0;
         int compteur = 0;
-        for(AbstractItem item : items) {	
+        for(AbstractItem item : items) {
             if (item != null) {
             	ImageView item_view = new ImageView(item.getImageView().getImage());
-                item_view.setFitHeight(50);
-                item_view.setFitWidth(50);
+            	item_view.setPreserveRatio(true);
+                item_view.setFitWidth(45);
                 StackPane itemBox = new StackPane(item_view);
+                itemBox.setPrefWidth(50);
+                itemBox.setPrefHeight(50);
                 itemBox.setStyle("-fx-border-width: 2px;-fx-border-color: white; -fx-border-radius: 10; -fx-background-color: rgb(56,52,50);");
                 
                 
@@ -124,7 +158,8 @@ public class Inventory {
                     itemName.setFont(Font.font("Nom de la police", FontWeight.BOLD, 15));
                     itemName.setFill(Color.WHITE);
                     VBox.setMargin(itemName, new Insets(0, 0, 0, 10));
-                    ImageView itemView = new ImageView(item.getImageView().getImage().getUrl());
+                    ImageView itemView = new ImageView(item.getImageView().getImage());
+                    itemView.setStyle("-fx-padding: 25 0 25 0");
                     Text itemDescription = new Text(item.getDescription());
                     itemDescription.setFill(Color.WHITE);
                     StackPane descBox = new StackPane(itemDescription);
@@ -133,13 +168,20 @@ public class Inventory {
                     
                     UseButtonInventory itemBtn = new UseButtonInventory(item);
                     itemBtn.setStyle("-fx-background-color: rgb(56,52,68); -fx-text-fill: white; -fx-border-color: white; -fx-border-width: 2px; -fx-border-radius: 5;");
-
+         
+                    //VBox.setMargin(itemBtn, new Insets(10, 0, 0, 10));
+                    
+                    
                     itemBtn.setOnAction(e -> {
                     	switch(item.getBtnText()) {
                     	case"Drink":
                     		itemBtn.pushButton(player,map);
                             this.remove(item, player,map);
+                            this.stage.close();
                     		break;
+                    	case "equip weapon":
+                    		player.setWeapon((Weapon) item);
+                    		player.getInventory().updateStageInventory(player, map);
                     	default:
                     		break;
                     	}
@@ -157,9 +199,8 @@ public class Inventory {
                     HBox boutonsBox = new HBox();
                     boutonsBox.setSpacing(10);
                     boutonsBox.getChildren().addAll(itemBtn, dropItem);
-
-                    itemView.setFitHeight(100);
-                    itemView.setFitWidth(100);
+                    itemView.setPreserveRatio(true);
+                    itemView.setFitHeight(70);
                     
                     Separator separator = new Separator();
                     separator.setPrefWidth(ItemInfo.getWidth());
