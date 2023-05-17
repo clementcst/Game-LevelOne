@@ -335,44 +335,14 @@ public class Monster extends AbstractPnj{
 		    	randomMove(map);
 		    }
 	}
-
-	public void randomMove(Map map) {
-		this.playerInVision(map);
-		 if(this.hasVision()) {
-			 return;
-		 }
-		 System.out.println(this.hasVision());
-		 int direction;
-		 Boolean hasMoved;
-		 Random random = new Random();
-		 direction = (int) random.nextInt(4);
-		 switch (direction) {
-		 case 0 :
-			 hasMoved = this.move("UP", map);
-			 System.out.println("UP choose " + hasMoved);
-
-			 break;
-		 case 1 :
-			 hasMoved = this.move("LEFT", map);
-			 System.out.println("LEFT choose " + hasMoved);
-
-			 break;
-		 case 2 :
-			 hasMoved = this.move("RIGTH", map);
-			 System.out.println("RIGHT choose " + hasMoved);
-
-			 break;
-		 case 3 :
-			 hasMoved = this.move("DOWN", map);
-			 System.out.println("DOWN choose " + hasMoved);
-			 break;
-		default : hasMoved = false;
-			break;
-		 }
-		 if(!hasMoved)
-			 randomMove(map);
-		 
-	 }
+	
+	private boolean checkVisionAndMoveIfPossible(double sortX, double sortY, double shortWidth, double sortHeight, double longX, double longY, double longWidth, double longHeight, Bounds playerBounds, String direction, Map map) {
+	    if (!PnjCollision.testVision(new BoundingBox(sortX,sortY,shortWidth,sortHeight), map) && playerBounds.intersects(longX, longY, longWidth, longHeight)) {
+	        this.setHasVision(true);
+	        return this.move(direction, map);
+	    }
+	    return false;
+	}
 	 
 	public void moveWithVision() {
 			 
