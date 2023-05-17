@@ -273,40 +273,25 @@ public class Monster extends AbstractPnj{
 	
 	 // Comportements des monstres
 	 public boolean move(String direction, Map map) {
-		 switch(direction) {
-		 	case "UP" :
-		 		if(!PnjCollision.testCollision(this, map.getGridpaneInteract(),0,-this.getSpeed(), map) && !PnjCollision.testCollision(this, map.getGridpaneObstacle(),0, -this.getSpeed(), map)) {
-		 			animatedMove(map.getGridpanePnj(), this.getImageView(), "Right", this.getX(), this.getY(), this.getNewX(), this.getNewY()-1);
-    				this.setNewY(this.getNewY()-1);
-    				return true;
-    			}
-		 		return false;
-		 	case "DOWN" :
-		 		if(!PnjCollision.testCollision(this, map.getGridpaneInteract(),0,this.getSpeed(), map) && !PnjCollision.testCollision(this, map.getGridpaneObstacle(),0, this.getSpeed(), map)) {
-		 			animatedMove(map.getGridpanePnj(), this.getImageView(), "Left", this.getX(), this.getY(), this.getNewX(), this.getNewY()+1);
-    				this.setNewY(this.getNewY()+1);
-    				return true;
-    			}
-		 		return false;
-		 	case "LEFT" :
-		 		if(!PnjCollision.testCollision(this, map.getGridpaneInteract(),-this.getSpeed(),0, map) && !PnjCollision.testCollision(this, map.getGridpaneObstacle(),-this.getSpeed(),0, map)) {
-		 			animatedMove(map.getGridpanePnj(), this.getImageView(), "Left", this.getX(), this.getY(), this.getNewX()-1, this.getNewY());
-    				this.setNewX(this.getNewX()-1);
-    				return true;
-    			}
-		 		return false;
-		 	case "RIGTH" :
-		 		if(!PnjCollision.testCollision(this, map.getGridpaneInteract(),this.getSpeed(),0, map) && !PnjCollision.testCollision(this, map.getGridpaneObstacle(),this.getSpeed(),0, map)) {
-		 			animatedMove(map.getGridpanePnj(), this.getImageView(), "Right", this.getX(), this.getY(), this.getNewX()+1, this.getNewY());
-    				this.setNewX(this.getNewX()+1);
-    				return true;
-    			}
-		 		return false;
-		 	default :
-		 		return false;
-		 }
-		 
-	 }
+	    boolean hasMoved = false;
+
+	    switch(direction) {
+	        case "UP":
+	            hasMoved = this.moveIfPossible(map, 0, -1);
+	            break;
+	        case "DOWN":
+	            hasMoved = this.moveIfPossible(map, 0, 1);
+	            break;
+	        case "LEFT":
+	            hasMoved = this.moveIfPossible(map, -1, 0);
+	            break;
+	        case "RIGHT":
+	            hasMoved = this.moveIfPossible(map, 1, 0);
+	            break;
+	    }
+
+	    return hasMoved;
+	}
 	 
 	 
 
