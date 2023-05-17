@@ -202,6 +202,21 @@ public class Monster extends AbstractPnj{
 	    animationTimeline.play();
 	}
 	
+	public void takingDamage() {
+		Timeline timeline = new Timeline(new KeyFrame(Duration.millis(200), event -> {
+		    this.getImageView().setVisible(!this.getImageView().isVisible());
+		}));
+		timeline.setCycleCount(Timeline.INDEFINITE);
+		this.setCanBeHurt(false);
+		PauseTransition pause = new PauseTransition(Duration.seconds(1));
+		pause.setOnFinished(event -> {
+		    timeline.stop();
+		    this.getImageView().setVisible(true);
+		    this.setCanBeHurt(true);
+		});
+		timeline.play();
+		pause.play();
+	}
 	
 	public static void animatedMove(GridPane gameBoard, ImageView characterImageView, String direction, int startX, int startY, int endX, int endY) {
 	    // Get the monster's type
