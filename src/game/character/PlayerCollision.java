@@ -2,6 +2,7 @@ package game.character;
 
 
 import game.item.Items;
+import game.item.Weapon;
 import game.map.Map;
 import game.pnj.Monster;
 import game.popUp.ActionChoice;
@@ -113,8 +114,16 @@ import javafx.scene.layout.GridPane;
 				        case "merchant.png":
 				        	ActionOnMerchant.displayActionMerchant(obstacle, player, gridpane, map);
 				        break;
-					case "merchant2.png":
+				        case "merchant2.png":
 				        	ActionOnMerchant2.displayActionMerchant(obstacle, player, gridpane, map);
+				        break;
+				        case "hammer.png":
+				        	Weapon H = new Weapon("hammer", 1, "Able to hit", "equip weapon");
+				        	ActionChoice.displayActionChoice(obstacle,player,gridpane,H,Constants.hammer.getImageView());
+				        break;
+				        case "hammerBoosted.png":
+				        	Weapon HB = new Weapon("hammerBoosted", 2, "Able to hit more", "equip weapon");
+				        	ActionChoice.displayActionChoice(obstacle,player,gridpane,HB,Constants.hammerBoosted.getImageView());
 				        break;
 				        default:
 				        	
