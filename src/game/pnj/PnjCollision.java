@@ -9,7 +9,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 
 public class PnjCollision {
-	public static boolean testCollision(Monster monster,GridPane gridpane,double diffX, double diffY, Map map) {		
+	public static boolean testCollision(Monster monster,GridPane gridpane, double diffX, double diffY, Map map, String direction) {		
 			Player player = map.getPlayer();
 			monster.getImageView().setLayoutX(monster.getImageView().getLayoutX()+diffX*32);
 			monster.getImageView().setLayoutY(monster.getImageView().getLayoutY()+diffY*32);
@@ -58,7 +58,7 @@ public class PnjCollision {
 		     Bounds playerBounds = player.getSprite().getBoundsInParent();
 		     if (playerBounds.intersects(monsterBounds)) {
 		    	 if(player.canBeHurt()) {
-		    		 monster.attack(player, map);
+		    		 monster.attack(player, map, direction);
 		    		 player.takingDamage();
 		    	 }		    	
 		    	 return true;
