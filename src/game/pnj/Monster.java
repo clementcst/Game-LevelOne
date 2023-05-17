@@ -362,54 +362,6 @@ public class Monster extends AbstractPnj{
 	    }
 	}
 	
-	public void playerInVision(Map map) {
-		Boolean hasMoved;
-		this.setHasVision(false);
-		Bounds playerBounds = map.getPlayer().getSprite().getBoundsInParent();
-		Bounds monsterBounds = this.getImageView().getBoundsInParent();
-		Bounds gaucheHaut = new BoundingBox(monsterBounds.getMinX()-30, monsterBounds.getMinY()-30, monsterBounds.getWidth(), monsterBounds.getHeight()+30);
-		Bounds hautDroite = new BoundingBox(monsterBounds.getMinX(), monsterBounds.getMinY()-30, monsterBounds.getWidth()+30, monsterBounds.getHeight());
-		Bounds droiteBas = new BoundingBox(monsterBounds.getMinX()+30, monsterBounds.getMinY(), monsterBounds.getWidth(), monsterBounds.getHeight()+30);
-		Bounds basGauche = new BoundingBox(monsterBounds.getMinX()-30, monsterBounds.getMinY()+30, monsterBounds.getWidth()+30, monsterBounds.getHeight());
-		Bounds gaucheHautPleineVision = new BoundingBox(monsterBounds.getMinX()-64, monsterBounds.getMinY()-64, 64, 94);
-		Bounds hautDroitePleineVision = new BoundingBox(monsterBounds.getMinX(), monsterBounds.getMinY()-64, 94, 64);
-		Bounds droiteBasPleineVision = new BoundingBox(monsterBounds.getMinX()+30, monsterBounds.getMinY(), 64, 94);
-		Bounds basGauchePleineVision = new BoundingBox(monsterBounds.getMinX()-64, monsterBounds.getMinY()+30, 94, 64);
-		
-		if(!PnjCollision.testVision(gaucheHaut, map)) {
-			if(playerBounds.intersects(gaucheHautPleineVision)) {
-				this.setHasVision(true);
-				System.out.println("gauche");
-				hasMoved = this.move("LEFT", map);
-				return;
-			}
-		}
-		if(!PnjCollision.testVision(hautDroite, map)) {
-			if(playerBounds.intersects(hautDroitePleineVision)) {
-				this.setHasVision(true);
-				System.out.println("haut");
-				hasMoved = this.move("UP", map);
-				return;
-			}
-		}
-		if(!PnjCollision.testVision(droiteBas, map)) {
-			if(playerBounds.intersects(droiteBasPleineVision)) {
-				this.setHasVision(true);
-				System.out.println("droite");
-				hasMoved = this.move("RIGTH", map);
-				return;
-			}
-		}
-		if(!PnjCollision.testVision(basGauche, map)) {
-			if(playerBounds.intersects(basGauchePleineVision)) {				
-				this.setHasVision(true);
-				System.out.println("bas");
-				hasMoved = this.move("DOWN", map);
-				return;
-			}
-		}
-		
-	}
 	 public void attack(Player player, Map map) {
 		 player.setHealth(player.getHealth()-this.getStrength(),map);
     	 if(player.getHealth() <= 0) {
