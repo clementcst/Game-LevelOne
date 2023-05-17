@@ -96,7 +96,7 @@ public class Inventory {
         testname.setFill(Color.YELLOW);
         VBox.setMargin(testname, new Insets(10, 0, 0, 0));
         
-        Text testatatck = new Text("D�gats : " + actualweapon.getDamage());
+        Text testatatck = new Text("Dégats : " + actualweapon.getDamage());
         testatatck.setFont(Font.font("Nom de la police", 17));
         testatatck.setFill(Color.YELLOW);
         VBox.setMargin(testatatck, new Insets(0, 0, 10, 0));
@@ -126,7 +126,7 @@ public class Inventory {
         infoPlayer.setAlignment(Pos.CENTER_LEFT);
         BorderPane.setMargin(infoPlayer, new Insets(0, 0, 10, 0));
 
-        //Créez la grille d'items
+        //CrÃ©ez la grille d'items
         GridPane gridPane = new GridPane();
         gridPane.setPadding(new Insets(10));
         gridPane.setHgap(10);
@@ -146,6 +146,7 @@ public class Inventory {
             	ImageView item_view = new ImageView(item.getImageView().getImage());
             	item_view.setPreserveRatio(true);
                 item_view.setFitWidth(45);
+                item_view.setFitHeight(45);
                 StackPane itemBox = new StackPane(item_view);
                 itemBox.setPrefWidth(50);
                 itemBox.setPrefHeight(50);
@@ -168,9 +169,6 @@ public class Inventory {
                     
                     UseButtonInventory itemBtn = new UseButtonInventory(item);
                     itemBtn.setStyle("-fx-background-color: rgb(56,52,68); -fx-text-fill: white; -fx-border-color: white; -fx-border-width: 2px; -fx-border-radius: 5;");
-         
-                    //VBox.setMargin(itemBtn, new Insets(10, 0, 0, 10));
-                    
                     
                     itemBtn.setOnAction(e -> {
                     	switch(item.getBtnText()) {
@@ -190,9 +188,10 @@ public class Inventory {
                     Button dropItem = new Button("Drop");
                     
                     dropItem.setOnAction(e -> {
-                    	player.getInventory().remove(item, player, map);    
-                    	map.getGridpaneInteract().add(item.getImageView(),(int) (map.getPlayer().getSprite().getLayoutX() /32),(int) (map.getPlayer().getSprite().getLayoutY() /32)+1);
-                    });
+                    	if(! (item instanceof Weapon)) {
+                    		player.getInventory().remove(item, player, map);    
+                        	map.getGridpaneInteract().add(item.getImageView(),(int) (map.getPlayer().getSprite().getLayoutX() /32),(int) (map.getPlayer().getSprite().getLayoutY() /32)+1);
+                    	}});
                     
                     dropItem.setStyle("-fx-background-color: rgb(56,52,68); -fx-text-fill: white; -fx-border-color: white; -fx-border-width: 2px; -fx-border-radius: 5;");
 
