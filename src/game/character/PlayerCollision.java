@@ -110,10 +110,14 @@ import javafx.scene.layout.GridPane;
 				        	ActionOnDoor.displayActionDoorChoice(obstacle,player,gridpane,map);//test
 				        break;
 				        case "flag.png":
+						player.stopAnimation();
 				        	ActionEndGame.displayEndGame(true);
 				        break;
 				        case "merchant.png":
 				        	ActionOnMerchant.displayActionMerchant(obstacle, player, gridpane, map);
+				        break;
+					case "merchant2.png":
+				        	//ActionOnMerchant.displayActionMerchant(obstacle, player, gridpane, map);
 				        break;
 				        default:
 				        	
